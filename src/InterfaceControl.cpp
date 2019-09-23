@@ -2693,7 +2693,7 @@ std::string CInterfaceControl::GetSourceList(void)
 
 		for( int i=0 ; i<receive_size ; i++ )
 		{
-			vec_receive_data[i];
+			str_ret[i] = vec_receive_data[i];
 		}
 	}
 
