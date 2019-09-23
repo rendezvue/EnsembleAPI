@@ -3,19 +3,19 @@
 
 CInterfaceControl g_cls_interface_control;
 
-int EnsembleConnect(const char* ip)
+int Ensemble_Network_Connect(const char* ip)
 {
     g_cls_interface_control.CreateSocket(ip, NETWORK_PORT_CON);
 
-    return EnsembleIsOnline() ;
+    return Ensemble_Network_IsOnline() ;
 }
 
-void EnsembleDisconnect()
+void Ensemble_Network_Disconnect()
 {
 	g_cls_interface_control.DeleteSocket();
 }
 
-int EnsembleIsOnline(void)
+int Ensemble_Network_IsOnline(void)
 {
     int ret = 0 ;
 
@@ -29,18 +29,18 @@ int EnsembleIsOnline(void)
     return ret ;
 }
 
-std::string EnsembleGetSourceList(void)
+std::string Ensemble_Source_Get_List(void)
 {
 	return g_cls_interface_control.GetSourceList();
 }
 
-int EnsembleSetSource(const std::string source)
+int Ensemble_Source_Set(const std::string source)
 {
 	return g_cls_interface_control.SetSource(source);
 }
 
 
-int EnsembleGetImage(const int option, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Source_Get_Image(const int option, const int type_option, const int width, const int height, unsigned char** data)
 {
     int fixed_width = width ;
     int fixed_height = height ;
@@ -48,7 +48,7 @@ int EnsembleGetImage(const int option, const int type_option, const int width, c
     return g_cls_interface_control.GetImage(option, type_option, fixed_width, fixed_height, data);
 }
 
-int EnsembleGetImage(const int option, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Source_Get_Image(const int option, const int type_option, unsigned char** data, int* out_width, int* out_height)
 {
     int get_width = -1 ;
     int get_height = -2 ;
@@ -202,7 +202,7 @@ int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, un
     return ret ;
 }
 
-int EnsembleToolGetObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, unsigned char** data)
+int Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, unsigned char** data)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
@@ -210,7 +210,7 @@ int EnsembleToolGetObjectImage(const std::string tool_id,const int type_option, 
     return g_cls_interface_control.ToolGetObjectImage(tool_id, type_option, fixed_width, fixed_height, data);
 }
 
-int EnsembleToolGetObjectImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+int Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -245,12 +245,12 @@ int Ensemble_Job_Set_SelectObject(const std::string id, const float x, const flo
 	return g_cls_interface_control.JobSelectObject(id, x, y, width, height);
 }
 
-int EnsembleToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin) 
+int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin) 
 {
 	return g_cls_interface_control.ToolSelectObject(tool_id, x, y, width, height, margin);
 }
 
-int EnsembleToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
+int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
 {
 	return g_cls_interface_control.ToolSelectObject(tool_id, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y, margin)  ;
 }
@@ -266,34 +266,34 @@ float Ensemble_Job_Get_DetectOption(const std::string id, const int option)
 	return g_cls_interface_control.JobGetDetectOption(id, option);
 }
 
-int EnsembleToolSetDetectOption(const std::string tool_id,const int option, const float value)
+int Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value)
 {
 	return g_cls_interface_control.ToolSetDetectOption(tool_id, option, value);
 }
 
-float EnsembleToolGetDetectOption(const std::string tool_id,const int option)
+float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 {
 	return g_cls_interface_control.ToolGetDetectOption(tool_id, option);
 }
 
 float Ensemble_Tool_Distance_Get_CalcDistance(const std::string tool_id)
 {
-	return EnsembleToolGetDetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_DISTANCE) ;
+	return Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_DISTANCE) ;
 }
 
 int Ensemble_Tool_Distance_Set_BaseDistance(const std::string tool_id, const float base_distance)
 {
-    return EnsembleToolSetDetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE, base_distance) ;
+    return Ensemble_Tool_Set_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE, base_distance) ;
 }
 
 float Ensemble_Tool_Distance_Get_BaseDistance(const std::string tool_id)
 {
-	return EnsembleToolGetDetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE) ;
+	return Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE) ;
 }
 
 float Ensemble_Tool_Angle_Get_CalcAngle(const std::string tool_id)
 {
-	return EnsembleToolGetDetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_ANGLE) ;
+	return Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_ANGLE) ;
 }
 
 int Ensemble_Job_Del_SelectObject(const std::string id)
@@ -326,7 +326,7 @@ int Ensemble_Job_Set_FeatureLevel(const std::string id, const int level)
 	return g_cls_interface_control.JobSetFeatureLevel(id, level);
 }
 
-int EnsembleToolDel(const std::string tool_id)
+int Ensemble_Tool_Del(const std::string tool_id)
 {
 	return g_cls_interface_control.DelTool(tool_id);
 }
@@ -341,12 +341,12 @@ std::string Ensemble_Job_Type_Get_List_Xml(void)
 	return g_cls_interface_control.Job_Type_Get_List_Xml();
 }
 
-std::string EnsembleGetToolList(void) 
+std::string Ensemble_Info_Get_ToolList(void) 
 {
 	return g_cls_interface_control.GetToolList();
 }
 
-std::string EnsembleGetToolTypeName(const int type)
+std::string Ensemble_Info_Get_ToolTypeName(const int type)
 {
     return g_cls_interface_control.GetToolTypeName(type);
 }
@@ -357,28 +357,28 @@ int Ensemble_Tool_Add_New(const std::string parent_id, const int tool_type)
 	return g_cls_interface_control.AddTool(parent_id, tool_type);
 }
 
-int EnsembleToolInsert(const std::string parent_id, const int index, const int tool_type)
+int Ensemble_Tool_Insert(const std::string parent_id, const int index, const int tool_type)
 {
 	return g_cls_interface_control.InsertTool(parent_id, index, tool_type);
 }
 
-int EnsembleToolMove(const std::string parent_id, const int cur_index, const int target_index)
+int Ensemble_Tool_Move(const std::string parent_id, const int cur_index, const int target_index)
 {
 	return g_cls_interface_control.MoveTool(parent_id, cur_index, target_index);
 }
 
 //TOOL
-std::string EnsembleToolGetName(const std::string tool_id)
+std::string Ensemble_Tool_Get_Name(const std::string tool_id)
 {
 	return g_cls_interface_control.ToolGetName(tool_id);
 }	
 
-int EnsembleToolSetName(const std::string tool_id, const std::string name) 
+int Ensemble_Tool_Set_Name(const std::string tool_id, const std::string name) 
 {
 	return g_cls_interface_control.ToolSetName(tool_id, name);
 }
 
-int EnsembleToolGetImage(const std::string tool_id, const int type_option,  const int width, const int height, unsigned char** data) 
+int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, unsigned char** data) 
 {
 	int fixed_width = width ;
     int fixed_height = height ;
@@ -386,7 +386,7 @@ int EnsembleToolGetImage(const std::string tool_id, const int type_option,  cons
     return g_cls_interface_control.ToolGetImage(tool_id, type_option, fixed_width, fixed_height, data);
 }
 
-int EnsembleToolGetImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -532,53 +532,53 @@ int Ensemble_Tool_Option_InspectDiameter_Set_Tolerance(const std::string option_
     return g_cls_interface_control.Tool_Option_InspectDiameter_Set_Tolerance(option_id, min, max) ;
 }
 
-int EnsembleToolGetFeatureLevel(const std::string tool_id)
+int Ensemble_Tool_Get_FeatureLevel(const std::string tool_id)
 {
 	return g_cls_interface_control.ToolGetFeatureLevel(tool_id);
 }
 
-int EnsembleToolSetFeatureLevel(const std::string tool_id, const int level)
+int Ensemble_Tool_Set_FeatureLevel(const std::string tool_id, const int level)
 {
 	return g_cls_interface_control.ToolSetFeatureLevel(tool_id, level);
 }
 
-int Ensemble_Tool_Option_Crack_GetInspectLevel(const std::string option_id)
+int Ensemble_Tool_Option_Crack_Get_InspectLevel(const std::string option_id)
 {
 	return g_cls_interface_control.Tool_Option_Crack_GetInspectLevel(option_id);
 }
 
-int Ensemble_Tool_Option_Crack_SetInspectLevel(const std::string option_id, const int level)
+int Ensemble_Tool_Option_Crack_Set_InspectLevel(const std::string option_id, const int level)
 {
 	return g_cls_interface_control.Tool_Option_Crack_SetInspectLevel(option_id, level);
 }
 
 
-int EnsembleJobRun(const std::string id)
+int Ensemble_Job_Run(const std::string id)
 {
 	return g_cls_interface_control.JobRun(id);
 }
 
-std::string EnsembleToolGetOptionList(const std::string tool_id)
+std::string Ensemble_Tool_Get_OptionList(const std::string tool_id)
 {
 	return g_cls_interface_control.ToolGetOptionList(tool_id) ;
 }
 
-std::string EnsembleToolGetOptionList(const int type)
+std::string Ensemble_Tool_Get_OptionList(const int type)
 {
 	return g_cls_interface_control.ToolGetOptionList(type) ;
 }
 
-int EnsembleToolGetOptionListCount(const int type)
+int Ensemble_Tool_Get_OptionList_Count(const int type)
 {
 	return g_cls_interface_control.ToolGetOptionCount(type) ;
 }
 
-int EnsembleToolAddNewOption(const std::string tool_id, const int option_type)
+int Ensemble_Tool_Add_NewOption(const std::string tool_id, const int option_type)
 {	
 	return g_cls_interface_control.ToolAddNewOption(tool_id, option_type) ;
 }
 
-int EnsembleToolDelOption(const std::string option_id)
+int Ensemble_Tool_Del_Option(const std::string option_id)
 {
 	return g_cls_interface_control.ToolDelOption(option_id) ;
 }
