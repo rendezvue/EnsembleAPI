@@ -2621,7 +2621,7 @@ int CInterfaceControl::Calibration_StandAlone_Y_Direction(const std::string job_
     return ret;
 }
 
-int CInterfaceControl::GetImage(const int option, const int type_option, int& width, int& height, unsigned char** out_data)
+int CInterfaceControl::GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -2638,7 +2638,7 @@ int CInterfaceControl::GetImage(const int option, const int type_option, int& wi
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
 	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
 	
     return ret;

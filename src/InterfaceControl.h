@@ -22,7 +22,7 @@ public:
 
 	//-----------------------------
 	//Image and Source
-	int GetImage(const int option, const int type_option, int& width, int& height, unsigned char** out_data);
+    int GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	std::string GetSourceList(void) ;
 	int SetSource(const std::string source) ;

@@ -16,8 +16,8 @@ int Ensemble_Source_Set(const std::string source);
 
 
 //[2] Get Image Stream
-int Ensemble_Source_Get_Image(const int option, const int type_option, const int width, const int height, unsigned char** data) ;
-int Ensemble_Source_Get_Image(const int option, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
+int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, const int width, const int height, unsigned char** data) ;
+int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 
 
 //[3] Job Management
