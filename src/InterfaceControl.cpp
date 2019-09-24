@@ -71,7 +71,9 @@ int CInterfaceControl::Base_Set_Run_Option(const std::string id, const bool run)
 
 	unsigned int command = ENSEMBLE_TASK_SET_RUN_OPTION;
 
-	int ret = m_cls_eth_client->Send(command, id, NULL) ;
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(run) ;
+	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
 	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
 
@@ -90,7 +92,9 @@ int CInterfaceControl::Base_Set_View_Option(const std::string id, const bool vie
 
     unsigned int command = ENSEMBLE_TASK_SET_VIEW_OPTION;
 
-	int ret = m_cls_eth_client->Send(command, id, NULL) ;
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(view) ;
+	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
 	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
 
