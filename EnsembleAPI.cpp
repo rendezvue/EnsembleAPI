@@ -603,9 +603,25 @@ int Ensemble_Job_Calibration_GetCount(const std::string job_id)
 	return g_cls_interface_control.Calibration_GetCount(job_id);
 }
 
-int Ensemble_Job_Calibration_GetImage(const std::string job_id, int index, char** data, int* len)
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data)
 {
-	return g_cls_interface_control.Calibration_GetImage(job_id, index, data, len);
+    int fixed_width = width ;
+    int fixed_height = height ;
+
+    return g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, fixed_width, fixed_height, data);
+}
+
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, unsigned char** data, int* out_width, int* out_height)
+{
+    int get_width = -1 ;
+    int get_height = -2 ;
+
+    int ret = g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, get_width, get_height, data);
+
+    if( out_width != NULL ) (*out_width) = get_width ;
+    if( out_height != NULL ) (*out_height) = get_height ;
+
+    return ret ;
 }
 
 int Ensemble_Job_Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y)

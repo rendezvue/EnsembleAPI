@@ -2123,9 +2123,9 @@ int CInterfaceControl::Calibration_GetCount(const std::string job_id)
 	return count ;
 }
 
-int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index, char** out_data, int* out_len)
+int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index, const int type_option, int& width, int& height, unsigned char** out_data)
 {
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
     if (m_cls_eth_client == NULL)
     {
@@ -2137,22 +2137,15 @@ int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index,
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
-
-	int image_width = -1 ;
-	int image_height = -1 ;
-    ret += m_cls_eth_client->ReceiveImage(command, image_width, image_height, (unsigned char **)out_data) ;
-
-	if( (*out_data) != NULL )
-	{
-        if( (*out_len) != NULL )
-		{
-            (*out_len) = image_width*image_height*3 ;
-		}
-	}
+	vec_send_data.push_back(type_option) ;
+	vec_send_data.push_back(width) ;
+	vec_send_data.push_back(height) ;
+    int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
 	
     return ret;
 }
+
 
 int CInterfaceControl::Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y)
 {

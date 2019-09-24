@@ -72,7 +72,7 @@ public:
 	int Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size) ;
 	int Calibration_Add(const std::string job_id, float robot_x, float robot_y) ;
 	int Calibration_GetCount(const std::string job_id) ;
-    int Calibration_GetImage(const std::string job_id, int index, char** out_data, int* out_len);
+	int Calibration_GetImage(const std::string job_id, int index, const int type_option, int& width, int& height, unsigned char** out_data) ;
 	int Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y);
 	int Calibration_Del(const std::string job_id, int index);
 	int Calibration_Clear(const std::string job_id);

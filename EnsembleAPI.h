@@ -137,7 +137,8 @@ int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x
 int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size);
 int Ensemble_Job_Calibration_Add(const std::string job_id, float robot_x, float robot_y);
 int Ensemble_Job_Calibration_GetCount(const std::string job_id);
-int Ensemble_Job_Calibration_GetImage(const std::string job_id, int index, char** data, int* len);
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data) ;
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 int Ensemble_Job_Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y);
 int Ensemble_Job_Calibration_Del(const std::string job_id, int index);
 int Ensemble_Job_Calibration_Clear(const std::string job_id);
