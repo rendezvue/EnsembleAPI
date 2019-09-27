@@ -28,8 +28,10 @@ int Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
 int Ensemble_Task_File_Save(void) ;		//save all
 int Ensemble_Task_File_Load(void) ;	//load all
 
-std::string Ensemble_Info_Get_ToolList(void) ;
+std::string Ensemble_Info_Type_Get_Tool_List_Xml(void) ;
 std::string Ensemble_Info_Get_ToolTypeName(const int type) ;
+std::string Ensemble_Info_Type_Get_Job_List_Xml(void) ;
+
 
 //[3-1] Project
 int Ensemble_Project_Add_New(const std::string name="") ;
@@ -42,7 +44,6 @@ int Ensemble_Project_Set_Name(const std::string project_id, const std::string na
 //[3-2] Job
 int Ensemble_Job_Add_New(const std::string project_id, const int type, const std::string name="") ;
 std::string Ensemble_Job_Get_TypeName(const int job_type) ;
-std::string Ensemble_Job_Type_Get_List_Xml(void) ;
 int Ensemble_Job_Del(const std::string id) ;
 std::string Ensemble_Job_Get_Name(const std::string id) ;
 int Ensemble_Job_Set_Name(const std::string id, const std::string name) ;

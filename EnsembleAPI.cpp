@@ -336,12 +336,12 @@ std::string Ensemble_Project_Get_List(void)
 	return g_cls_interface_control.Project_Get_List();
 }
 
-std::string Ensemble_Job_Type_Get_List_Xml(void)
+std::string Ensemble_Info_Type_Get_Job_List_Xml(void)
 {
 	return g_cls_interface_control.Job_Type_Get_List_Xml();
 }
 
-std::string Ensemble_Info_Get_ToolList(void) 
+std::string Ensemble_Info_Type_Get_Tool_List_Xml(void) 
 {
 	return g_cls_interface_control.GetToolList();
 }
