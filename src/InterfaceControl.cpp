@@ -3,6 +3,8 @@
 
 CInterfaceControl::CInterfaceControl(void)
 {
+    //initial : make calss instance
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 }
 
 CInterfaceControl::~CInterfaceControl(void)
@@ -19,11 +21,20 @@ int CInterfaceControl::Get_Run_Option(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	unsigned int command = ENSEMBLE_TASK_GET_RUN_OPTION;
 
-	int ret = m_cls_eth_client->Send(command, id, NULL) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, NULL) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	if( vec_receive_data.size() == 1 )
 	{
@@ -43,13 +54,22 @@ int CInterfaceControl::Get_View_Option(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TASK_GET_VIEW_OPTION;
 
-	int ret = m_cls_eth_client->Send(command, id, NULL) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, NULL) ;
 	std::vector<float> vec_receive_data; 
-	ret += m_cls_eth_client->Receive(command,&vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command,&vec_receive_data) ;
 
 	if( vec_receive_data.size() == 1 )
 	{
@@ -69,13 +89,22 @@ int CInterfaceControl::Base_Set_Run_Option(const std::string id, const bool run)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	unsigned int command = ENSEMBLE_TASK_SET_RUN_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(run) ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -90,13 +119,22 @@ int CInterfaceControl::Base_Set_View_Option(const std::string id, const bool vie
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TASK_SET_VIEW_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(view) ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -111,13 +149,22 @@ int CInterfaceControl::Task_Save(void)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TASK_SAVE;
 
-    int ret = m_cls_eth_client->Send(command, std::string(), NULL) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -132,11 +179,20 @@ int CInterfaceControl::Task_Load(void)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TASK_LOAD;
 
-    int ret = m_cls_eth_client->Send(command, std::string(), NULL) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -149,6 +205,15 @@ int CInterfaceControl::Project_Add_New(const std::string name)
     {
         printf("Before accessing the Ensemble\n");
         return ENSEMBLE_ERROR_INVALID_MEMORY;
+    }
+
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
     std::vector<float> vec_send_data ;
@@ -164,9 +229,9 @@ int CInterfaceControl::Project_Add_New(const std::string name)
 
     unsigned int command = ENSEMBLE_PRJ_NEW;
 
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -181,11 +246,20 @@ int CInterfaceControl::Project_Del(const std::string id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_PRJ_DEL;
 
-    int ret = m_cls_eth_client->Send(command, id, NULL) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, NULL) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -201,6 +275,15 @@ int CInterfaceControl::Job_Add_New(const std::string project_id, const int type,
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_JOB_NEW;
 
     std::vector<float> vec_send_data ;
@@ -214,9 +297,9 @@ int CInterfaceControl::Job_Add_New(const std::string project_id, const int type,
             vec_send_data.push_back(data) ;
 		}
 	}
-    int ret = m_cls_eth_client->Send(command, project_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, project_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
 }
@@ -233,13 +316,22 @@ std::string CInterfaceControl::Job_Get_TypeName(const int job_type)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_JOB_GET_TYPE_NAME;
 		
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(job_type) ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -265,14 +357,23 @@ int CInterfaceControl::DelJob(const std::string id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_DEL;
 
     std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -289,14 +390,22 @@ std::string CInterfaceControl::JobGetName(const std::string id)
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_GET_NAME;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -322,6 +431,15 @@ int CInterfaceControl::JobChangeName(const std::string id, const std::string nam
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SET_NAME;
@@ -336,9 +454,9 @@ int CInterfaceControl::JobChangeName(const std::string id, const std::string nam
             vec_send_data.push_back(data) ;
 		}
 	}
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	return ret;
 }
@@ -353,6 +471,15 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_JOB_GET_IMAGE;
 
 	qDebug("JobGetImage : type_option = %d", (unsigned int)type_option) ;
@@ -364,9 +491,9 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
 	
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 		
     return ret;
 }
@@ -381,6 +508,15 @@ int CInterfaceControl::OptionGetImage(const std::string option_id, const int typ
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_GET_IMAGE;
 
 	std::vector<float> vec_send_data ;
@@ -388,9 +524,9 @@ int CInterfaceControl::OptionGetImage(const std::string option_id, const int typ
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
 	
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -405,6 +541,15 @@ int CInterfaceControl::Tool_Option_InspectColor_Histogram_GetImage(const std::st
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_GET_HISTOGRAM_IMAGE;
 
 	std::vector<float> vec_send_data ;
@@ -413,9 +558,9 @@ int CInterfaceControl::Tool_Option_InspectColor_Histogram_GetImage(const std::st
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
 	
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -430,13 +575,22 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Histogram_UseElement(const s
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_SET_HISTOGRAM_USE_ELEMENT;
 
 	std::vector<float> vec_send_data ;
     vec_send_data.push_back(color_elem) ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -451,14 +605,23 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Histogram_UseElement(const s
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_GET_HISTOGRAM_USE_ELEMENT;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int value = 0 ;
 	if( vec_receive_data.size()  > 0 ) value = vec_receive_data[0] ;
@@ -476,15 +639,24 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Histogram_Range(const std::s
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_SET_HISTOGRAM_RANGE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(color_elem) ;
     vec_send_data.push_back(min) ;
 	vec_send_data.push_back(max) ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -499,15 +671,24 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Histogram_Range(const std::s
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_GET_HISTOGRAM_RANGE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(color_elem) ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	if( vec_receive_data.size() == 2 )
 	{
 		if( out_min != NULL ) (*out_min) = vec_receive_data[0] ;
@@ -527,14 +708,23 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Base_Pixel_Count(const std::
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_GET_BASE_PIXEL_COUNT;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int base_count = -1 ;
 	if( vec_receive_data.size() == 1 )
@@ -555,14 +745,23 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Tolerance(const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_GET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	if( vec_receive_data.size() == 2 )
 	{
 		if( out_min != NULL ) (*out_min) = vec_receive_data[0] ;
@@ -582,14 +781,23 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Tolerance(const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLOR_SET_TOLERANCE;
 	
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(min) ;
 	vec_send_data.push_back(max) ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -604,14 +812,23 @@ int CInterfaceControl::Tool_Option_InspectDistance_Get_Tolerance(const std::stri
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DISTANCE_GET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	if( vec_receive_data.size() == 2 )
 	{
 		if( out_min != NULL ) (*out_min) = vec_receive_data[0] ;
@@ -631,14 +848,23 @@ int CInterfaceControl::Tool_Option_InspectDistance_Set_Tolerance(const std::stri
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DISTANCE_SET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(min) ;
 	vec_send_data.push_back(max) ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }	
@@ -655,12 +881,21 @@ std::string CInterfaceControl::Tool_Option_InspectDistance_Get_ID_Info_Base(cons
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DISTANCE_GET_ID_INFO_BASE;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -688,12 +923,21 @@ std::string CInterfaceControl::Tool_Option_InspectDistance_Get_ID_Info_Target(co
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DISTANCE_GET_ID_INFO_TARGET;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -719,14 +963,23 @@ int CInterfaceControl::Tool_Option_InspectAngle_Get_Tolerance(const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_ANGLE_GET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	if( vec_receive_data.size() == 2 )
 	{
 		if( out_min != NULL ) (*out_min) = vec_receive_data[0] ;
@@ -746,14 +999,24 @@ int CInterfaceControl::Tool_Option_InspectAngle_Set_Tolerance(const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_ANGLE_SET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(min) ;
 	vec_send_data.push_back(max) ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }	
@@ -770,14 +1033,22 @@ std::string CInterfaceControl::Tool_Option_InspectAngle_Get_ID_Info_Base(const s
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_ANGLE_GET_ID_INFO_BASE;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -805,14 +1076,23 @@ std::string CInterfaceControl::Tool_Option_InspectAngle_Get_ID_Info_Target(const
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_ANGLE_GET_ID_INFO_TARGET;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -838,14 +1118,23 @@ float CInterfaceControl::Tool_Circle_Get_CalcDiameter(const std::string tool_id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_CIRCLE_GET_CALC_DIAMETER;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	float ret_value = -1 ;
 	if( vec_receive_data.size() == 1 ) ret_value = vec_receive_data[0] ;
@@ -863,14 +1152,23 @@ int CInterfaceControl::Tool_Option_InspectDiameter_Get_Tolerance(const std::stri
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DIAMETER_GET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	if( vec_receive_data.size() == 2 )
 	{
 		if( out_min != NULL ) (*out_min) = vec_receive_data[0] ;
@@ -889,14 +1187,23 @@ int CInterfaceControl::Tool_Option_InspectDiameter_Set_Tolerance(const std::stri
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_DIAMETER_SET_TOLERANCE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(min) ;
 	vec_send_data.push_back(max) ;
-	int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -911,14 +1218,23 @@ int CInterfaceControl::ToolGetImage(const std::string tool_id, const int type_op
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_GET_IMAGE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -933,14 +1249,23 @@ int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_op
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_JOB_GET_OBJECT_IMAGE;
 		
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -955,14 +1280,23 @@ int CInterfaceControl::ToolGetObjectImage(const std::string tool_id, const int t
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_GET_OBJECT_IMAGE;
 		
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -978,14 +1312,23 @@ int CInterfaceControl::JobSetImage(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SET_IMAGE;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 
@@ -1001,6 +1344,15 @@ int CInterfaceControl::JobSetDetectArea(const std::string id, const float x, con
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SET_DETECT_AREA;
@@ -1010,9 +1362,9 @@ int CInterfaceControl::JobSetDetectArea(const std::string id, const float x, con
 	vec_send_data.push_back(y) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1027,6 +1379,15 @@ int CInterfaceControl::JobSetZoom(const std::string id, const float x, const flo
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SET_ZOOM;
@@ -1036,9 +1397,9 @@ int CInterfaceControl::JobSetZoom(const std::string id, const float x, const flo
 	vec_send_data.push_back(y) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1053,6 +1414,15 @@ int CInterfaceControl::JobSelectObject(const std::string id, const float x, cons
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SELECT_OBJECT;
@@ -1062,9 +1432,9 @@ int CInterfaceControl::JobSelectObject(const std::string id, const float x, cons
 	vec_send_data.push_back(y) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1078,6 +1448,15 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float l
 		printf("Before accessing the Ensemble\n");
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
+
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 
 	//printf("id - %d\n", id);
 
@@ -1093,9 +1472,9 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float l
 	vec_send_data.push_back(left_bottom_x) ;
 	vec_send_data.push_back(left_bottom_y) ;
 	vec_send_data.push_back(margin) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	return ret;
 }
@@ -1110,6 +1489,15 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_SELECT_OBJECT;
@@ -1120,9 +1508,9 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
 	vec_send_data.push_back(margin) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1137,6 +1525,15 @@ int CInterfaceControl::JobSetDetectOption(const std::string id, const int option
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_SET_DETECT_OPTION;
@@ -1144,9 +1541,9 @@ int CInterfaceControl::JobSetDetectOption(const std::string id, const int option
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
 	vec_send_data.push_back(value) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1161,15 +1558,23 @@ float CInterfaceControl::JobGetDetectOption(const std::string id, const int opti
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_GET_DETECT_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	float value = 0.0 ;
 	if( vec_receive_data.size() == 1 )
@@ -1191,14 +1596,23 @@ int CInterfaceControl::JobResetObject(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_RESET_OBJECT;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1213,6 +1627,15 @@ int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, fl
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_JOB_SET_MASK;
@@ -1223,9 +1646,9 @@ int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, fl
 	vec_send_data.push_back(w) ;
 	vec_send_data.push_back(h) ;
 	vec_send_data.push_back(inverse) ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 
@@ -1241,14 +1664,22 @@ int CInterfaceControl::JobUndoMaskArea(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_JOB_UNDO_MASK;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1263,14 +1694,22 @@ int CInterfaceControl::JobDelMaskArea(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_JOB_DEL_MASK;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1285,14 +1724,22 @@ int CInterfaceControl::JobGetFeatureLevel(const std::string id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_JOB_GET_FEATURE_LEVEL;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int level = -1 ;
 	if( vec_receive_data.size() == 1 )
@@ -1315,15 +1762,23 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_JOB_SET_FEATURE_LEVEL;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(level) ;
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1338,14 +1793,22 @@ int CInterfaceControl::DelTool(const std::string tool_id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_DEL;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 
@@ -1363,14 +1826,23 @@ std::string CInterfaceControl::ToolGetName(const std::string tool_id)
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_GET_NAME;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1396,6 +1868,15 @@ int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_SET_NAME;
@@ -1410,9 +1891,9 @@ int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string 
             vec_send_data.push_back(data) ;
         }
     }
-	int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1427,14 +1908,23 @@ int CInterfaceControl::ToolGetFeatureLevel(const std::string tool_id)
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_TOOL_GET_FEATURE_LEVEL;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int level = -1 ;
 	if( vec_receive_data.size() == 1 )
@@ -1457,6 +1947,15 @@ int CInterfaceControl::ToolSetFeatureLevel(const std::string tool_id, const int 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_TOOL_SET_FEATURE_LEVEL;
@@ -1464,9 +1963,9 @@ int CInterfaceControl::ToolSetFeatureLevel(const std::string tool_id, const int 
 	
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(level) ;
-	int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1481,14 +1980,23 @@ int CInterfaceControl::Tool_Option_Crack_GetInspectLevel(const std::string optio
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_CRACK_GET_INSPECT_LEVEL;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int level = -1 ;
 	if( vec_receive_data.size() == 1 )
@@ -1511,15 +2019,23 @@ int CInterfaceControl::Tool_Option_Crack_SetInspectLevel(const std::string optio
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
 	unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_CRACK_SET_INSPECT_LEVEL;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(level) ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
 }
@@ -1534,6 +2050,14 @@ int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_SET_DETECT_OPTION;
@@ -1541,9 +2065,9 @@ int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
 	vec_send_data.push_back(value) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	return ret;
 }
@@ -1558,15 +2082,24 @@ float CInterfaceControl::ToolGetDetectOption(const std::string tool_id, const in
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_GET_DETECT_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	float value = 0.0 ;
 	if( vec_receive_data.size() == 1 )
@@ -1589,12 +2122,21 @@ std::string CInterfaceControl::ToolGetOptionList(const std::string tool_id)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST;
 		
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1622,13 +2164,22 @@ int CInterfaceControl::ToolGetOptionCount(const int tool_type)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST_COUNT;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(tool_type) ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	float value = 0.0 ;
 	if( vec_receive_data.size() ==1 )
@@ -1651,13 +2202,22 @@ std::string CInterfaceControl::ToolGetOptionList(const int tool_type)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST;
 		
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(tool_type) ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1685,13 +2245,22 @@ int CInterfaceControl::ToolAddNewOption(const std::string tool_id, const int opt
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_ADD_NEW;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option_type) ;
-    int ret = m_cls_eth_client->Send(command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -1708,12 +2277,21 @@ int CInterfaceControl::ToolDelOption(const std::string option_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_TOOL_OPTION_DEL;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, option_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -1731,12 +2309,21 @@ std::string CInterfaceControl::Job_Type_Get_List_Xml(void)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_JOB_TYPE_GET_LIST;
 		
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1766,14 +2353,23 @@ std::string CInterfaceControl::Project_Get_List(void)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
 	qDebug("Project_Get_List") ;
 	
     unsigned int command = ENSEMBLE_PRJ_GET_LIST;
 		
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 
@@ -1804,14 +2400,23 @@ std::string CInterfaceControl::Project_Get_Name(const std::string id)
 		return str_ret;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_PRJ_GET_NAME;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1837,6 +2442,15 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 		return ENSEMBLE_ERROR_INVALID_MEMORY;
 	}
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_PRJ_SET_NAME;
@@ -1851,9 +2465,9 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
             vec_send_data.push_back(data) ;
         }
     }
-	int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	return ret;
 }
@@ -1870,12 +2484,21 @@ std::string CInterfaceControl::GetToolList(void)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_GET_TOOL_LIST;
 		
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1903,13 +2526,22 @@ std::string CInterfaceControl::GetToolTypeName(const int type)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_GET_TOOL_TYPE_NAME;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type) ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -1935,15 +2567,24 @@ int CInterfaceControl::AddTool(const std::string parent_id, const int tool_type)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_ADD;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(tool_type) ;
-    int ret = m_cls_eth_client->Send(command, parent_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, parent_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -1958,6 +2599,15 @@ int CInterfaceControl::InsertTool(const std::string parent_id, const int index, 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_INSERT;
@@ -1965,9 +2615,9 @@ int CInterfaceControl::InsertTool(const std::string parent_id, const int index, 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
 	vec_send_data.push_back(tool_type) ;
-    int ret = m_cls_eth_client->Send(command, parent_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, parent_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -1982,6 +2632,15 @@ int CInterfaceControl::MoveTool(const std::string parent_id, const int cur_index
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_TOOL_MOVE;
@@ -1989,9 +2648,9 @@ int CInterfaceControl::MoveTool(const std::string parent_id, const int cur_index
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(cur_index) ;
 	vec_send_data.push_back(target_index) ;
-    int ret = m_cls_eth_client->Send(command, parent_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, parent_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -2006,14 +2665,23 @@ int CInterfaceControl::JobRun(const std::string id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_RUN;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -2030,14 +2698,23 @@ int CInterfaceControl::Calibration_Get_Chess_Info(const std::string job_id, int 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_CHESS_INFO;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	if( vec_receive_data.size() == 3 )
 	{
@@ -2059,6 +2736,15 @@ int CInterfaceControl::Calibration_Set_Chess_Info(const std::string job_id, cons
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_SET_CHESS_INFO;
@@ -2067,9 +2753,9 @@ int CInterfaceControl::Calibration_Set_Chess_Info(const std::string job_id, cons
 	vec_send_data.push_back(x_num) ;
 	vec_send_data.push_back(y_num) ;
 	vec_send_data.push_back(squre_mm_size) ;
-    int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -2084,6 +2770,15 @@ int CInterfaceControl::Calibration_Add(const std::string job_id, float robot_x, 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_ADD;
@@ -2091,9 +2786,9 @@ int CInterfaceControl::Calibration_Add(const std::string job_id, float robot_x, 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(robot_x) ;
 	vec_send_data.push_back(robot_y) ;
-    int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 
@@ -2109,14 +2804,23 @@ int CInterfaceControl::Calibration_GetCount(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_COUNT;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int count = 0 ;
 	if( vec_receive_data.size() == 1 )
@@ -2137,6 +2841,15 @@ int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index,
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_IMAGE;
 
 	std::vector<float> vec_send_data ;
@@ -2144,8 +2857,8 @@ int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index,
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -2161,15 +2874,24 @@ int CInterfaceControl::Calibration_GetRobotInfo(const std::string job_id, int in
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_INFO;
 
    	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int i_robot_x = 0;
 	int i_robot_y = 0;
@@ -2193,15 +2915,24 @@ int CInterfaceControl::Calibration_Del(const std::string job_id, int index)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_DEL ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -2216,14 +2947,22 @@ int CInterfaceControl::Calibration_Clear(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_CLEAR ;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -2238,14 +2977,22 @@ int CInterfaceControl::Calibration_Run(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_RUN ;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -2260,15 +3007,24 @@ int CInterfaceControl::Calibration_Custom_Center_Point(const std::string job_id,
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_SET_CUSTOM_CENTER_POINT ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(customnum) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -2283,6 +3039,14 @@ int CInterfaceControl::Calibration_GetPoint(const std::string job_id, const floa
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_POINT;
@@ -2290,9 +3054,9 @@ int CInterfaceControl::Calibration_GetPoint(const std::string job_id, const floa
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(in_px) ;
 	vec_send_data.push_back(in_py) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	if( vec_receive_data.size() == 2 )
 	{
@@ -2313,15 +3077,23 @@ int CInterfaceControl::Calibration_GetChessPoint(const std::string job_id, const
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_GET_CHESSPOINT;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     if( vec_receive_data.size() == 2 )
 	{
@@ -2342,14 +3114,23 @@ int CInterfaceControl::Calibration_isOK(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_IS_OK;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	int is_ok = 0;
 	
@@ -2371,14 +3152,23 @@ int CInterfaceControl::Calibration_StandAlone_Run(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_RUN ;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
@@ -2393,14 +3183,22 @@ int CInterfaceControl::Calibration_StandAlone_Get_Image_Count(const std::string 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_GET_IMAGE_COUNT;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int value = 0.0 ;
 	if( vec_receive_data.size() == 1 )
@@ -2421,14 +3219,23 @@ int CInterfaceControl::Calibration_StandAlone_Init(const std::string job_id)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_INIT ;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -2443,15 +3250,24 @@ int CInterfaceControl::Calibration_StandAlone_Get_Feature_Pos(const std::string 
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_GET_FEATURE_POSE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(index) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 	if ( vec_receive_data.size() == 12 )
 	{
@@ -2493,6 +3309,15 @@ int CInterfaceControl::Calibration_StandAlone_Set_Matrix(const std::string job_i
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_SET_CALIB_MAT  ;
@@ -2503,9 +3328,9 @@ int CInterfaceControl::Calibration_StandAlone_Set_Matrix(const std::string job_i
 		vec_send_data.push_back(matrix[i]) ;
 	}
 	
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
 
     return ret;
@@ -2521,14 +3346,23 @@ int CInterfaceControl::Calibration_StandAlone_Get_Matrix(const std::string job_i
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_GET_CALIB_MAT;
 
 	std::vector<float> vec_send_data ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     if ( vec_receive_data.size() == 12 )
 	{
@@ -2552,6 +3386,15 @@ int CInterfaceControl::Calibration_StandAlone_Calc_Calib_Matrix(const std::strin
     {
         printf("Before accessing the Ensemble\n");
         return ENSEMBLE_ERROR_INVALID_MEMORY;
+    }
+
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
     //printf("id - %d\n", id);
@@ -2580,9 +3423,9 @@ int CInterfaceControl::Calibration_StandAlone_Calc_Calib_Matrix(const std::strin
 		vec_send_data.push_back(rpos[i]) ;
 	}
 	
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	if ( vec_receive_data.size() == 12 )
 	{
@@ -2605,15 +3448,24 @@ int CInterfaceControl::Calibration_StandAlone_Y_Direction(const std::string job_
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CALIBRATION_STANDALONE_SET_DIRECTION  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(Direction) ;
-	int ret = m_cls_eth_client->Send(command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;
 }
@@ -2628,6 +3480,15 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_GET_IMAGE;
 
 	std::vector<float> vec_send_data ;
@@ -2635,8 +3496,8 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -2651,14 +3512,23 @@ int CInterfaceControl::GetResultImage(const std::string id, const int type_optio
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     unsigned int command = ENSEMBLE_JOB_GET_IMAGE_RESULT;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
-    int ret = m_cls_eth_client->Send(command, id, &vec_send_data) ;
-	ret += m_cls_eth_client->ReceiveImage(command, width, height, out_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
     return ret;
 }
@@ -2676,12 +3546,21 @@ std::string CInterfaceControl::GetSourceList(void)
         return str_ret;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
     unsigned int command = ENSEMBLE_GET_SOURCE_LIST;
 
 	std::vector<float> vec_send_data ;
-    int ret = m_cls_eth_client->Send(command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int receive_size = vec_receive_data.size() ;
 	if( receive_size > 0 )
@@ -2707,13 +3586,22 @@ int CInterfaceControl::SetSource(const std::string source)
         return ENSEMBLE_ERROR_INVALID_MEMORY;
     }
 
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_SET_SOURCE;
 
-    int ret = m_cls_eth_client->SendString(command, std::string(), source) ;
+    int ret = p_cls_ethernet_control_data->SendString(p_socket, command, std::string(), source) ;
 	std::vector<float> vec_receive_data ;
-	ret += m_cls_eth_client->Receive(command, &vec_receive_data) ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }

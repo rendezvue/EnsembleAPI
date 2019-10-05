@@ -8,6 +8,7 @@
 #include "EnsembleCommand.h"
 #include "Interface.h"
 #include "EthernetClient.h"
+#include "EthernetClientControlData.h"
 
 #include <qdebug.h>
 
