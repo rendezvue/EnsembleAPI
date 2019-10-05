@@ -46,6 +46,8 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
         return ENSEMBLE_ERROR_ALREADY_CONNECT;
 	}
 
+    qDebug("Create Socket 1") ;
+
 	m_cls_eth_client = new CEthernetClient();
 
 	int ret;
@@ -68,7 +70,11 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
 	}
 	//return m_cls_eth_client->Open(ip, port);
 	*/
+
+    qDebug("Create Socket 2") ;
     ret = m_cls_eth_client->Open(m_ip.c_str(), m_port);
+
+    qDebug("Create Socket 3 ( ret=%d )", ret) ;
 
 	if (ret != 0)
 	{
@@ -93,22 +99,3 @@ void CInterface::DeleteSocket()
     delete(m_cls_eth_client);
     m_cls_eth_client = NULL;
 }
-
-int CInterface::IsOnline(void)
-{
-    boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    if (m_cls_eth_client)
-    {
-        //m_cls_eth_client->Close();
-
-        //delete m_cls_eth_client;
-        //m_cls_eth_client = NULL;
-        return ENSEMBLE_ERROR_ALREADY_CONNECT;
-    }
-    else
-    {
-        return ENSEMBLE_ERROR_NO_CONNECT ;
-    }
-}
-

@@ -22,7 +22,6 @@ public:
 
 	int CreateSocket(const char* ip, const unsigned int port);
 	void DeleteSocket();
-    int IsOnline(void) ;
 
 protected :
 	boost::mutex mutex;

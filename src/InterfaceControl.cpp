@@ -11,6 +11,40 @@ CInterfaceControl::~CInterfaceControl(void)
 {
 }
 
+int CInterfaceControl::IsOnline(void)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    if (m_cls_eth_client == NULL)
+    {
+        printf("Before accessing the Ensemble\n");
+        return ENSEMBLE_ERROR_INVALID_MEMORY;
+    }
+
+    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_COMMAND_NETWORK_IS_ONLINE;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    if( vec_receive_data.size() == 1 )
+    {
+        ret = vec_receive_data[0] ;
+    }
+
+    return ret ;
+}
+
+
 int CInterfaceControl::Get_Run_Option(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

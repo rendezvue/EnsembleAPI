@@ -21,6 +21,8 @@ public:
 	CInterfaceControl(void);
 	~CInterfaceControl(void);
 
+    int IsOnline(void);
+
 	//-----------------------------
 	//Image and Source
     int GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
