@@ -21,9 +21,9 @@ int Ensemble_Network_IsOnline(void)
 
     int net_ctrl = g_cls_interface_control.IsOnline();      //ENSEMBLE_ERROR_ALREADY_CONNECT
 
-    if( net_ctrl == ENSEMBLE_ERROR_ALREADY_CONNECT )
+    if( net_ctrl == 8370 )
     {
-        ret |= ENSEMBLE_CONNECT_CONTROL_PORT ;
+        ret = 1 ;
     }
 
     return ret ;

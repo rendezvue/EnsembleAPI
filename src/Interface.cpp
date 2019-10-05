@@ -46,8 +46,6 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
         return ENSEMBLE_ERROR_ALREADY_CONNECT;
 	}
 
-    qDebug("Create Socket 1") ;
-
 	m_cls_eth_client = new CEthernetClient();
 
 	int ret;
@@ -71,10 +69,7 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
 	//return m_cls_eth_client->Open(ip, port);
 	*/
 
-    qDebug("Create Socket 2") ;
     ret = m_cls_eth_client->Open(m_ip.c_str(), m_port);
-
-    qDebug("Create Socket 3 ( ret=%d )", ret) ;
 
 	if (ret != 0)
 	{
