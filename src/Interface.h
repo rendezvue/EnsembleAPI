@@ -26,7 +26,7 @@ public:
 protected :
 	boost::mutex mutex;
 
-	CEthernetClient *m_cls_eth_client;
+    CEthernetClient m_cls_eth_client;
 	
 	unsigned char* m_p_send_data ;
 	unsigned int m_i_send_data_size ;

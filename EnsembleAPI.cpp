@@ -5,9 +5,7 @@ CInterfaceControl g_cls_interface_control;
 
 int Ensemble_Network_Connect(const char* ip)
 {
-    g_cls_interface_control.CreateSocket(ip, NETWORK_PORT_CON);
-
-    return Ensemble_Network_IsOnline() ;
+    return g_cls_interface_control.CreateSocket(ip, NETWORK_PORT_CON);
 }
 
 void Ensemble_Network_Disconnect()
@@ -19,7 +17,11 @@ int Ensemble_Network_IsOnline(void)
 {
     int ret = 0 ;
 
+    //qDebug("Ensemble_Network_IsOnline") ;
+
     int net_ctrl = g_cls_interface_control.IsOnline();      //ENSEMBLE_ERROR_ALREADY_CONNECT
+
+   // qDebug("Ensemble_Network_IsOnline : net_ctrl = %d", net_ctrl) ;
 
     if( net_ctrl == 8370 )
     {

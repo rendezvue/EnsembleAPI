@@ -15,13 +15,7 @@ int CInterfaceControl::IsOnline(void)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -32,9 +26,14 @@ int CInterfaceControl::IsOnline(void)
 
     unsigned int command = ENSEMBLE_COMMAND_NETWORK_IS_ONLINE;
 
+    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE send ") ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
+
+    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive") ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive = %d", ret) ;
 
     if( vec_receive_data.size() == 1 )
     {
@@ -49,13 +48,7 @@ int CInterfaceControl::Get_Run_Option(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -82,13 +75,7 @@ int CInterfaceControl::Get_View_Option(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -117,13 +104,7 @@ int CInterfaceControl::Base_Set_Run_Option(const std::string id, const bool run)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -147,13 +128,7 @@ int CInterfaceControl::Base_Set_View_Option(const std::string id, const bool vie
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -177,13 +152,7 @@ int CInterfaceControl::Task_Save(void)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -207,13 +176,7 @@ int CInterfaceControl::Task_Load(void)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -235,13 +198,7 @@ int CInterfaceControl::Project_Add_New(const std::string name)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -274,13 +231,7 @@ int CInterfaceControl::Project_Del(const std::string id)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -302,14 +253,7 @@ int CInterfaceControl::Project_Del(const std::string id)
 int CInterfaceControl::Job_Add_New(const std::string project_id, const int type, const std::string name)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -344,13 +288,7 @@ std::string CInterfaceControl::Job_Get_TypeName(const int job_type)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -385,13 +323,7 @@ int CInterfaceControl::DelJob(const std::string id)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -418,13 +350,7 @@ std::string CInterfaceControl::JobGetName(const std::string id)
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -459,13 +385,7 @@ int CInterfaceControl::JobChangeName(const std::string id, const std::string nam
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -499,13 +419,7 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -536,13 +450,7 @@ int CInterfaceControl::OptionGetImage(const std::string option_id, const int typ
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -569,13 +477,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Histogram_GetImage(const std::st
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -603,13 +505,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Histogram_UseElement(const s
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -633,13 +529,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Histogram_UseElement(const s
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -667,13 +557,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Histogram_Range(const std::s
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -699,13 +583,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Histogram_Range(const std::s
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -736,13 +614,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Base_Pixel_Count(const std::
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -773,13 +645,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Get_Tolerance(const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -809,13 +675,7 @@ int CInterfaceControl::Tool_Option_InspectColor_Set_Tolerance(const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -840,13 +700,7 @@ int CInterfaceControl::Tool_Option_InspectDistance_Get_Tolerance(const std::stri
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -876,13 +730,7 @@ int CInterfaceControl::Tool_Option_InspectDistance_Set_Tolerance(const std::stri
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -909,13 +757,7 @@ std::string CInterfaceControl::Tool_Option_InspectDistance_Get_ID_Info_Base(cons
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -951,13 +793,7 @@ std::string CInterfaceControl::Tool_Option_InspectDistance_Get_ID_Info_Target(co
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -990,14 +826,8 @@ std::string CInterfaceControl::Tool_Option_InspectDistance_Get_ID_Info_Target(co
 int CInterfaceControl::Tool_Option_InspectAngle_Get_Tolerance(const std::string option_id, float* out_min, float* out_max)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1027,13 +857,7 @@ int CInterfaceControl::Tool_Option_InspectAngle_Set_Tolerance(const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1061,13 +885,7 @@ std::string CInterfaceControl::Tool_Option_InspectAngle_Get_ID_Info_Base(const s
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1104,13 +922,7 @@ std::string CInterfaceControl::Tool_Option_InspectAngle_Get_ID_Info_Target(const
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1146,13 +958,7 @@ float CInterfaceControl::Tool_Circle_Get_CalcDiameter(const std::string tool_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1180,13 +986,7 @@ int CInterfaceControl::Tool_Option_InspectDiameter_Get_Tolerance(const std::stri
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1215,13 +1015,7 @@ int CInterfaceControl::Tool_Option_InspectDiameter_Set_Tolerance(const std::stri
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1246,13 +1040,8 @@ int CInterfaceControl::ToolGetImage(const std::string tool_id, const int type_op
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1277,13 +1066,7 @@ int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_op
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1308,13 +1091,7 @@ int CInterfaceControl::ToolGetObjectImage(const std::string tool_id, const int t
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1340,13 +1117,7 @@ int CInterfaceControl::JobSetImage(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1372,13 +1143,7 @@ int CInterfaceControl::JobSetDetectArea(const std::string id, const float x, con
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1407,13 +1172,7 @@ int CInterfaceControl::JobSetZoom(const std::string id, const float x, const flo
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1442,13 +1201,7 @@ int CInterfaceControl::JobSelectObject(const std::string id, const float x, cons
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1477,13 +1230,7 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float l
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1517,13 +1264,7 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1553,13 +1294,7 @@ int CInterfaceControl::JobSetDetectOption(const std::string id, const int option
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1586,13 +1321,7 @@ float CInterfaceControl::JobGetDetectOption(const std::string id, const int opti
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1624,13 +1353,7 @@ int CInterfaceControl::JobResetObject(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1655,13 +1378,7 @@ int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, fl
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1692,13 +1409,7 @@ int CInterfaceControl::JobUndoMaskArea(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1722,13 +1433,7 @@ int CInterfaceControl::JobDelMaskArea(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1752,13 +1457,7 @@ int CInterfaceControl::JobGetFeatureLevel(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1790,13 +1489,7 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1821,13 +1514,7 @@ int CInterfaceControl::DelTool(const std::string tool_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1854,13 +1541,7 @@ std::string CInterfaceControl::ToolGetName(const std::string tool_id)
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1896,13 +1577,7 @@ int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1935,14 +1610,8 @@ int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string 
 int CInterfaceControl::ToolGetFeatureLevel(const std::string tool_id) 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -1975,13 +1644,7 @@ int CInterfaceControl::ToolSetFeatureLevel(const std::string tool_id, const int 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2007,14 +1670,8 @@ int CInterfaceControl::ToolSetFeatureLevel(const std::string tool_id, const int 
 int CInterfaceControl::Tool_Option_Crack_GetInspectLevel(const std::string option_id) 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2047,13 +1704,7 @@ int CInterfaceControl::Tool_Option_Crack_SetInspectLevel(const std::string optio
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2078,13 +1729,7 @@ int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2109,14 +1754,8 @@ int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int 
 float CInterfaceControl::ToolGetDetectOption(const std::string tool_id, const int option)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2149,14 +1788,8 @@ std::string CInterfaceControl::ToolGetOptionList(const std::string tool_id)
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
 	std::string str_ret ;
-	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2192,13 +1825,7 @@ int CInterfaceControl::ToolGetOptionCount(const int tool_type)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2230,13 +1857,7 @@ std::string CInterfaceControl::ToolGetOptionList(const int tool_type)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2273,13 +1894,7 @@ int CInterfaceControl::ToolAddNewOption(const std::string tool_id, const int opt
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2305,13 +1920,7 @@ int CInterfaceControl::ToolDelOption(const std::string option_id)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2337,13 +1946,7 @@ std::string CInterfaceControl::Job_Type_Get_List_Xml(void)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2380,14 +1983,8 @@ std::string CInterfaceControl::Project_Get_List(void)
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
 	std::string str_ret ;
-	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2428,13 +2025,7 @@ std::string CInterfaceControl::Project_Get_Name(const std::string id)
 
 	std::string str_ret ;
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return str_ret;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2470,13 +2061,7 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
-	if (m_cls_eth_client == NULL)
-	{
-		printf("Before accessing the Ensemble\n");
-		return ENSEMBLE_ERROR_INVALID_MEMORY;
-	}
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2511,14 +2096,8 @@ std::string CInterfaceControl::GetToolList(void)
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
 	std::string str_ret ;
-	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
 
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2554,13 +2133,7 @@ std::string CInterfaceControl::GetToolTypeName(const int type)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2595,13 +2168,7 @@ int CInterfaceControl::AddTool(const std::string parent_id, const int tool_type)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2627,13 +2194,7 @@ int CInterfaceControl::InsertTool(const std::string parent_id, const int index, 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2660,13 +2221,7 @@ int CInterfaceControl::MoveTool(const std::string parent_id, const int cur_index
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2693,13 +2248,7 @@ int CInterfaceControl::JobRun(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2726,13 +2275,7 @@ int CInterfaceControl::Calibration_Get_Chess_Info(const std::string job_id, int 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2764,13 +2307,7 @@ int CInterfaceControl::Calibration_Set_Chess_Info(const std::string job_id, cons
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2798,13 +2335,7 @@ int CInterfaceControl::Calibration_Add(const std::string job_id, float robot_x, 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2832,13 +2363,7 @@ int CInterfaceControl::Calibration_GetCount(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2869,13 +2394,7 @@ int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index,
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2902,13 +2421,7 @@ int CInterfaceControl::Calibration_GetRobotInfo(const std::string job_id, int in
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2943,13 +2456,7 @@ int CInterfaceControl::Calibration_Del(const std::string job_id, int index)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -2975,13 +2482,7 @@ int CInterfaceControl::Calibration_Clear(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3005,13 +2506,7 @@ int CInterfaceControl::Calibration_Run(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3035,13 +2530,7 @@ int CInterfaceControl::Calibration_Custom_Center_Point(const std::string job_id,
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3067,13 +2556,7 @@ int CInterfaceControl::Calibration_GetPoint(const std::string job_id, const floa
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3105,13 +2588,7 @@ int CInterfaceControl::Calibration_GetChessPoint(const std::string job_id, const
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3142,13 +2619,7 @@ int CInterfaceControl::Calibration_isOK(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3180,13 +2651,7 @@ int CInterfaceControl::Calibration_StandAlone_Run(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3211,13 +2676,7 @@ int CInterfaceControl::Calibration_StandAlone_Get_Image_Count(const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3247,13 +2706,7 @@ int CInterfaceControl::Calibration_StandAlone_Init(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3278,13 +2731,7 @@ int CInterfaceControl::Calibration_StandAlone_Get_Feature_Pos(const std::string 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3337,13 +2784,7 @@ int CInterfaceControl::Calibration_StandAlone_Set_Matrix(const std::string job_i
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3374,13 +2815,7 @@ int CInterfaceControl::Calibration_StandAlone_Get_Matrix(const std::string job_i
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3416,13 +2851,7 @@ int CInterfaceControl::Calibration_StandAlone_Calc_Calib_Matrix(const std::strin
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3476,13 +2905,7 @@ int CInterfaceControl::Calibration_StandAlone_Y_Direction(const std::string job_
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3508,13 +2931,7 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3540,13 +2957,7 @@ int CInterfaceControl::GetResultImage(const std::string id, const int type_optio
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3574,13 +2985,7 @@ std::string CInterfaceControl::GetSourceList(void)
 
 	std::string str_ret ;
 	
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return str_ret;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
@@ -3614,13 +3019,7 @@ int CInterfaceControl::SetSource(const std::string source)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    if (m_cls_eth_client == NULL)
-    {
-        printf("Before accessing the Ensemble\n");
-        return ENSEMBLE_ERROR_INVALID_MEMORY;
-    }
-
-    tcp::socket *p_socket = m_cls_eth_client->GetSocketPointer() ;
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
     if( p_socket == NULL )
