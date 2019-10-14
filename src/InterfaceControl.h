@@ -67,6 +67,8 @@ public:
 	int JobDelMaskArea(const std::string id);
 	int JobGetFeatureLevel(const std::string id);
 	int JobSetFeatureLevel(const std::string id, const int level);
+	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
+	int Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 
 	int JobRun(const std::string id);
 

@@ -1509,6 +1509,67 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
 
 	return ret;
 }
+
+int CInterfaceControl::Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_GET_FEATURE_OPTION;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() == 4 )
+	{
+		if( out_param1 != NULL ) (*out_param1) = vec_receive_data[0] ;
+		if( out_param2 != NULL ) (*out_param2) = vec_receive_data[1] ;
+		if( out_param3 != NULL ) (*out_param3) = vec_receive_data[2] ;
+		if( out_param4 != NULL ) (*out_param4) = vec_receive_data[3] ;
+	}
+
+	return ret ;
+}
+
+int CInterfaceControl::Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_SET_FEATURE_OPTION;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(param1) ;
+	vec_send_data.push_back(param2) ;
+	vec_send_data.push_back(param3) ;
+	vec_send_data.push_back(param4) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret ;
+}
+
 	
 int CInterfaceControl::DelTool(const std::string tool_id)
 {

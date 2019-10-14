@@ -328,6 +328,16 @@ int Ensemble_Job_Set_FeatureLevel(const std::string id, const int level)
 	return g_cls_interface_control.JobSetFeatureLevel(id, level);
 }
 
+int Ensemble_Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
+{
+	return g_cls_interface_control.Job_Get_Feature_Option(id, out_param1, out_param2, out_param3, out_param4) ;
+}
+
+int Ensemble_Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
+{
+	return g_cls_interface_control.Job_Set_Feature_Option(id, param1, param2, param3, param4) ;
+}
+
 int Ensemble_Tool_Del(const std::string tool_id)
 {
 	return g_cls_interface_control.DelTool(tool_id);
