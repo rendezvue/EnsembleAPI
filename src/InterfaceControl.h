@@ -65,6 +65,8 @@ public:
 	int JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse);
 	int JobUndoMaskArea(const std::string id);
 	int JobDelMaskArea(const std::string id);
+	int JobGetUseCustomFeatureOption(const std::string id);
+	int JobSetUseCustomFeatureOption(const std::string id, const bool b_use);
 	int JobGetFeatureLevel(const std::string id);
 	int JobSetFeatureLevel(const std::string id, const int level);
 	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);

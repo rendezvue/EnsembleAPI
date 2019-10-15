@@ -1510,6 +1510,63 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
 	return ret;
 }
 
+int CInterfaceControl::JobGetUseCustomFeatureOption(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_JOB_GET_USE_CUSTOM_FEATURE_OPTION;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int use = 0 ;
+	if( vec_receive_data.size() == 1 )
+	{
+		use = vec_receive_data[0] ;
+
+		ret = use ;
+	}
+	
+    return ret;
+}
+
+int CInterfaceControl::JobSetUseCustomFeatureOption(const std::string id, const bool b_use)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_JOB_SET_USE_CUSTOM_FEATURE_OPTION;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(b_use) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
 int CInterfaceControl::Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
