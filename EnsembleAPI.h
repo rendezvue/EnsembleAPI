@@ -87,6 +87,10 @@ int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, un
 //[3-3] Tool : Detect Object, Line, Circle
 int Ensemble_Tool_Get_FeatureLevel(const std::string tool_id);
 int Ensemble_Tool_Set_FeatureLevel(const std::string tool_id, const int level);
+int Ensemble_Tool_Get_UseCustomFeatureOption(const std::string id);
+int Ensemble_Tool_Set_UseCustomFeatureOption(const std::string id, const bool b_use);
+int Ensemble_Tool_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
+int Ensemble_Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
 int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0) ;
 int Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value) ;

@@ -65,10 +65,10 @@ public:
 	int JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse);
 	int JobUndoMaskArea(const std::string id);
 	int JobDelMaskArea(const std::string id);
-	int JobGetUseCustomFeatureOption(const std::string id);
-	int JobSetUseCustomFeatureOption(const std::string id, const bool b_use);
 	int JobGetFeatureLevel(const std::string id);
 	int JobSetFeatureLevel(const std::string id, const int level);
+	int JobGetUseCustomFeatureOption(const std::string id);
+	int JobSetUseCustomFeatureOption(const std::string id, const bool b_use);
 	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
 	int Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 
@@ -144,8 +144,12 @@ public:
 	int ToolSetName(const std::string tool_id, const std::string name) ;
 
 	int ToolGetFeatureLevel(const std::string tool_id) ;
-	int ToolSetFeatureLevel(const std::string tool_id, const int level) ;
-
+	int ToolSetFeatureLevel(const std::string tool_id, const int level) ;	
+	int ToolGetUseCustomFeatureOption(const std::string id);
+	int ToolSetUseCustomFeatureOption(const std::string id, const bool b_use);
+	int Tool_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
+	int Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
+	
 	//crack
 	int Tool_Option_Crack_GetInspectLevel(const std::string option_id) ;
 	int Tool_Option_Crack_SetInspectLevel(const std::string option_id, const int level) ;
