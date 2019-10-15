@@ -59,6 +59,8 @@ int Ensemble_Job_Undo_MaskArea(const std::string id);
 int Ensemble_Job_Del_MaskArea(const std::string id);
 int Ensemble_Job_Get_FeatureLevel(const std::string id);
 int Ensemble_Job_Set_FeatureLevel(const std::string id, const int level);
+int Ensemble_Job_Get_UseCustomFeatureOption(const std::string id);
+int Ensemble_Job_Set_UseCustomFeatureOption(const std::string id, const bool b_use);
 int Ensemble_Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
 int Ensemble_Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 int Ensemble_Job_Set_SelectObject(const std::string id, const float x, const float y, const float width, const float height) ;
