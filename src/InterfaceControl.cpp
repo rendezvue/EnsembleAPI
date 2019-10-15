@@ -1535,9 +1535,9 @@ int CInterfaceControl::JobGetUseCustomFeatureOption(const std::string id)
 	if( vec_receive_data.size() == 1 )
 	{
 		use = vec_receive_data[0] ;
-
-		ret = use ;
 	}
+
+	ret = use ;
 	
     return ret;
 }
