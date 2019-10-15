@@ -2480,7 +2480,7 @@ int CInterfaceControl::MoveTool(const std::string parent_id, const int cur_index
     return ret;
 }
 
-int CInterfaceControl::JobRun(const std::string id)
+int CInterfaceControl::JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -2498,6 +2498,14 @@ int CInterfaceControl::JobRun(const std::string id)
     unsigned int command = ENSEMBLE_JOB_RUN;
 
 	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(masking_left_top_x) ;
+	vec_send_data.push_back(masking_left_top_y) ;
+	vec_send_data.push_back(masking_right_top_x) ;
+	vec_send_data.push_back(masking_right_top_y) ;
+	vec_send_data.push_back(masking_right_bottom_x) ;
+	vec_send_data.push_back(masking_right_bottom_y) ;
+	vec_send_data.push_back(masking_left_bottom_x) ;
+	vec_send_data.push_back(masking_left_bottom_y) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;

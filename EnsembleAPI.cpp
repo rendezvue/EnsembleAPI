@@ -595,9 +595,9 @@ int Ensemble_Tool_Option_Crack_Set_InspectLevel(const std::string option_id, con
 }
 
 
-int Ensemble_Job_Run(const std::string id)
+int Ensemble_Job_Run(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
 {
-	return g_cls_interface_control.JobRun(id);
+	return g_cls_interface_control.JobRun(id, masking_left_top_x, masking_left_top_y, masking_right_top_x, masking_right_top_y, masking_right_bottom_x, masking_right_bottom_y, masking_left_bottom_x, masking_left_bottom_y) ;
 }
 
 std::string Ensemble_Tool_Get_OptionList(const std::string tool_id)
