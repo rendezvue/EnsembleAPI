@@ -247,6 +247,16 @@ int Ensemble_Job_Set_SelectObject(const std::string id, const float x, const flo
 	return g_cls_interface_control.JobSelectObject(id, x, y, width, height);
 }
 
+int Ensemble_Job_Set_Ref_Point(const std::string id, const float x, const float y) 
+{
+	return g_cls_interface_control.JobSetRefPoint(id, x, y);
+}
+
+int Ensemble_Job_Del_Ref_Point(const std::string id)
+{
+	return g_cls_interface_control.JobDelRefPoint(id);
+}
+
 int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin) 
 {
 	return g_cls_interface_control.ToolSelectObject(tool_id, x, y, width, height, margin);

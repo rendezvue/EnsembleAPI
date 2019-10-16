@@ -65,6 +65,8 @@ int Ensemble_Job_Get_Feature_Option(const std::string id, int* out_param1, int* 
 int Ensemble_Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 int Ensemble_Job_Set_SelectObject(const std::string id, const float x, const float y, const float width, const float height) ;
 int Ensemble_Job_Del_SelectObject(const std::string id) ;
+int Ensemble_Job_Set_Ref_Point(const std::string id, const float x, const float y) ;
+int Ensemble_Job_Del_Ref_Point(const std::string id) ;
 int Ensemble_Job_Set_DetectOption(const std::string id, const int option, const float value) ;
 float Ensemble_Job_Get_DetectOption(const std::string id, const int option) ;
 int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data) ;

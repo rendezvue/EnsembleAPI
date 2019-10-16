@@ -60,6 +60,8 @@ public:
 	int JobSetZoom(const std::string id, const float x, const float y, const float width, const float height) ;
 	int JobSelectObject(const std::string id, const float x, const float y, const float width, const float height) ;
 	int JobSetDetectOption(const std::string id, const int option, const float value) ;
+	int JobSetRefPoint(const std::string id, const float x, const float y) ;
+	int JobDelRefPoint(const std::string id) ;
 	float JobGetDetectOption(const std::string id, const int option) ;
 	int JobResetObject(const std::string id) ;
 	int JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse);
