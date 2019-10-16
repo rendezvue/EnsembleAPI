@@ -1342,6 +1342,58 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x
 	return ret;
 }
 
+int CInterfaceControl::ToolSetRefPoint(const std::string id, const float x, const float y)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_SET_REF_POINT;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(x) ;
+	vec_send_data.push_back(y) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
+int CInterfaceControl::ToolDelRefPoint(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DEL_REF_POINT;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
 int CInterfaceControl::JobSetDetectOption(const std::string id, const int option, const float value)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

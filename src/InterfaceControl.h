@@ -160,7 +160,9 @@ public:
 	int ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
 	int ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0)  ;
 	int ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data) ;
-
+	int ToolSetRefPoint(const std::string id, const float x, const float y) ;
+	int ToolDelRefPoint(const std::string id) ;
+	
 	//object detct
 	int ToolSetDetectOption(const std::string tool_id, const int option, const float value) ;
 	float ToolGetDetectOption(const std::string tool_id, const int option) ;

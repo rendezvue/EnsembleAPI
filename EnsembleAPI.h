@@ -95,6 +95,8 @@ int Ensemble_Tool_Get_Feature_Option(const std::string id, int* out_param1, int*
 int Ensemble_Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
 int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0) ;
+int Ensemble_Tool_Set_Ref_Point(const std::string id, const float x, const float y) ;
+int Ensemble_Tool_Del_Ref_Point(const std::string id) ;
 int Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value) ;
 float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option) ;
 
