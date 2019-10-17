@@ -41,6 +41,8 @@ std::string Ensemble_Project_Get_Name(const std::string project_id) ;
 int Ensemble_Project_Set_Name(const std::string project_id, const std::string name) ;
 //Run
 int Ensemble_Poject_Run(const std::string id) ;
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data) ;
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 
 
 //[3-2] Job

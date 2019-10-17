@@ -142,6 +142,29 @@ int Ensemble_Poject_Run(const std::string id)
 	return g_cls_interface_control.Project_Run(id);
 }
 
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
+{
+	 int fixed_width = width ;
+    int fixed_height = height ;
+
+    return g_cls_interface_control.Project_GetResultImage(id, type_option, fixed_width, fixed_height, data);
+}
+
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+{
+	int get_width = -1 ;
+    int get_height = -2 ;
+
+	if( out_width != NULL ) get_width = (*out_width) ;
+	if( out_height != NULL ) get_height = (*out_height) ;
+
+    int ret = g_cls_interface_control.Project_GetResultImage(id, type_option, get_width, get_height, data);
+
+    if( out_width != NULL ) (*out_width) = get_width ;
+    if( out_height != NULL ) (*out_height) = get_height ;
+
+    return ret ;
+}
 
 int Ensemble_Job_Add_New(const std::string project_id, const int type, const std::string name)
 {

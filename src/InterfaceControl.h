@@ -45,6 +45,7 @@ public:
 	std::string Project_Get_Name(const std::string id) ;
 	int Project_Set_Name(const std::string id, const std::string name) ;
 	int Project_Run(const std::string id) ;
+	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 
 	std::string Job_Type_Get_List_Xml(void) ;
 		
