@@ -2431,6 +2431,32 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 	return ret;
 }
 
+int CInterfaceControl::Project_Run(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_PRJ_RUN;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+	
+	return ret;
+}
+
+
 std::string CInterfaceControl::GetToolList(void)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

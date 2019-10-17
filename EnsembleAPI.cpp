@@ -137,6 +137,12 @@ int Ensemble_Project_Set_Name(const std::string project_id, const std::string na
 	return g_cls_interface_control.Project_Set_Name(project_id, name);
 }
 
+int Ensemble_Poject_Run(const std::string id)
+{
+	return g_cls_interface_control.Project_Run(id);
+}
+
+
 int Ensemble_Job_Add_New(const std::string project_id, const int type, const std::string name)
 {
 	return g_cls_interface_control.Job_Add_New(project_id, type, name);

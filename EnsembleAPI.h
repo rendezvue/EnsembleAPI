@@ -39,6 +39,8 @@ int Ensemble_Project_Del(const std::string proj_id="") ;
 std::string Ensemble_Project_Get_List(void) ;
 std::string Ensemble_Project_Get_Name(const std::string project_id) ;
 int Ensemble_Project_Set_Name(const std::string project_id, const std::string name) ;
+//Run
+int Ensemble_Poject_Run(const std::string id) ;
 
 
 //[3-2] Job
