@@ -2431,17 +2431,18 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 	return ret;
 }
 
-int CInterfaceControl::Project_Run(const std::string id)
+std::string CInterfaceControl::Project_Run(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
     tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
+	std::string str_ret ;
     if( p_socket == NULL )
     {
         printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+        return str_ret;
     }
 
 	//printf("id - %d\n", id);
@@ -2452,8 +2453,19 @@ int CInterfaceControl::Project_Run(const std::string id)
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
 	
-	return ret;
+    return str_ret;
 }
 
 int CInterfaceControl::Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -2634,17 +2646,18 @@ int CInterfaceControl::MoveTool(const std::string parent_id, const int cur_index
     return ret;
 }
 
-int CInterfaceControl::JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
+std::string CInterfaceControl::JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
     tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
     CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
+	std::string str_ret ;
     if( p_socket == NULL )
     {
         printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+        return str_ret;
     }
 
     //printf("id - %d\n", id);
@@ -2664,7 +2677,18 @@ int CInterfaceControl::JobRun(const std::string id, const float masking_left_top
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
-    return ret;
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+	
+    return str_ret;
 }
 
 //Calibration

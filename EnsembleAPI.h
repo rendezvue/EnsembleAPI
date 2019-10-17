@@ -42,7 +42,7 @@ std::string Ensemble_Project_Get_List(void) ;
 std::string Ensemble_Project_Get_Name(const std::string project_id) ;
 int Ensemble_Project_Set_Name(const std::string project_id, const std::string name) ;
 //Run
-int Ensemble_Poject_Run(const std::string id) ;
+std::string Ensemble_Poject_Run(const std::string id) ;
 int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data) ;
 int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 
@@ -78,7 +78,7 @@ float Ensemble_Job_Get_DetectOption(const std::string id, const int option) ;
 int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data) ;
 int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 //Run
-int Ensemble_Job_Run(const std::string id, const float masking_left_top_x=-1, const float masking_left_top_y=-1, const float masking_right_top_x=-1, const float masking_right_top_y=-1, const float masking_right_bottom_x=-1, const float masking_right_bottom_y=-1, const float masking_left_bottom_x=-1, const float masking_left_bottom_y=-1) ;
+std::string Ensemble_Job_Run(const std::string id, const float masking_left_top_x=-1, const float masking_left_top_y=-1, const float masking_right_top_x=-1, const float masking_right_top_y=-1, const float masking_right_bottom_x=-1, const float masking_right_bottom_y=-1, const float masking_left_bottom_x=-1, const float masking_left_bottom_y=-1) ;
 
 //[3-3] Tool
 int Ensemble_Tool_Add_New(const std::string parent_id, const int tool_type) ;

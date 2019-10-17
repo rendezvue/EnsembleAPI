@@ -44,7 +44,7 @@ public:
 	std::string Project_Get_List(void) ;
 	std::string Project_Get_Name(const std::string id) ;
 	int Project_Set_Name(const std::string id, const std::string name) ;
-	int Project_Run(const std::string id) ;
+	std::string Project_Run(const std::string id) ;
 	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 
 	std::string Job_Type_Get_List_Xml(void) ;
@@ -77,7 +77,7 @@ public:
 	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
 	int Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
 
-	int JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y);
+	std::string JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y);
 
 	//Calibration
 	int Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, int *out_squre_mm_size) ;
