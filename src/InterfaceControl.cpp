@@ -3353,6 +3353,31 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
 
 int CInterfaceControl::GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
 {
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_GET_IMAGE_RESULT;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(type_option) ;
+	vec_send_data.push_back(width) ;
+	vec_send_data.push_back(height) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+	
+    return ret;
+}
+
+int CInterfaceControl::Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
+{
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
     tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;

@@ -26,9 +26,9 @@ public:
 	//-----------------------------
 	//Image and Source
     int GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
-	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	std::string GetSourceList(void) ;
 	int SetSource(const std::string source) ;
+	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	//Image and Source
 	//-----------------------------
 	
@@ -57,6 +57,7 @@ public:
 	int JobChangeName(const std::string id, const std::string name) ;
 	int JobGetImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data) ;
 	int JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	int JobSetImage(const std::string id) ;
 	int JobSetDetectArea(const std::string id, const float x, const float y, const float width, const float height) ;
 	int JobSetZoom(const std::string id, const float x, const float y, const float width, const float height) ;

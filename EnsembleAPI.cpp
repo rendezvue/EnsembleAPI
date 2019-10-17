@@ -63,12 +63,33 @@ int Ensemble_Source_Get_Image(const int option, std::string id, const int type_o
     return ret ;
 }
 
+int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
+{
+	int fixed_width = width ;
+    int fixed_height = height ;
+
+    return g_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, data);
+}
+
+int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+{
+	int get_width = -1 ;
+    int get_height = -2 ;
+
+    int ret = g_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, data);
+
+    if( out_width != NULL ) (*out_width) = get_width ;
+    if( out_height != NULL ) (*out_height) = get_height ;
+
+    return ret ;
+}
+
 int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
 {
 	 int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.Job_GetResultImage(id, type_option, fixed_width, fixed_height, data);
 }
 
 int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
@@ -79,7 +100,7 @@ int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, un
 	if( out_width != NULL ) get_width = (*out_width) ;
 	if( out_height != NULL ) get_height = (*out_height) ;
 
-    int ret = g_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.Job_GetResultImage(id, type_option, get_width, get_height, data);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
