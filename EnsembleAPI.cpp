@@ -76,6 +76,9 @@ int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsig
 	int get_width = -1 ;
     int get_height = -2 ;
 
+	if( out_width != NULL ) if( (*out_width) > 0 ) get_width = (*out_width) ;
+    if( out_height != NULL ) if( (*out_height) > 0 )  get_height = (*out_height) ;
+
     int ret = g_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, data);
 
     if( out_width != NULL ) (*out_width) = get_width ;
