@@ -105,7 +105,19 @@ public:
 															float ret_Matrix[12]);
 	int Calibration_StandAlone_Y_Direction(const std::string job_id, int Direction);
 
-	
+	//Camera
+	int Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on);
+	int Camera_Get_Auto_Exposure_OnOff(const std::string job_id);
+	int Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
+	int Camera_Get_Manual_Exposure_Value(const std::string job_id);
+	int Camera_Set_Manual_Gain_Value(const std::string job_id, const int value);
+	int Camera_Get_Manual_Gain_Value(const std::string job_id);
+	int Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on);
+	int Camera_Get_Auto_Focus_OnOff(const std::string job_id);
+	int Camera_Set_Manual_Focus_Value(const std::string job_id, const int value);
+	int Camera_Get_Manual_Focus_Value(const std::string job_id);
+	int Camera_Set_Factory_Reset(const std::string job_id);
+
 	std::string GetToolList(void) ;
     std::string GetToolTypeName(const int type) ;
 	int AddTool(const std::string parent_id, const int tool_type) ;

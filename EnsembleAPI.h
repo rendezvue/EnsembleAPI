@@ -178,4 +178,17 @@ int Ensemble_Job_Calibration_GetPoint(const std::string job_id, const float in_p
 int Ensemble_Job_Calibration_GetChessPoint(const std::string job_id, const int index, float* out_rx, float* out_ry);
 int Ensemble_Job_Calibration_isOK(const std::string job_id);
 
+//[6] Camera Tool
+int Ensemble_Job_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on);
+int Ensemble_Job_Camera_Get_Auto_Exposure_OnOff(const std::string job_id);
+int Ensemble_Job_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
+int Ensemble_Job_Camera_Get_Manual_Exposure_Value(const std::string job_id);
+int Ensemble_Job_Camera_Set_Manual_Gain_Value(const std::string job_id, const int value);
+int Ensemble_Job_Camera_Get_Manual_Gain_Value(const std::string job_id);
+int Ensemble_Job_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on);
+int Ensemble_Job_Camera_Get_Auto_Focus_OnOff(const std::string job_id);
+int Ensemble_Job_Camera_Set_Manual_Focus_Value(const std::string job_id, const int value);
+int Ensemble_Job_Camera_Get_Manual_Focus_Value(const std::string job_id);
+int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id);
+
 #endif

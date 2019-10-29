@@ -823,3 +823,59 @@ int Ensemble_Job_Calibration_isOK(const std::string job_id)
 	return g_cls_interface_control.Calibration_isOK(job_id);
 }
 
+int Ensemble_Job_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on)
+{
+	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff(job_id, on);
+}
+
+int Ensemble_Job_Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Exposure_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Exposure_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Exposure_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Gain_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Gain_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Gain_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Gain_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on)
+{
+	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff(job_id, on);
+}
+
+int Ensemble_Job_Camera_Get_Auto_Focus_OnOff(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Focus_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Focus_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Focus_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Focus_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Focus_Value(job_id);
+}
+
+
