@@ -3462,6 +3462,66 @@ int CInterfaceControl::Camera_Get_Manual_Exposure_Value(const std::string job_id
     return ret;		
 }
 
+int CInterfaceControl::Camera_Get_Min_Exposure_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_EXPOSURE_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Max_Exposure_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_EXPOSURE_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
 int CInterfaceControl::Camera_Set_Manual_Gain_Value(const std::string job_id, const int value)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
@@ -3504,6 +3564,66 @@ int CInterfaceControl::Camera_Get_Manual_Gain_Value(const std::string job_id)
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_GAIN_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Min_Gain_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_GAIN_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Max_Gain_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_GAIN_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3617,6 +3737,66 @@ int CInterfaceControl::Camera_Get_Manual_Focus_Value(const std::string job_id)
     //printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_FOCUS_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Min_Focus_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_FOCUS_VALUE  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() > 0 )
+	{
+		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Max_Focus_Value(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_FOCUS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;

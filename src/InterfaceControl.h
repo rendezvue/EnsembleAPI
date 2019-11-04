@@ -110,12 +110,18 @@ public:
 	int Camera_Get_Auto_Exposure_OnOff(const std::string job_id);
 	int Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Exposure_Value(const std::string job_id);
+	int Camera_Get_Min_Exposure_Value(const std::string job_id);
+	int Camera_Get_Max_Exposure_Value(const std::string job_id);
 	int Camera_Set_Manual_Gain_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Gain_Value(const std::string job_id);
+	int Camera_Get_Min_Gain_Value(const std::string job_id);
+	int Camera_Get_Max_Gain_Value(const std::string job_id);
 	int Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on);
 	int Camera_Get_Auto_Focus_OnOff(const std::string job_id);
 	int Camera_Set_Manual_Focus_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Focus_Value(const std::string job_id);
+	int Camera_Get_Min_Focus_Value(const std::string job_id);
+	int Camera_Get_Max_Focus_Value(const std::string job_id);
 	int Camera_Set_Factory_Reset(const std::string job_id);
 
 	std::string GetToolList(void) ;
