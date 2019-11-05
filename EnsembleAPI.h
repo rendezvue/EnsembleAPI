@@ -23,6 +23,7 @@ int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsig
 
 
 //[3] Job Management
+std::string Ensemble_Task_Get_Parent_Tree(const std::string id) ;
 int Ensemble_Task_Get_Run_Option(const std::string id) ;
 int Ensemble_Task_Get_View_Option(const std::string id) ;
 int Ensemble_Task_Set_Run_Option(const std::string id, const bool run) ;
@@ -30,6 +31,7 @@ int Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
 int Ensemble_Task_File_Save(void) ;		//save all
 int Ensemble_Task_File_Load(void) ;	//load all
 
+//Information
 std::string Ensemble_Info_Type_Get_Tool_List_Xml(void) ;
 std::string Ensemble_Info_Get_ToolTypeName(const int type) ;
 std::string Ensemble_Info_Type_Get_Job_List_Xml(void) ;
@@ -40,6 +42,7 @@ int Ensemble_Project_Add_New(const std::string name="") ;
 int Ensemble_Project_Del(const std::string proj_id="") ;
 std::string Ensemble_Project_Get_List(void) ;
 std::string Ensemble_Project_Get_Name(const std::string project_id) ;
+std::string Ensemble_Project_Get_Has_Job_Info(const std::string project_id) ;
 int Ensemble_Project_Set_Name(const std::string project_id, const std::string name) ;
 //Run
 std::string Ensemble_Poject_Run(const std::string id) ;

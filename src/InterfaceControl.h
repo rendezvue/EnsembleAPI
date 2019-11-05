@@ -31,7 +31,8 @@ public:
 	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
 	//Image and Source
 	//-----------------------------
-	
+
+	std::string Task_Get_Parent_Tree(const std::string id) ;
 	int Get_Run_Option(const std::string id) ;
 	int Get_View_Option(const std::string id) ;
 	int Base_Set_Run_Option(const std::string id, const bool run) ;
@@ -43,6 +44,7 @@ public:
 	int Project_Del(const std::string id) ;
 	std::string Project_Get_List(void) ;
 	std::string Project_Get_Name(const std::string id) ;
+	std::string Project_Get_Job_Info(const std::string id) ;
 	int Project_Set_Name(const std::string id, const std::string name) ;
 	std::string Project_Run(const std::string id) ;
 	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);

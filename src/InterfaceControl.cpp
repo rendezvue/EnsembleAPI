@@ -43,6 +43,41 @@ int CInterfaceControl::IsOnline(void)
     return ret ;
 }
 
+std::string CInterfaceControl::Task_Get_Parent_Tree(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
+    unsigned int command = ENSEMBLE_TASK_GET_PARENT_TREE;
+		
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+    return str_ret;
+}
+
 
 int CInterfaceControl::Get_Run_Option(const std::string id)
 {
@@ -2377,6 +2412,44 @@ std::string CInterfaceControl::Project_Get_Name(const std::string id)
 	//printf("id - %d\n", id);
 
     unsigned int command = ENSEMBLE_PRJ_GET_NAME;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+	
+    return str_ret;
+}
+
+std::string CInterfaceControl::Project_Get_Job_Info(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_PRJ_GET_JOB_INFO;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;

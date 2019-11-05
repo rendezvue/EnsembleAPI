@@ -111,6 +111,12 @@ int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, un
     return ret ;
 }
 
+std::string Ensemble_Task_Get_Parent_Tree(const std::string id)
+{
+	return g_cls_interface_control.Task_Get_Parent_Tree(id);
+}
+
+
 int Ensemble_Task_Get_Run_Option(const std::string id)
 {
 	return g_cls_interface_control.Get_Run_Option(id);
@@ -154,6 +160,11 @@ int Ensemble_Project_Del(const std::string proj_id)
 std::string Ensemble_Project_Get_Name(const std::string project_id)
 {
 	return g_cls_interface_control.Project_Get_Name(project_id);
+}
+
+std::string Ensemble_Project_Get_Has_Job_Info(const std::string project_id)
+{
+	return g_cls_interface_control.Project_Get_Job_Info(project_id);
 }
 
 int Ensemble_Project_Set_Name(const std::string project_id, const std::string name)
