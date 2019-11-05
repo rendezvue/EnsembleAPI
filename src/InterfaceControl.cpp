@@ -61,7 +61,7 @@ std::string CInterfaceControl::Task_Get_Parent_Tree(const std::string id)
     unsigned int command = ENSEMBLE_TASK_GET_PARENT_TREE;
 		
 	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
