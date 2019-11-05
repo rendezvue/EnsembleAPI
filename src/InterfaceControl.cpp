@@ -3390,7 +3390,7 @@ int CInterfaceControl::Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_AUTO_EXPOSURE_ONOFF  ;
+    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_AUTO_EXPOSURE_ONOFF  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
