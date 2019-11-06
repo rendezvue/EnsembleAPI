@@ -95,6 +95,7 @@ public:
 	int Calibration_GetPoint(const std::string job_id, const float in_px, const float in_py, float* out_rx, float* out_ry);
 	int Calibration_GetChessPoint(const std::string job_id, const int index, float* out_rx, float* out_ry);
 	int Calibration_isOK(const std::string job_id);
+	int Calibration_Copy(const std::string job_id, const std::string from_job_id) ;
 	int Calibration_StandAlone_Run(const std::string job_id);
 	int Calibration_StandAlone_Get_Image_Count(const std::string job_id);
 	int Calibration_StandAlone_Init(const std::string job_id);

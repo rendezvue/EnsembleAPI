@@ -3142,6 +3142,40 @@ int CInterfaceControl::Calibration_isOK(const std::string job_id)
 	return is_ok ;
 }
 
+int CInterfaceControl::Calibration_Copy(const std::string job_id, const std::string from_job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_CALIBRATION_COPY ;
+
+	std::vector<float> vec_send_data ;
+	if( !from_job_id.empty() )
+	{
+		int data_size = from_job_id.size() ;
+		for( int i=0 ; i<data_size ; i++ )
+		{
+			float data = from_job_id[i] ;
+            vec_send_data.push_back(data) ;
+		}
+	}
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
 int CInterfaceControl::Calibration_StandAlone_Run(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

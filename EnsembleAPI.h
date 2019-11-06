@@ -180,6 +180,7 @@ int Ensemble_Job_Calibration_Custom_Center_Point(const std::string job_id, int c
 int Ensemble_Job_Calibration_GetPoint(const std::string job_id, const float in_px, const float in_py, float* out_rx, float* out_ry);
 int Ensemble_Job_Calibration_GetChessPoint(const std::string job_id, const int index, float* out_rx, float* out_ry);
 int Ensemble_Job_Calibration_isOK(const std::string job_id);
+int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string from_job_id);
 
 //[6] Camera Tool
 int Ensemble_Job_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on);
