@@ -914,6 +914,106 @@ int Ensemble_Job_Camera_Get_Max_Focus_Value(const std::string job_id)
 	return g_cls_interface_control.Camera_Get_Max_Focus_Value(job_id);
 }
 
+int Ensemble_Job_Camera_Set_Manual_Brightness_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Brightness_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Brightness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Brightness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Min_Brightness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Min_Brightness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Max_Brightness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Max_Brightness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Sharpness_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Sharpness_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Sharpness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Sharpness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Min_Sharpness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Min_Sharpness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Max_Sharpness_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Max_Sharpness_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Contrast_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Contrast_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Contrast_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Contrast_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Min_Contrast_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Min_Contrast_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Max_Contrast_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Max_Contrast_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_ISO_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_ISO_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_ISO_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_ISO_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Min_ISO_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Min_ISO_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Max_ISO_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Max_ISO_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Set_Manual_Shutter_Speed_Value(const std::string job_id, const int value)
+{
+	return g_cls_interface_control.Camera_Set_Manual_Shutter_Speed_Value(job_id, value);
+}
+
+int Ensemble_Job_Camera_Get_Manual_Shutter_Speed_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Shutter_Speed_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Min_Shutter_Speed_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Min_Shutter_Speed_Value(job_id);
+}
+
+int Ensemble_Job_Camera_Get_Max_Shutter_Speed_Value(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Max_Shutter_Speed_Value(job_id);
+}
+
 int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Focus_Value(job_id);
