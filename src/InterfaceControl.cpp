@@ -3471,7 +3471,7 @@ int CInterfaceControl::Camera_Set_Auto_Exposure_OnOff(const std::string job_id, 
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_AUTO_EXPOSURE_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_EXPOSURE_ONOFF  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(on) ;
@@ -3497,7 +3497,7 @@ int CInterfaceControl::Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_AUTO_EXPOSURE_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_AUTO_EXPOSURE_ONOFF  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3528,7 +3528,7 @@ int CInterfaceControl::Camera_Set_Manual_Exposure_Value(const std::string job_id
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_EXPOSURE_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_EXPOSURE_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -3554,7 +3554,7 @@ int CInterfaceControl::Camera_Get_Manual_Exposure_Value(const std::string job_id
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_EXPOSURE_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_EXPOSURE_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3584,7 +3584,7 @@ int CInterfaceControl::Camera_Get_Min_Exposure_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_EXPOSURE_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_EXPOSURE_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3614,7 +3614,7 @@ int CInterfaceControl::Camera_Get_Max_Exposure_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_EXPOSURE_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_EXPOSURE_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3644,7 +3644,7 @@ int CInterfaceControl::Camera_Set_Manual_Gain_Value(const std::string job_id, co
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_GAIN_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_GAIN_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -3670,7 +3670,7 @@ int CInterfaceControl::Camera_Get_Manual_Gain_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_GAIN_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_GAIN_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3700,7 +3700,7 @@ int CInterfaceControl::Camera_Get_Min_Gain_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_GAIN_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_GAIN_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3730,7 +3730,7 @@ int CInterfaceControl::Camera_Get_Max_Gain_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_GAIN_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_GAIN_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3760,7 +3760,7 @@ int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, con
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_AUTO_FOCUS_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_FOCUS_ONOFF  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(on) ;
@@ -3786,7 +3786,7 @@ int CInterfaceControl::Camera_Get_Auto_Focus_OnOff(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_AUTO_FOCUS_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_AUTO_FOCUS_ONOFF  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3817,7 +3817,7 @@ int CInterfaceControl::Camera_Set_Manual_Focus_Value(const std::string job_id, c
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_FOCUS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_FOCUS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -3843,7 +3843,7 @@ int CInterfaceControl::Camera_Get_Manual_Focus_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_FOCUS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_FOCUS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3873,7 +3873,7 @@ int CInterfaceControl::Camera_Get_Min_Focus_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_FOCUS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_FOCUS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3903,7 +3903,7 @@ int CInterfaceControl::Camera_Get_Max_Focus_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_FOCUS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_FOCUS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3934,7 +3934,7 @@ int CInterfaceControl::Camera_Set_Manual_Brightness_Value(const std::string job_
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_BRIGHTNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_BRIGHTNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -3960,7 +3960,7 @@ int CInterfaceControl::Camera_Get_Manual_Brightness_Value(const std::string job_
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_BRIGHTNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_BRIGHTNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -3990,7 +3990,7 @@ int CInterfaceControl::Camera_Get_Min_Brightness_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_BRIGHTNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_BRIGHTNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4020,7 +4020,7 @@ int CInterfaceControl::Camera_Get_Max_Brightness_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_BRIGHTNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_BRIGHTNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4050,7 +4050,7 @@ int CInterfaceControl::Camera_Set_Manual_Sharpness_Value(const std::string job_i
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_SHARPNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_SHARPNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -4076,7 +4076,7 @@ int CInterfaceControl::Camera_Get_Manual_Sharpness_Value(const std::string job_i
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_SHARPNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_SHARPNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4106,7 +4106,7 @@ int CInterfaceControl::Camera_Get_Min_Sharpness_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_SHARPNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_SHARPNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4136,7 +4136,7 @@ int CInterfaceControl::Camera_Get_Max_Sharpness_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_SHARPNESS_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_SHARPNESS_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4166,7 +4166,7 @@ int CInterfaceControl::Camera_Set_Manual_Contrast_Value(const std::string job_id
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_CONTRAST_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_CONTRAST_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -4192,7 +4192,7 @@ int CInterfaceControl::Camera_Get_Manual_Contrast_Value(const std::string job_id
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_CONTRAST_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_CONTRAST_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4222,7 +4222,7 @@ int CInterfaceControl::Camera_Get_Min_Contrast_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_CONTRAST_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_CONTRAST_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4252,7 +4252,7 @@ int CInterfaceControl::Camera_Get_Max_Contrast_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_CONTRAST_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_CONTRAST_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4282,7 +4282,7 @@ int CInterfaceControl::Camera_Set_Manual_ISO_Value(const std::string job_id, con
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_ISO_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_ISO_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -4308,7 +4308,7 @@ int CInterfaceControl::Camera_Get_Manual_ISO_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_ISO_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_ISO_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4338,7 +4338,7 @@ int CInterfaceControl::Camera_Get_Min_ISO_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_ISO_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_ISO_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4368,7 +4368,7 @@ int CInterfaceControl::Camera_Get_Max_ISO_Value(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_ISO_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_ISO_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4398,7 +4398,7 @@ int CInterfaceControl::Camera_Set_Manual_Shutter_Speed_Value(const std::string j
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_MANUAL_SHUTTER_SPEED_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_MANUAL_SHUTTER_SPEED_VALUE  ;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(value) ;
@@ -4424,7 +4424,7 @@ int CInterfaceControl::Camera_Get_Manual_Shutter_Speed_Value(const std::string j
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MANUAL_SHUTTER_SPEED_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MANUAL_SHUTTER_SPEED_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4454,7 +4454,7 @@ int CInterfaceControl::Camera_Get_Min_Shutter_Speed_Value(const std::string job_
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MIN_SHUTTER_SPEED_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MIN_SHUTTER_SPEED_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4484,7 +4484,7 @@ int CInterfaceControl::Camera_Get_Max_Shutter_Speed_Value(const std::string job_
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_GET_MAX_SHUTTER_SPEED_VALUE  ;
+    unsigned int command = ENSEMBLE_CAMERA_GET_MAX_SHUTTER_SPEED_VALUE  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
@@ -4514,7 +4514,7 @@ int CInterfaceControl::Camera_Set_Factory_Reset(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_CAMERA_SET_FACTORY_RESET  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_FACTORY_RESET  ;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
