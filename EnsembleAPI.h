@@ -258,6 +258,7 @@ int Ensemble_Camera_Set_Manual_Shutter_Speed_Value(const int value);
 int Ensemble_Camera_Get_Manual_Shutter_Speed_Value(void);
 int Ensemble_Camera_Get_Min_Shutter_Speed_Value(void);
 int Ensemble_Camera_Get_Max_Shutter_Speed_Value(void);
+int Ensemble_Camera_Set_Factory_Reset(void);
 
 
 #endif

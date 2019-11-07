@@ -1026,180 +1026,186 @@ int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id)
 
 int Ensemble_Camera_Set_Auto_Exposure_OnOff(const bool on)
 {
-	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff("Camera_Base", on);
+	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff("ini", on);
 }
 
 int Ensemble_Camera_Get_Auto_Exposure_OnOff(void)
 {
-	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Exposure_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Exposure_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Exposure_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Exposure_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Exposure_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Exposure_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Exposure_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Exposure_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Exposure_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Exposure_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Exposure_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Exposure_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Gain_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Gain_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Gain_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Gain_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Gain_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Gain_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Gain_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Gain_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Gain_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Gain_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Gain_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Gain_Value("ini");
 }
 
 int Ensemble_Camera_Set_Auto_Focus_OnOff(const bool on)
 {
-	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff("Camera_Base", on);
+	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff("ini", on);
 }
 
 int Ensemble_Camera_Get_Auto_Focus_OnOff(void)
 {
-	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Focus_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Focus_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Focus_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Focus_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Focus_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Focus_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Focus_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Focus_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Focus_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Focus_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Focus_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Focus_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Brightness_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Brightness_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Brightness_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Brightness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Brightness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Brightness_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Brightness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Brightness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Brightness_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Brightness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Brightness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Brightness_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Sharpness_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Sharpness_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Sharpness_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Sharpness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Sharpness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Sharpness_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Sharpness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Sharpness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Sharpness_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Sharpness_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Sharpness_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Sharpness_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Contrast_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Contrast_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Contrast_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Contrast_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Contrast_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Contrast_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Contrast_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Contrast_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Contrast_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Contrast_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Contrast_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Contrast_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_ISO_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_ISO_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_ISO_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_ISO_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_ISO_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_ISO_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_ISO_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_ISO_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_ISO_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_ISO_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_ISO_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_ISO_Value("ini");
 }
 
 int Ensemble_Camera_Set_Manual_Shutter_Speed_Value(const int value)
 {
-	return g_cls_interface_control.Camera_Set_Manual_Shutter_Speed_Value("Camera_Base", value);
+	return g_cls_interface_control.Camera_Set_Manual_Shutter_Speed_Value("ini", value);
 }
 
 int Ensemble_Camera_Get_Manual_Shutter_Speed_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Shutter_Speed_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Manual_Shutter_Speed_Value("ini");
 }
 
 int Ensemble_Camera_Get_Min_Shutter_Speed_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Min_Shutter_Speed_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Min_Shutter_Speed_Value("ini");
 }
 
 int Ensemble_Camera_Get_Max_Shutter_Speed_Value(void)
 {
-	return g_cls_interface_control.Camera_Get_Max_Shutter_Speed_Value("Camera_Base");
+	return g_cls_interface_control.Camera_Get_Max_Shutter_Speed_Value("ini");
 }
+
+int Ensemble_Camera_Set_Factory_Reset(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Get_Manual_Focus_Value("ini");
+}
+
