@@ -1021,7 +1021,7 @@ int Ensemble_Job_Camera_Get_Max_Shutter_Speed_Value(const std::string job_id)
 
 int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Focus_Value(job_id);
+	return g_cls_interface_control.Camera_Set_Factory_Reset(job_id);
 }
 
 int Ensemble_Camera_Set_Auto_Exposure_OnOff(const bool on)
@@ -1206,6 +1206,6 @@ int Ensemble_Camera_Get_Max_Shutter_Speed_Value(void)
 
 int Ensemble_Camera_Set_Factory_Reset(void)
 {
-	return g_cls_interface_control.Camera_Get_Manual_Focus_Value("ini");
+	return g_cls_interface_control.Camera_Set_Factory_Reset("ini");
 }
 
