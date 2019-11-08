@@ -3745,7 +3745,7 @@ int CInterfaceControl::Camera_Get_Max_Gain_Value(const std::string job_id)
     return ret;		
 }
 
-int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on)
+int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3764,6 +3764,10 @@ int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, con
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(on) ;
+	vec_send_data.push_back(x) ;
+	vec_send_data.push_back(y) ;
+	vec_send_data.push_back(width) ;
+	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
@@ -3796,6 +3800,39 @@ int CInterfaceControl::Camera_Get_Auto_Focus_OnOff(const std::string job_id)
 	if( vec_receive_data.size() > 0 )
 	{
 		ret = vec_receive_data[0] ;
+	}
+	
+    return ret;		
+}
+
+int CInterfaceControl::Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_GET_AUTO_FOCUS_AREA  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() == 4 )
+	{
+		if( out_x ) (*out_x) = vec_receive_data[0] ;
+		if( out_y ) (*out_y) = vec_receive_data[1] ;
+		if( out_width ) (*out_width) = vec_receive_data[2] ;
+		if( out_height ) (*out_height) = vec_receive_data[3] ;
 	}
 	
     return ret;		
