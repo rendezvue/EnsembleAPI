@@ -146,7 +146,12 @@ public:
 	int Camera_Get_Manual_Shutter_Speed_Value(const std::string job_id);
 	int Camera_Get_Min_Shutter_Speed_Value(const std::string job_id);
 	int Camera_Get_Max_Shutter_Speed_Value(const std::string job_id);
+	int Camera_Set_Flip_V(const std::string job_id, const bool flip) ;
+	int Camera_Get_Flip_V(const std::string job_id) ;
+	int Camera_Set_Flip_H(const std::string job_id, const bool flip) ;
+	int Camera_Get_Flip_H(const std::string job_id) ;
 	int Camera_Set_Factory_Reset(const std::string job_id);
+	int Camera_Set_Config_Run(const std::string job_id);
 
 	std::string GetToolList(void) ;
     std::string GetToolTypeName(const int type) ;
