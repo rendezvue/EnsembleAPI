@@ -839,384 +839,193 @@ int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string fr
 	return g_cls_interface_control.Calibration_Copy(job_id, from_job_id);
 }
 
-int Ensemble_Job_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on)
+int Ensemble_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on)
 {
 	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff(job_id, on);
 }
 
-int Ensemble_Job_Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
+int Ensemble_Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Exposure_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Exposure_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Exposure_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Exposure_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Exposure_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Exposure_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Exposure_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Exposure_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Exposure_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Exposure_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Gain_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Gain_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Gain_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Gain_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Gain_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Gain_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Gain_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Gain_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Gain_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Gain_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Gain_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Gain_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height)
+int Ensemble_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height)
 {
 	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff(job_id, on, x, y, width, height);
 }
 
-int Ensemble_Job_Camera_Get_Auto_Focus_OnOff(const std::string job_id)
+int Ensemble_Camera_Get_Auto_Focus_OnOff(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height)
+int Ensemble_Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height)
 {
 	return g_cls_interface_control.Camera_Get_Auto_Focus_Area(job_id, out_x, out_y, out_width, out_height) ;
 }
 
-int Ensemble_Job_Camera_Set_Manual_Focus_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Focus_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Focus_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Focus_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Focus_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Focus_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Focus_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Focus_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Focus_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Focus_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Focus_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Focus_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Brightness_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Brightness_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Brightness_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Brightness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Brightness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Brightness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Brightness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Brightness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Brightness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Brightness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Brightness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Brightness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Sharpness_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Sharpness_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Sharpness_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Sharpness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Sharpness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Sharpness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Sharpness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Sharpness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Sharpness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Sharpness_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Sharpness_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Sharpness_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Contrast_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Contrast_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Contrast_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Contrast_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Contrast_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Contrast_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Contrast_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Contrast_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Contrast_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Contrast_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Contrast_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Contrast_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_ISO_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_ISO_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_ISO_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_ISO_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_ISO_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_ISO_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_ISO_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_ISO_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_ISO_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_ISO_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_ISO_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_ISO_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Manual_Shutter_Speed_Value(const std::string job_id, const int value)
+int Ensemble_Camera_Set_Manual_Shutter_Speed_Value(const std::string job_id, const int value)
 {
 	return g_cls_interface_control.Camera_Set_Manual_Shutter_Speed_Value(job_id, value);
 }
 
-int Ensemble_Job_Camera_Get_Manual_Shutter_Speed_Value(const std::string job_id)
+int Ensemble_Camera_Get_Manual_Shutter_Speed_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Manual_Shutter_Speed_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Min_Shutter_Speed_Value(const std::string job_id)
+int Ensemble_Camera_Get_Min_Shutter_Speed_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Min_Shutter_Speed_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Get_Max_Shutter_Speed_Value(const std::string job_id)
+int Ensemble_Camera_Get_Max_Shutter_Speed_Value(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Get_Max_Shutter_Speed_Value(job_id);
 }
 
-int Ensemble_Job_Camera_Set_Factory_Reset(const std::string job_id)
+int Ensemble_Camera_Set_Factory_Reset(const std::string job_id)
 {
 	return g_cls_interface_control.Camera_Set_Factory_Reset(job_id);
-}
-
-int Ensemble_Camera_Set_Auto_Exposure_OnOff(const bool on)
-{
-	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff("ini", on);
-}
-
-int Ensemble_Camera_Get_Auto_Exposure_OnOff(void)
-{
-	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Exposure_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Exposure_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Exposure_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Exposure_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Exposure_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Exposure_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Exposure_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Exposure_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Gain_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Gain_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Gain_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Gain_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Gain_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Gain_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Gain_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Gain_Value("ini");
-}
-
-int Ensemble_Camera_Set_Auto_Focus_OnOff(const bool on, const float x, const float y, const float width, const float height)
-{
-	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff("ini", on, x, y, width, height);
-}
-
-int Ensemble_Camera_Get_Auto_Focus_OnOff(void)
-{
-	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff("ini");
-}
-
-int Ensemble_Camera_Get_Auto_Focus_Area(float *out_x, float *out_y, float *out_width, float *out_height)
-{
-	return g_cls_interface_control.Camera_Get_Auto_Focus_Area("ini", out_x, out_y, out_width, out_height);
-}
-
-
-int Ensemble_Camera_Set_Manual_Focus_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Focus_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Focus_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Focus_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Focus_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Focus_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Focus_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Focus_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Brightness_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Brightness_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Brightness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Brightness_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Brightness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Brightness_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Brightness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Brightness_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Sharpness_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Sharpness_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Sharpness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Sharpness_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Sharpness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Sharpness_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Sharpness_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Sharpness_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Contrast_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Contrast_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Contrast_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Contrast_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Contrast_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Contrast_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Contrast_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Contrast_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_ISO_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_ISO_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_ISO_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_ISO_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_ISO_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_ISO_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_ISO_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_ISO_Value("ini");
-}
-
-int Ensemble_Camera_Set_Manual_Shutter_Speed_Value(const int value)
-{
-	return g_cls_interface_control.Camera_Set_Manual_Shutter_Speed_Value("ini", value);
-}
-
-int Ensemble_Camera_Get_Manual_Shutter_Speed_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Manual_Shutter_Speed_Value("ini");
-}
-
-int Ensemble_Camera_Get_Min_Shutter_Speed_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Min_Shutter_Speed_Value("ini");
-}
-
-int Ensemble_Camera_Get_Max_Shutter_Speed_Value(void)
-{
-	return g_cls_interface_control.Camera_Get_Max_Shutter_Speed_Value("ini");
-}
-
-int Ensemble_Camera_Set_Factory_Reset(void)
-{
-	return g_cls_interface_control.Camera_Set_Factory_Reset("ini");
 }
 
