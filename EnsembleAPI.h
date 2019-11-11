@@ -96,6 +96,9 @@ int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  c
 int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height) ;
 
 //[3-3] Tool : Detect Object, Line, Circle
+int Ensemble_Tool_Set_MaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse);
+int Ensemble_Tool_Undo_MaskArea(const std::string tool_id);
+int Ensemble_Tool_Del_MaskArea(const std::string tool_id);
 int Ensemble_Tool_Get_FeatureLevel(const std::string tool_id);
 int Ensemble_Tool_Set_FeatureLevel(const std::string tool_id, const int level);
 int Ensemble_Tool_Get_UseCustomFeatureOption(const std::string id);

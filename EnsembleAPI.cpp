@@ -638,6 +638,21 @@ int Ensemble_Tool_Option_InspectDiameter_Set_Tolerance(const std::string option_
     return g_cls_interface_control.Tool_Option_InspectDiameter_Set_Tolerance(option_id, min, max) ;
 }
 
+int Ensemble_Tool_Set_MaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse)
+{
+	return g_cls_interface_control.ToolSetMaskArea(tool_id, x, y, w, h, inverse);
+}
+
+int Ensemble_Tool_Undo_MaskArea(const std::string tool_id)
+{
+	return g_cls_interface_control.ToolUndoMaskArea(tool_id);
+}
+
+int Ensemble_Tool_Del_MaskArea(const std::string tool_id)
+{
+	return g_cls_interface_control.ToolDelMaskArea(tool_id);
+}
+
 int Ensemble_Tool_Get_FeatureLevel(const std::string tool_id)
 {
 	return g_cls_interface_control.ToolGetFeatureLevel(tool_id);

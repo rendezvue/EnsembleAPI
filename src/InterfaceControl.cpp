@@ -1864,6 +1864,86 @@ int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string 
 	return ret;
 }
 
+int CInterfaceControl::ToolSetMaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_TOOL_SET_MASK;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(x) ;
+	vec_send_data.push_back(y) ;
+	vec_send_data.push_back(w) ;
+	vec_send_data.push_back(h) ;
+	vec_send_data.push_back(inverse) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+
+}
+
+int CInterfaceControl::ToolUndoMaskArea(const std::string tool_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_TOOL_UNDO_MASK;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
+int CInterfaceControl::ToolDelMaskArea(const std::string tool_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_TOOL_DEL_MASK;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
+
 int CInterfaceControl::ToolGetFeatureLevel(const std::string tool_id) 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

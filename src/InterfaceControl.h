@@ -195,6 +195,9 @@ public:
 	std::string ToolGetName(const std::string tool_id) ;
 	int ToolSetName(const std::string tool_id, const std::string name) ;
 
+	int ToolSetMaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse);
+	int ToolUndoMaskArea(const std::string tool_id);
+	int ToolDelMaskArea(const std::string tool_id);
 	int ToolGetFeatureLevel(const std::string tool_id) ;
 	int ToolSetFeatureLevel(const std::string tool_id, const int level) ;	
 	int ToolGetUseCustomFeatureOption(const std::string id);
