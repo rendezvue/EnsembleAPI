@@ -225,6 +225,9 @@ public:
 	int ToolGetOptionCount(const int tool_type) ;
 	int ToolAddNewOption(const std::string tool_id, const int option_type) ;
 	int ToolDelOption(const std::string option_id) ;
+
+	//Tool Offset Distance
+	int Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
 		
 	//////////////////
  };

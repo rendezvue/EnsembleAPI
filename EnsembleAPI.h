@@ -112,6 +112,10 @@ int Ensemble_Tool_Del_Ref_Point(const std::string id) ;
 int Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value) ;
 float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option) ;
 
+//[3-3] Tool : Offset Distance
+int Ensemble_Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
+
+
 //[3-3] Tool : Calc Distance
 float Ensemble_Tool_Distance_Get_CalcDistance(const std::string tool_id) ;
 int Ensemble_Tool_Distance_Set_BaseDistance(const std::string tool_id, const float base_distance) ;
