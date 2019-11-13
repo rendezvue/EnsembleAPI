@@ -190,8 +190,7 @@ int Ensemble_Job_Calibration_isOK(const std::string job_id);
 int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string from_job_id);
 
 //[6] Camera Tool
-int Ensemble_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on);
-int Ensemble_Camera_Get_Auto_Exposure_OnOff(const std::string job_id);
+int Ensemble_Camera_Set_Auto_Exposure(const std::string job_id);
 int Ensemble_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
 int Ensemble_Camera_Get_Manual_Exposure_Value(const std::string job_id);
 int Ensemble_Camera_Get_Min_Exposure_Value(const std::string job_id);
@@ -200,8 +199,7 @@ int Ensemble_Camera_Set_Manual_Gain_Value(const std::string job_id, const int va
 int Ensemble_Camera_Get_Manual_Gain_Value(const std::string job_id);
 int Ensemble_Camera_Get_Min_Gain_Value(const std::string job_id);
 int Ensemble_Camera_Get_Max_Gain_Value(const std::string job_id);
-int Ensemble_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x=-1, const float y=-1, const float width=-1, const float height=-1);
-int Ensemble_Camera_Get_Auto_Focus_OnOff(const std::string job_id);
+int Ensemble_Camera_Set_Auto_Focus(const std::string job_id, const float x=-1, const float y=-1, const float width=-1, const float height=-1);
 int Ensemble_Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height);
 int Ensemble_Camera_Set_Manual_Focus_Value(const std::string job_id, const int value);
 int Ensemble_Camera_Get_Manual_Focus_Value(const std::string job_id);

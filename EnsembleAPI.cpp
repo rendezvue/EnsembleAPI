@@ -859,14 +859,9 @@ int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string fr
 	return g_cls_interface_control.Calibration_Copy(job_id, from_job_id);
 }
 
-int Ensemble_Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on)
+int Ensemble_Camera_Set_Auto_Exposure(const std::string job_id)
 {
-	return g_cls_interface_control.Camera_Set_Auto_Exposure_OnOff(job_id, on);
-}
-
-int Ensemble_Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
-{
-	return g_cls_interface_control.Camera_Get_Auto_Exposure_OnOff(job_id);
+    return g_cls_interface_control.Camera_Set_Auto_Exposure(job_id);
 }
 
 int Ensemble_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value)
@@ -909,14 +904,9 @@ int Ensemble_Camera_Get_Max_Gain_Value(const std::string job_id)
 	return g_cls_interface_control.Camera_Get_Max_Gain_Value(job_id);
 }
 
-int Ensemble_Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height)
+int Ensemble_Camera_Set_Auto_Focus(const std::string job_id, const float x, const float y, const float width, const float height)
 {
-	return g_cls_interface_control.Camera_Set_Auto_Focus_OnOff(job_id, on, x, y, width, height);
-}
-
-int Ensemble_Camera_Get_Auto_Focus_OnOff(const std::string job_id)
-{
-	return g_cls_interface_control.Camera_Get_Auto_Focus_OnOff(job_id);
+    return g_cls_interface_control.Camera_Set_Auto_Focus(job_id, x, y, width, height);
 }
 
 int Ensemble_Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height)

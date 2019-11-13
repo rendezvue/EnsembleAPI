@@ -109,8 +109,7 @@ public:
 	int Calibration_StandAlone_Y_Direction(const std::string job_id, int Direction);
 
 	//Camera
-	int Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on);
-	int Camera_Get_Auto_Exposure_OnOff(const std::string job_id);
+	int Camera_Set_Auto_Exposure(const std::string job_id);
 	int Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Exposure_Value(const std::string job_id);
 	int Camera_Get_Min_Exposure_Value(const std::string job_id);
@@ -119,8 +118,7 @@ public:
 	int Camera_Get_Manual_Gain_Value(const std::string job_id);
 	int Camera_Get_Min_Gain_Value(const std::string job_id);
 	int Camera_Get_Max_Gain_Value(const std::string job_id);
-	int Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height);
-	int Camera_Get_Auto_Focus_OnOff(const std::string job_id);
+	int Camera_Set_Auto_Focus(const std::string job_id, const float x, const float y, const float width, const float height);
 	int Camera_Get_Auto_Focus_Area(const std::string job_id, float *out_x, float *out_y, float *out_width, float *out_height) ;
 	int Camera_Set_Manual_Focus_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Focus_Value(const std::string job_id);

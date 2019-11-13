@@ -3566,7 +3566,7 @@ int CInterfaceControl::Calibration_StandAlone_Y_Direction(const std::string job_
     return ret;
 }
 
-int CInterfaceControl::Camera_Set_Auto_Exposure_OnOff(const std::string job_id, const bool on)
+int CInterfaceControl::Camera_Set_Auto_Exposure(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3581,47 +3581,15 @@ int CInterfaceControl::Camera_Set_Auto_Exposure_OnOff(const std::string job_id, 
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_EXPOSURE_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_EXPOSURE  ;
 
 	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(on) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
     return ret;		
 }
-
-int CInterfaceControl::Camera_Get_Auto_Exposure_OnOff(const std::string job_id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    //printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_CAMERA_GET_AUTO_EXPOSURE_ONOFF  ;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	if( vec_receive_data.size() > 0 )
-	{
-		ret = vec_receive_data[0] ;
-	}
-	
-    return ret;		
-}
-
 
 int CInterfaceControl::Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value)
 {
@@ -3855,7 +3823,7 @@ int CInterfaceControl::Camera_Get_Max_Gain_Value(const std::string job_id)
     return ret;		
 }
 
-int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, const bool on, const float x, const float y, const float width, const float height)
+int CInterfaceControl::Camera_Set_Auto_Focus(const std::string job_id, const float x, const float y, const float width, const float height)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3870,10 +3838,9 @@ int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, con
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_FOCUS_ONOFF  ;
+    unsigned int command = ENSEMBLE_CAMERA_SET_AUTO_FOCUS ;
 
 	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(on) ;
 	vec_send_data.push_back(x) ;
 	vec_send_data.push_back(y) ;
 	vec_send_data.push_back(width) ;
@@ -3881,36 +3848,6 @@ int CInterfaceControl::Camera_Set_Auto_Focus_OnOff(const std::string job_id, con
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-	
-    return ret;		
-}
-
-int CInterfaceControl::Camera_Get_Auto_Focus_OnOff(const std::string job_id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    //printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_CAMERA_GET_AUTO_FOCUS_ONOFF  ;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	if( vec_receive_data.size() > 0 )
-	{
-		ret = vec_receive_data[0] ;
-	}
 	
     return ret;		
 }
