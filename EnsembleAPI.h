@@ -193,6 +193,7 @@ int Ensemble_Job_Calibration_isOK(const std::string job_id);
 int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string from_job_id);
 
 //[6] Camera Tool
+int Ensemble_Camera_Set_Ready(const std::string job_id);
 int Ensemble_Camera_Set_Auto_Exposure(const std::string job_id);
 int Ensemble_Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
 int Ensemble_Camera_Get_Manual_Exposure_Value(const std::string job_id);

@@ -874,6 +874,11 @@ int Ensemble_Job_Calibration_Copy(const std::string job_id, const std::string fr
 	return g_cls_interface_control.Calibration_Copy(job_id, from_job_id);
 }
 
+int Ensemble_Camera_Set_Ready(const std::string job_id)
+{
+	return g_cls_interface_control.Camera_Set_Ready(job_id);
+}
+
 int Ensemble_Camera_Set_Auto_Exposure(const std::string job_id)
 {
     return g_cls_interface_control.Camera_Set_Auto_Exposure(job_id);

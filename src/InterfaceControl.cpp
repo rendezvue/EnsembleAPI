@@ -3654,6 +3654,31 @@ int CInterfaceControl::Calibration_StandAlone_Y_Direction(const std::string job_
     return ret;
 }
 
+int CInterfaceControl::Camera_Set_Ready(const std::string job_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_SET_READY  ;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+	
+    return ret;		
+}
+
 int CInterfaceControl::Camera_Set_Auto_Exposure(const std::string job_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

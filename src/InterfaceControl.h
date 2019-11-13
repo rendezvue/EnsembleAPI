@@ -109,6 +109,7 @@ public:
 	int Calibration_StandAlone_Y_Direction(const std::string job_id, int Direction);
 
 	//Camera
+	int Camera_Set_Ready(const std::string job_id) ;
 	int Camera_Set_Auto_Exposure(const std::string job_id);
 	int Camera_Set_Manual_Exposure_Value(const std::string job_id, const int value);
 	int Camera_Get_Manual_Exposure_Value(const std::string job_id);
