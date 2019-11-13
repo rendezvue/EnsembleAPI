@@ -115,6 +115,8 @@ float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 //[3-3] Tool : Offset Distance
 int Ensemble_Tool_Offset_Distance_Set_Direction(const std::string tool_id, const int direction) ;
 int Ensemble_Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
+int Ensemble_Tool_Offset_Distance_Set_Region(const std::string tool_id, const float x, const float y, const float width, const float height) ;
+int Ensemble_Tool_Offset_Distance_Get_Region(const std::string tool_id, float* out_x, float* out_y, float* out_width, float* out_height) ;
 
 
 //[3-3] Tool : Calc Distance

@@ -227,6 +227,8 @@ public:
 	//Tool Offset Distance
 	int Tool_Offset_Distance_Set_Direction(const std::string tool_id, const int direction) ;
 	int Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
+	int Tool_Offset_Distance_Set_Region(const std::string tool_id, const float x, const float y, const float width, const float height) ;
+	int Tool_Offset_Distance_Get_Region(const std::string tool_id, float* out_x, float* out_y, float* out_width, float* out_height) ;
 		
 	//////////////////
  };

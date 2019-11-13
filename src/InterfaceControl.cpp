@@ -2425,6 +2425,68 @@ int CInterfaceControl::Tool_Offset_Distance_Get_Direction(const std::string tool
     return ret;
 }
 
+int CInterfaceControl::Tool_Offset_Distance_Set_Region(const std::string tool_id, const float x, const float y, const float width, const float height)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_TOOL_OFFSET_DISTANCE_SET_REGION;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(x) ;
+	vec_send_data.push_back(y) ;
+	vec_send_data.push_back(width) ;
+	vec_send_data.push_back(height) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
+int CInterfaceControl::Tool_Offset_Distance_Get_Region(const std::string tool_id, float* out_x, float* out_y, float* out_width, float* out_height)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_TOOL_OFFSET_DISTANCE_GET_REGION;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() == 4 )
+	{
+		if( out_x ) (*out_x) = vec_receive_data[0] ;
+		if( out_y ) (*out_y) = vec_receive_data[1] ;
+		if( out_width ) (*out_width) = vec_receive_data[2] ;
+		if( out_height ) (*out_height) = vec_receive_data[3] ;
+	}
+
+    return ret;
+}
+
 int CInterfaceControl::ToolDelOption(const std::string option_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
