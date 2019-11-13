@@ -362,6 +362,11 @@ float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 	return g_cls_interface_control.ToolGetDetectOption(tool_id, option);
 }
 
+int Ensemble_Tool_Offset_Distance_Set_Direction(const std::string tool_id, const int direction)
+{
+	return g_cls_interface_control.Tool_Offset_Distance_Set_Direction(tool_id, direction);
+}
+
 int Ensemble_Tool_Offset_Distance_Get_Direction(const std::string tool_id)
 {
 	return g_cls_interface_control.Tool_Offset_Distance_Get_Direction(tool_id);
