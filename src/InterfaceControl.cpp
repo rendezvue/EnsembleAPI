@@ -2551,6 +2551,35 @@ int CInterfaceControl::Tool_Offset_Distance_Get_Inspection_Tolerance_Info(const 
     return ret;
 }
 
+int CInterfaceControl::Tool_Offset_Distance_Set_Inspection_Tolerance_Info(const std::string tool_id, const float distance_min, const float distance_max, const float angle_min, const float angle_max) 
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_TOOL_OFFSET_DISTANCE_SET_INSPECT_TOLERANCE_INFO;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(distance_min) ;
+	vec_send_data.push_back(distance_max) ;
+	vec_send_data.push_back(angle_min) ;
+	vec_send_data.push_back(angle_max) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
 int CInterfaceControl::ToolDelOption(const std::string option_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
