@@ -382,6 +382,16 @@ int Ensemble_Tool_Offset_Distance_Get_Region(const std::string tool_id, float* o
 	return g_cls_interface_control.Tool_Offset_Distance_Get_Region(tool_id, out_x, out_y, out_width, out_height) ;
 }
 
+int Ensemble_Tool_Offset_Distance_Get_Inspection_Base_Info(const std::string tool_id, float* out_distance, float *out_angle)
+{
+	return g_cls_interface_control.Tool_Offset_Distance_Get_Inspection_Base_Info(tool_id, out_distance, out_angle) ;
+}
+
+int Ensemble_Tool_Offset_Distance_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_distance_min, float *out_distance_max, float* out_angle_min, float *out_angle_max) 
+{
+	return g_cls_interface_control.Tool_Offset_Distance_Get_Inspection_Tolerance_Info(tool_id, out_distance_min, out_distance_max, out_angle_min, out_angle_max) ;
+}
+
 float Ensemble_Tool_Distance_Get_CalcDistance(const std::string tool_id)
 {
 	return Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_DISTANCE) ;

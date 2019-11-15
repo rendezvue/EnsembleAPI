@@ -117,6 +117,8 @@ int Ensemble_Tool_Offset_Distance_Set_Direction(const std::string tool_id, const
 int Ensemble_Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
 int Ensemble_Tool_Offset_Distance_Set_Region(const std::string tool_id, const float x, const float y, const float width, const float height) ;
 int Ensemble_Tool_Offset_Distance_Get_Region(const std::string tool_id, float* out_x, float* out_y, float* out_width, float* out_height) ;
+int Ensemble_Tool_Offset_Distance_Get_Inspection_Base_Info(const std::string tool_id, float* out_distance, float *out_angle) ;
+int Ensemble_Tool_Offset_Distance_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_distance_min, float *out_distance_max, float* out_angle_min, float *out_angle_max) ;
 
 
 //[3-3] Tool : Calc Distance
