@@ -217,7 +217,9 @@ public:
 	
 	//object detct
 	int ToolSetDetectOption(const std::string tool_id, const int option, const float value) ;
-	float ToolGetDetectOption(const std::string tool_id, const int option) ;
+	float ToolGetDetectOption(const std::string tool_id, const int option) ;	
+	int Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
+	int Tool_Detect_Object_Set_Inspection_Tolerance_Info(const std::string tool_id, const float score_threshold) ;
 
 	std::string ToolGetOptionList(const std::string tool_id) ;
 	std::string ToolGetOptionList(const int tool_type) ;

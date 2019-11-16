@@ -112,6 +112,11 @@ int Ensemble_Tool_Del_Ref_Point(const std::string id) ;
 int Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value) ;
 float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option) ;
 
+//[3-3] Tool : Detect Object
+int Ensemble_Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
+int Ensemble_Tool_Detect_Object_Set_Inspection_Tolerance_Info(const std::string tool_id, const float score_threshold) ;
+
+
 //[3-3] Tool : Offset Distance
 int Ensemble_Tool_Offset_Distance_Set_Direction(const std::string tool_id, const int direction) ;
 int Ensemble_Tool_Offset_Distance_Get_Direction(const std::string tool_id) ;
