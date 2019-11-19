@@ -476,9 +476,9 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
 	
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 		
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::OptionGetImage(const std::string option_id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -503,9 +503,9 @@ int CInterfaceControl::OptionGetImage(const std::string option_id, const int typ
 	
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -531,9 +531,9 @@ int CInterfaceControl::Tool_Option_InspectColor_Histogram_GetImage(const std::st
 	
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::Tool_Option_InspectColor_Set_Histogram_UseElement(const std::string option_id, const int color_elem)
@@ -1092,9 +1092,9 @@ int CInterfaceControl::ToolGetImage(const std::string tool_id, const int type_op
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -1117,9 +1117,9 @@ int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_op
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size = p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -1142,9 +1142,9 @@ int CInterfaceControl::ToolGetObjectImage(const std::string tool_id, const int t
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 
@@ -1511,6 +1511,59 @@ int CInterfaceControl::JobResetObject(const std::string id)
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
+}
+
+int CInterfaceControl::Job_Set_Erase(const std::string id, const float x, const float y, const float width, const float height)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_SET_ERASE;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(x) ;
+	vec_send_data.push_back(y) ;
+	vec_send_data.push_back(width) ;
+	vec_send_data.push_back(height) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
+int CInterfaceControl::Job_Del_Erase(const std::string id)
+{
+	
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+	tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+	CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+	if( p_socket == NULL )
+	{
+		printf("Network Error : NULL Socket\n");
+		return ENSEMBLE_ERROR_SOCKET_CONNECT;
+	}
+
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_JOB_DEL_ERASE;
+
+	std::vector<float> vec_send_data ;
+	int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+	ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 }
 
 int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
@@ -2908,9 +2961,9 @@ int CInterfaceControl::Project_GetResultImage(const std::string id, const int ty
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 std::string CInterfaceControl::GetToolList(void)
@@ -3253,9 +3306,9 @@ int CInterfaceControl::Calibration_GetImage(const std::string job_id, int index,
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 
@@ -5030,9 +5083,9 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -5055,9 +5108,9 @@ int CInterfaceControl::GetResultImage(const std::string id, const int type_optio
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 int CInterfaceControl::Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data)
@@ -5080,9 +5133,9 @@ int CInterfaceControl::Job_GetResultImage(const std::string id, const int type_o
 	vec_send_data.push_back(width) ;
 	vec_send_data.push_back(height) ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    ret += p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
+    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_data) ;
 	
-    return ret;
+    return image_buf_size;
 }
 
 

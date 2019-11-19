@@ -432,6 +432,16 @@ int Ensemble_Job_Del_SelectObject(const std::string id)
 	return g_cls_interface_control.JobResetObject(id);
 }
 
+int Ensemble_Job_Set_Erase(const std::string id, const float x, const float y, const float width, const float height)
+{
+	return g_cls_interface_control.Job_Set_Erase(id, x, y, width, height) ;
+}
+
+int Ensemble_Job_Del_Erase(const std::string id)
+{
+	return g_cls_interface_control.Job_Del_Erase(id);
+}
+
 int Ensemble_Job_Set_MaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
 {
 	return g_cls_interface_control.JobSetMaskArea(id, x, y, w, h, inverse);
