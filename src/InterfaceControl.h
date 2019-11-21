@@ -212,7 +212,7 @@ public:
 
 	//object
 	int ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
-	int ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0)  ;
+	int ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0 )  ;
 	int ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data) ;
 	int ToolSetRefPoint(const std::string id, const float x, const float y) ;
 	int ToolDelRefPoint(const std::string id) ;
@@ -223,6 +223,9 @@ public:
 	int Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
 	int Tool_Detect_Object_Set_Inspection_Tolerance_Info(const std::string tool_id, const float score_threshold) ;
 
+	//Detect line
+	int Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) ;
+	
 	std::string ToolGetOptionList(const std::string tool_id) ;
 	std::string ToolGetOptionList(const int tool_type) ;
 	int ToolGetOptionCount(const int tool_type) ;

@@ -341,6 +341,10 @@ int Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float left_t
 	return g_cls_interface_control.ToolSelectObject(tool_id, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y, margin)  ;
 }
 
+int Ensemble_Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) 
+{
+	return g_cls_interface_control.Tool_Detect_Line_Set_SelectObject(tool_id, line1_x, line1_y, line2_x, line2_y, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y)  ;
+}
 
 int Ensemble_Job_Set_DetectOption(const std::string id, const int option, const float value) 
 {

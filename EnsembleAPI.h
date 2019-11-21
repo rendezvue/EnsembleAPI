@@ -118,6 +118,8 @@ float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 int Ensemble_Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
 int Ensemble_Tool_Detect_Object_Set_Inspection_Tolerance_Info(const std::string tool_id, const float score_threshold) ;
 
+//[3-3] Tool : Detect Line
+int Ensemble_Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) ;
 
 //[3-3] Tool : Offset Distance
 int Ensemble_Tool_Offset_Distance_Set_Direction(const std::string tool_id, const int direction) ;

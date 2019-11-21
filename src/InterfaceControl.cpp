@@ -1347,6 +1347,43 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float l
 	return ret;
 }
 
+int CInterfaceControl::Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DETECT_LINE_SELECT_ROTATED_OBJECT;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(line1_x) ;
+	vec_send_data.push_back(line1_y) ;
+	vec_send_data.push_back(line2_x) ;
+	vec_send_data.push_back(line2_y) ;
+	vec_send_data.push_back(left_top_x) ;
+	vec_send_data.push_back(left_top_y) ;
+	vec_send_data.push_back(right_top_x) ;
+	vec_send_data.push_back(right_top_y) ;
+	vec_send_data.push_back(right_bottom_x) ;
+	vec_send_data.push_back(right_bottom_y) ;
+	vec_send_data.push_back(left_bottom_x) ;
+	vec_send_data.push_back(left_bottom_y) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+	
+	return ret;
+}
+
 int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
