@@ -2384,6 +2384,80 @@ int CInterfaceControl::Tool_Detect_Object_Set_Inspection_Tolerance_Info(const st
 	return ret ;
 }
 
+std::string CInterfaceControl::Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return std::string() ; //ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DETECT_CODE_GET_CODE_TYPE;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	std::string str_ret ;
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+
+    return str_ret;
+}
+
+std::string CInterfaceControl::Tool_Detect_Code_Get_Ref_CodeData(const std::string tool_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return std::string() ; //ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DETECT_CODE_GET_CODE_DATA;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	std::string str_ret ;
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+
+    return str_ret;
+}
+
 std::string CInterfaceControl::ToolGetOptionList(const std::string tool_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

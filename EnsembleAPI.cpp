@@ -366,6 +366,16 @@ float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 	return g_cls_interface_control.ToolGetDetectOption(tool_id, option);
 }
 
+std::string Ensemble_Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id)
+{
+	return g_cls_interface_control.Tool_Detect_Code_Get_Ref_CodeType(tool_id) ;
+}
+
+std::string Ensemble_Tool_Detect_Code_Get_Ref_CodeData(const std::string tool_id)
+{
+	return g_cls_interface_control.Tool_Detect_Code_Get_Ref_CodeData(tool_id) ;
+}
+
 int Ensemble_Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold)
 {
 	return g_cls_interface_control.Tool_Detect_Object_Get_Inspection_Tolerance_Info(tool_id, out_score_threshold) ;
