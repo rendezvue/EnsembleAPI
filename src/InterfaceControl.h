@@ -25,10 +25,10 @@ public:
 
 	//-----------------------------
 	//Image and Source
-    int GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
+    int GetImage(const int option, std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int *out_type_option);
 	std::string GetSourceList(void) ;
 	int SetSource(const std::string source) ;
-	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
+	int GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int *out_type_option);
 	//Image and Source
 	//-----------------------------
 
@@ -47,7 +47,7 @@ public:
 	std::string Project_Get_Job_Info(const std::string id) ;
 	int Project_Set_Name(const std::string id, const std::string name) ;
 	std::string Project_Run(const std::string id) ;
-	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
+	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option);
 
 	std::string Job_Type_Get_List_Xml(void) ;
 		
@@ -57,9 +57,9 @@ public:
 	int DelJob(const std::string id) ;
 	std::string JobGetName(const std::string id) ;
 	int JobChangeName(const std::string id, const std::string name) ;
-	int JobGetImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data) ;
-	int JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data) ;
-	int Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data);
+	int JobGetImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int *out_type_option) ;
+	int JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int *out_type_option) ;
+	int Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int *out_type_option);
 	int JobSetImage(const std::string id) ;
 	int JobSetDetectArea(const std::string id, const float x, const float y, const float width, const float height) ;
 	int JobSetZoom(const std::string id, const float x, const float y, const float width, const float height) ;
@@ -88,7 +88,7 @@ public:
 	int Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size) ;
 	int Calibration_Add(const std::string job_id, float robot_x, float robot_y) ;
 	int Calibration_GetCount(const std::string job_id) ;
-	int Calibration_GetImage(const std::string job_id, int index, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int Calibration_GetImage(const std::string job_id, int index, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;
 	int Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y);
 	int Calibration_Del(const std::string job_id, int index);
 	int Calibration_Clear(const std::string job_id);
@@ -162,10 +162,10 @@ public:
 	int DelTool(const std::string tool_id) ;
 
 	//Tool Option
-	int OptionGetImage(const std::string option_id, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int OptionGetImage(const std::string option_id, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;
 
 	//Tool Option : Inspect Color
-	int Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;
 	int Tool_Option_InspectColor_Set_Histogram_UseElement(const std::string option_id, const int color_elem) ;
 	int Tool_Option_InspectColor_Get_Histogram_UseElement(const std::string option_id) ;
 	int Tool_Option_InspectColor_Set_Histogram_Range(const std::string option_id, const int color_elem, const float min, const float max) ;
@@ -192,7 +192,7 @@ public:
 	int Tool_Option_InspectDiameter_Set_Tolerance(const std::string option_id, const float min, const float max) ;
 	
 	////
-	int ToolGetImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int ToolGetImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;
 	std::string ToolGetName(const std::string tool_id) ;
 	int ToolSetName(const std::string tool_id, const std::string name) ;
 
@@ -213,7 +213,7 @@ public:
 	//object
 	int ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
 	int ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0 )  ;
-	int ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data) ;
+	int ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;
 	int ToolSetRefPoint(const std::string id, const float x, const float y) ;
 	int ToolDelRefPoint(const std::string id) ;
 	
@@ -245,6 +245,6 @@ public:
 	int Tool_Offset_Distance_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_distance_min, float *out_distance_max, float* out_angle_min, float *out_angle_max)  ;
 	int Tool_Offset_Distance_Set_Inspection_Tolerance_Info(const std::string tool_id, const float distance_min, const float distance_max, const float angle_min, const float angle_max)  ;
 	//////////////////
- };
+};
 
 #endif

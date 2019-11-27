@@ -42,20 +42,20 @@ int Ensemble_Source_Set(const std::string source)
 }
 
 
-int Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, const int width, const int height, unsigned char** data, int *out_type_option)
 {
     int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.GetImage(option, id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.GetImage(option, id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int *out_type_option)
 {
     int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.GetImage(option, id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.GetImage(option, id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -63,15 +63,15 @@ int Ensemble_Source_Get_Image(const int option, std::string id, const int type_o
     return ret ;
 }
 
-int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int *out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int *out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -79,7 +79,7 @@ int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsig
 	if( out_width != NULL ) if( (*out_width) > 0 ) get_width = (*out_width) ;
     if( out_height != NULL ) if( (*out_height) > 0 )  get_height = (*out_height) ;
 
-    int ret = g_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -87,15 +87,15 @@ int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsig
     return ret ;
 }
 
-int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	 int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.Job_GetResultImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.Job_GetResultImage(id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -103,7 +103,7 @@ int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, un
 	if( out_width != NULL ) get_width = (*out_width) ;
 	if( out_height != NULL ) get_height = (*out_height) ;
 
-    int ret = g_cls_interface_control.Job_GetResultImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.Job_GetResultImage(id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -177,15 +177,15 @@ std::string Ensemble_Poject_Run(const std::string id)
 	return g_cls_interface_control.Project_Run(id);
 }
 
-int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	 int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.Project_GetResultImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.Project_GetResultImage(id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -193,7 +193,7 @@ int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option
 	if( out_width != NULL ) get_width = (*out_width) ;
 	if( out_height != NULL ) get_height = (*out_height) ;
 
-    int ret = g_cls_interface_control.Project_GetResultImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.Project_GetResultImage(id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -226,20 +226,20 @@ int Ensemble_Job_Set_Name(const std::string id, const std::string name)
 	return g_cls_interface_control.JobChangeName(id, name);
 }
 
-int Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, unsigned char** data) 
+int Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.JobGetImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.JobGetImage(id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Job_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+int Ensemble_Job_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.JobGetImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.JobGetImage(id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -247,20 +247,20 @@ int Ensemble_Job_Get_Image(const std::string id, const int type_option, unsigned
     return ret ;
 }
 
-int Ensemble_Job_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, unsigned char** data)
+int Ensemble_Job_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.JobGetObjectImage(id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.JobGetObjectImage(id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.JobGetObjectImage(id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.JobGetObjectImage(id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -268,20 +268,20 @@ int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, un
     return ret ;
 }
 
-int Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, unsigned char** data)
+int Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.ToolGetObjectImage(tool_id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.ToolGetObjectImage(tool_id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height) 
+int Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.ToolGetObjectImage(tool_id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.ToolGetObjectImage(tool_id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -553,20 +553,20 @@ int Ensemble_Tool_Set_Name(const std::string tool_id, const std::string name)
 	return g_cls_interface_control.ToolSetName(tool_id, name);
 }
 
-int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, unsigned char** data) 
+int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.ToolGetImage(tool_id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.ToolGetImage(tool_id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.ToolGetImage(tool_id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.ToolGetImage(tool_id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -575,20 +575,20 @@ int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, un
 }
 
 //Option
-int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option,  const int width, const int height, unsigned char** data)
+int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.OptionGetImage(option_id, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.OptionGetImage(option_id, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.OptionGetImage(option_id, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.OptionGetImage(option_id, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -596,20 +596,20 @@ int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_op
     return ret ;
 }
 
-int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option,  const int width, const int height, unsigned char** data)
+int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.Tool_Option_InspectColor_Histogram_GetImage(option_id, color_num, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.Tool_Option_InspectColor_Histogram_GetImage(option_id, color_num, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.Tool_Option_InspectColor_Histogram_GetImage(option_id, color_num, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.Tool_Option_InspectColor_Histogram_GetImage(option_id, color_num, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
@@ -813,20 +813,20 @@ int Ensemble_Job_Calibration_GetCount(const std::string job_id)
 	return g_cls_interface_control.Calibration_GetCount(job_id);
 }
 
-int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data)
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option)
 {
     int fixed_width = width ;
     int fixed_height = height ;
 
-    return g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, fixed_width, fixed_height, data);
+    return g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, fixed_width, fixed_height, data, out_type_option);
 }
 
-int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, unsigned char** data, int* out_width, int* out_height)
+int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option)
 {
     int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, get_width, get_height, data);
+    int ret = g_cls_interface_control.Calibration_GetImage(job_id, index, type_option, get_width, get_height, data, out_type_option);
 
     if( out_width != NULL ) (*out_width) = get_width ;
     if( out_height != NULL ) (*out_height) = get_height ;
