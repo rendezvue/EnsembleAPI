@@ -226,6 +226,8 @@ public:
 	//detect code
 	std::string Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id) ;
 	std::string Tool_Detect_Code_Get_Ref_CodeData(const std::string tool_id) ;
+	float Tool_Detect_Code_Get_Padding(const std::string tool_id) ;
+	int Tool_Detect_Code_Set_Padding(const std::string tool_id, const float padding_rate) ;
 
 	//Detect line
 	int Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) ;

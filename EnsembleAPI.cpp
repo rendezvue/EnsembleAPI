@@ -376,6 +376,16 @@ std::string Ensemble_Tool_Detect_Code_Get_Ref_CodeData(const std::string tool_id
 	return g_cls_interface_control.Tool_Detect_Code_Get_Ref_CodeData(tool_id) ;
 }
 
+float Ensemble_Tool_Detect_Code_Get_Padding(const std::string tool_id)
+{
+	return g_cls_interface_control.Tool_Detect_Code_Get_Padding(tool_id) ;
+}
+
+int Ensemble_Tool_Detect_Code_Set_Padding(const std::string tool_id, const float padding_rate)
+{
+	return g_cls_interface_control.Tool_Detect_Code_Set_Padding(tool_id, padding_rate) ;
+}
+
 int Ensemble_Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold)
 {
 	return g_cls_interface_control.Tool_Detect_Object_Get_Inspection_Tolerance_Info(tool_id, out_score_threshold) ;

@@ -2458,6 +2458,63 @@ std::string CInterfaceControl::Tool_Detect_Code_Get_Ref_CodeData(const std::stri
     return str_ret;
 }
 
+float CInterfaceControl::Tool_Detect_Code_Get_Padding(const std::string tool_id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DETECT_CODE_GET_PADDING;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	float value = 0.0 ;
+	if( vec_receive_data.size() ==1 )
+	{
+		value = vec_receive_data[0] ;
+	}
+
+	return value ;
+}
+
+int CInterfaceControl::Tool_Detect_Code_Set_Padding(const std::string tool_id, const float padding_rate)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_TOOL_DETECT_CODE_SET_PADDING;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(padding_rate) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret ;
+}
+
 std::string CInterfaceControl::ToolGetOptionList(const std::string tool_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

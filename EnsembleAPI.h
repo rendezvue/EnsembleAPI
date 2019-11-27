@@ -117,6 +117,8 @@ float Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
 //[3-3] Tool : Detect Code
 std::string Ensemble_Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id) ;
 std::string Ensemble_Tool_Detect_Code_Get_Ref_CodeData(const std::string tool_id) ;
+float Ensemble_Tool_Detect_Code_Get_Padding(const std::string tool_id) ;
+int Ensemble_Tool_Detect_Code_Set_Padding(const std::string tool_id, const float padding_rate) ;
 
 
 //[3-3] Tool : Detect Object
