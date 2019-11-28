@@ -3072,6 +3072,63 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 	return ret;
 }
 
+int CInterfaceControl::Poject_Set_Trigger_Run(const std::string id, const bool b_set)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_PRJ_SET_TRIGGER_RUN;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(b_set) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+	
+	return ret;
+}
+
+int CInterfaceControl::Poject_Get_Trigger_Run(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_PRJ_GET_TRIGGER_RUN;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int b_trigger_run = 0 ;
+	if( vec_receive_data.size() == 1 )
+	{
+		b_trigger_run = vec_receive_data[0] ;
+	}
+	return b_trigger_run;
+}
+
+
 std::string CInterfaceControl::Project_Run(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

@@ -46,6 +46,8 @@ public:
 	std::string Project_Get_Name(const std::string id) ;
 	std::string Project_Get_Job_Info(const std::string id) ;
 	int Project_Set_Name(const std::string id, const std::string name) ;
+	int Poject_Set_Trigger_Run(const std::string id, const bool b_set) ;
+	int Poject_Get_Trigger_Run(const std::string id) ;
 	std::string Project_Run(const std::string id) ;
 	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option);
 

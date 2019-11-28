@@ -172,6 +172,16 @@ int Ensemble_Project_Set_Name(const std::string project_id, const std::string na
 	return g_cls_interface_control.Project_Set_Name(project_id, name);
 }
 
+int Ensemble_Poject_Set_Trigger_Run(const std::string id, const bool b_set)
+{
+	return g_cls_interface_control.Poject_Set_Trigger_Run(id, b_set);
+}
+
+int Ensemble_Poject_Get_Trigger_Run(const std::string id)
+{
+	return g_cls_interface_control.Poject_Get_Trigger_Run(id);
+}
+
 std::string Ensemble_Poject_Run(const std::string id)
 {
 	return g_cls_interface_control.Project_Run(id);
