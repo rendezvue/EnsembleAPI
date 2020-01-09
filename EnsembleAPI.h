@@ -6,7 +6,7 @@
 #include <string>
 
 //[0] Connect
-int Ensemble_Network_Connect(const char* ip);
+int Ensemble_Network_Connect(const char* ip, const int port);
 void Ensemble_Network_Disconnect(void);
 int Ensemble_Network_IsOnline(void);
 

@@ -3,9 +3,9 @@
 
 CInterfaceControl g_cls_interface_control;
 
-int Ensemble_Network_Connect(const char* ip)
+int Ensemble_Network_Connect(const char* ip, const int port)
 {
-    return g_cls_interface_control.CreateSocket(ip, NETWORK_PORT_CON);
+    return g_cls_interface_control.CreateSocket(ip, port);
 }
 
 void Ensemble_Network_Disconnect()
