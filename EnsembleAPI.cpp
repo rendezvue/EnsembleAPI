@@ -818,12 +818,12 @@ int Ensemble_Job_Calibration_Add(const std::string job_id, float robot_x, float 
 	return g_cls_interface_control.Calibration_Add(job_id, robot_x, robot_y);
 }
 
-int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, int *out_squre_mm_size)
+int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size)
 {
 	return g_cls_interface_control.Calibration_Get_Chess_Info(job_id, out_x_num, out_y_num, out_squre_mm_size) ;
 }
 
-int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size)
+int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size)
 {
 	return g_cls_interface_control.Calibration_Set_Chess_Info(job_id, x_num, y_num, squre_mm_size) ;
 }

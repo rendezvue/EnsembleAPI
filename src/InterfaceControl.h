@@ -86,8 +86,8 @@ public:
 	std::string JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y);
 
 	//Calibration
-	int Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, int *out_squre_mm_size) ;
-	int Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size) ;
+    int Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size) ;
+    int Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size) ;
 	int Calibration_Add(const std::string job_id, float robot_x, float robot_y) ;
 	int Calibration_GetCount(const std::string job_id) ;
 	int Calibration_GetImage(const std::string job_id, int index, const int type_option, int& width, int& height, unsigned char** out_data, int* out_type_option) ;

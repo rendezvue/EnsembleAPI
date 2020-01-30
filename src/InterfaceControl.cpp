@@ -3391,7 +3391,7 @@ std::string CInterfaceControl::JobRun(const std::string id, const float masking_
 
 //Calibration
 
-int CInterfaceControl::Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, int *out_squre_mm_size) 
+int CInterfaceControl::Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3423,7 +3423,7 @@ int CInterfaceControl::Calibration_Get_Chess_Info(const std::string job_id, int 
 	return ret ;
 }
 
-int CInterfaceControl::Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size)
+int CInterfaceControl::Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 

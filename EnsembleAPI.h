@@ -188,8 +188,8 @@ int Ensemble_Tool_Option_Crack_Get_InspectLevel(const std::string option_id);
 int Ensemble_Tool_Option_Crack_Set_InspectLevel(const std::string option_id, const int level);
 
 //[5] Calibration
-int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, int *out_squre_mm_size);
-int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const int squre_mm_size);
+int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size);
+int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size);
 int Ensemble_Job_Calibration_Add(const std::string job_id, float robot_x, float robot_y);
 int Ensemble_Job_Calibration_GetCount(const std::string job_id);
 int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option) ;
