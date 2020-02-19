@@ -26,14 +26,14 @@ int CInterfaceControl::IsOnline(void)
 
     unsigned int command = ENSEMBLE_COMMAND_NETWORK_IS_ONLINE;
 
-    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE send ") ;
+    ////qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE send ") ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
 
-    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive") ;
+    ////qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive") ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
-    //qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive = %d", ret) ;
+    ////qDebug("ENSEMBLE_COMMAND_NETWORK_IS_ONLINE redeive = %d", ret) ;
 
     if( vec_receive_data.size() == 1 )
     {
@@ -465,9 +465,9 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
 
     unsigned int command = ENSEMBLE_JOB_GET_IMAGE;
 
-	qDebug("JobGetImage : type_option = %d", (unsigned int)type_option) ;
-	qDebug("JobGetImage : width = %d", width) ;
-	qDebug("JobGetImage : height = %d", height) ;
+	//qDebug("JobGetImage : type_option = %d", (unsigned int)type_option) ;
+	//qDebug("JobGetImage : width = %d", width) ;
+	//qDebug("JobGetImage : height = %d", height) ;
 	
 	std::vector<float> vec_send_data ;
     vec_send_data.push_back(type_option) ;
@@ -2936,7 +2936,7 @@ std::string CInterfaceControl::Project_Get_List(void)
         return str_ret;
     }
 
-	qDebug("Project_Get_List") ;
+	//qDebug("Project_Get_List") ;
 	
     unsigned int command = ENSEMBLE_PRJ_GET_LIST;
 		
@@ -2947,7 +2947,7 @@ std::string CInterfaceControl::Project_Get_List(void)
 
 	int receive_size = vec_receive_data.size() ;
 
-	qDebug("receive_size = %d", receive_size)  ;
+	//qDebug("receive_size = %d", receive_size)  ;
 	
 	if( receive_size > 0 )
 	{

@@ -28,11 +28,11 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
     m_ip = ip;
     m_port = port ;
 
-    qDebug("CreateSocket") ;
+    //qDebug("CreateSocket") ;
 
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    qDebug("CreateSocket : new Client") ;
+    //qDebug("CreateSocket : new Client") ;
 
     int ret;
 
@@ -57,7 +57,7 @@ int CInterface::CreateSocket(const char* ip, const unsigned int port)
 
     ret = m_cls_eth_client.Open(m_ip.c_str(), m_port);
 
-     qDebug("CreateSocket : open ret=%d", ret) ;
+    //qDebug("CreateSocket : open ret=%d", ret) ;
 
     return ret;
 }
@@ -66,9 +66,9 @@ void CInterface::DeleteSocket()
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
-    qDebug("Delete Socket : Close") ;
+    //qDebug("Delete Socket : Close") ;
 
     m_cls_eth_client.Close();
 
-     qDebug("Delete Socket : Close 4") ;
+    //qDebug("Delete Socket : Close 4") ;
 }

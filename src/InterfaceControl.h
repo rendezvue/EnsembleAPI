@@ -10,7 +10,7 @@
 #include "EthernetClient.h"
 #include "EthernetClientControlData.h"
 
-#include <qdebug.h>
+//#include <qdebug.h>
 
 #define TRANS_IAMGE_WIDTH		640
 #define TRANS_IAMGE_HEIGHT		480

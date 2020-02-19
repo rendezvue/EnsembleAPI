@@ -6,7 +6,7 @@
 #include <boost/thread.hpp>
 #include "EthernetClient.h"
 
-#include <qdebug.h>
+//nclude <qdebug.h>
 
 #include <string>
 
