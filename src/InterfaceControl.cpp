@@ -5424,7 +5424,7 @@ int CInterfaceControl::SetSource(const std::string source)
     return ret;
 }
 
-int CInterfaceControl::Camera_GrabImage_By_User(const std::string job_id)
+int CInterfaceControl::Camera_Capture_SW_Trigger(const std::string job_id)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -5439,7 +5439,7 @@ int CInterfaceControl::Camera_GrabImage_By_User(const std::string job_id)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_CAMERA_GRAB_BY_USER  ;
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_SW_TRIGGER  ;
 
     std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;

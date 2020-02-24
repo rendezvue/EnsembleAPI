@@ -258,7 +258,7 @@ int Ensemble_Camera_Set_Flip_H(const std::string job_id, const bool flip);
 int Ensemble_Camera_Get_Flip_H(const std::string job_id);
 int Ensemble_Camera_Set_Factory_Reset(const std::string job_id);
 int Ensemble_Camera_Set_Config_Run(const std::string job_id);
-int Ensemble_Camera_GrabImage_By_User(const std::string job_id);
+int Ensemble_Camera_Capture_SW_Trigger(const std::string job_id);
 int Ensemble_Digital_IO_GetIn(const std::string job_id);
 int Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val);
 

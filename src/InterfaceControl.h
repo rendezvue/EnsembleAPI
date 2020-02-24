@@ -156,7 +156,7 @@ public:
 	int Camera_Set_Factory_Reset(const std::string job_id);
 	int Camera_Set_Config_Run(const std::string job_id);
 
-    int Camera_GrabImage_By_User(const std::string job_id);
+    int Camera_Capture_SW_Trigger(const std::string job_id);
     int Digital_IO_GetIn(const std::string job_id);
     int Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val);
 
