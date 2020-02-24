@@ -1153,4 +1153,18 @@ int Ensemble_Camera_Set_Config_Run(const std::string job_id)
 	return g_cls_interface_control.Camera_Set_Config_Run(job_id);
 }
 
+int Ensemble_Camera_GrabImage_By_User(const std::string job_id)
+{
+    return g_cls_interface_control.Camera_GrabImage_By_User(job_id);
+}
+
+int Ensemble_Digital_IO_GetIn(const std::string job_id)
+{
+    return g_cls_interface_control.Digital_IO_GetIn(job_id);
+}
+
+int Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val)
+{
+    return g_cls_interface_control.Digital_IO_SetOut(job_id, pin_num, pin_val);
+}
 
