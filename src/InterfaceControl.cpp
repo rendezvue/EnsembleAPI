@@ -5424,5 +5424,85 @@ int CInterfaceControl::SetSource(const std::string source)
     return ret;
 }
 
+int CInterfaceControl::Camera_GrabImage_By_User(const std::string job_id)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_GRAB_BY_USER  ;
+
+    std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+int CInterfaceControl::Digital_IO_GetIn(const std::string job_id)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_DIGITAL_IO_GET_IN  ;
+
+    std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    ret = false ;
+    if( vec_receive_data.size() > 0 )
+    {
+        ret = vec_receive_data[0] ;
+    }
+
+    return ret;
+}
+
+int CInterfaceControl::Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_DIGITAL_IO_SET_OUT  ;
+
+    std::vector<float> vec_send_data ;
+    vec_send_data.push_back(pin_num) ;
+    vec_send_data.push_back(pin_val) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
 
