@@ -1,5 +1,6 @@
 #include "InterfaceControl.h"
 #include "ErrorType.h"
+#include <QDebug>
 
 CInterfaceControl::CInterfaceControl(void)
 {
@@ -4183,6 +4184,7 @@ int CInterfaceControl::Camera_Get_Manual_Exposure_Value(const std::string job_id
 	{
 		ret = vec_receive_data[0] ;
 	}
+    qDebug("ret = %d\n",ret);
 	
     return ret;		
 }
