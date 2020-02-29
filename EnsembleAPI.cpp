@@ -147,9 +147,9 @@ int CEnsembleAPI::Ensemble_Task_Set_View_Option(const std::string id, const bool
 	return m_cls_interface_control.Base_Set_View_Option(id, view);
 }
 
-int CEnsembleAPI::Ensemble_Task_File_Save(void) 		//save all
+int CEnsembleAPI::Ensemble_Task_File_Save(const bool b_overwrite) 		//save all
 {
-	return m_cls_interface_control.Task_Save();
+	return m_cls_interface_control.Task_Save(b_overwrite);
 }
 
 int CEnsembleAPI::Ensemble_Task_File_Load(void) //load all

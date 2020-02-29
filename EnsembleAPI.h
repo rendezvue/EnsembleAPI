@@ -43,7 +43,7 @@ public:
 	int Ensemble_Task_Get_View_Option(const std::string id) ;
 	int Ensemble_Task_Set_Run_Option(const std::string id, const bool run) ;
 	int Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
-	int Ensemble_Task_File_Save(void) ;		//save all
+	int Ensemble_Task_File_Save(const bool b_overwrite=false) ;		//save all
 	int Ensemble_Task_File_Load(void) ;	//load all
 
 	//Information

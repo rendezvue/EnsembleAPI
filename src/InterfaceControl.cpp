@@ -183,7 +183,7 @@ int CInterfaceControl::Base_Set_View_Option(const std::string id, const bool vie
 	return ret ;
 }
 
-int CInterfaceControl::Task_Save(void)
+int CInterfaceControl::Task_Save(const bool b_overwrite)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -200,7 +200,9 @@ int CInterfaceControl::Task_Save(void)
 
     unsigned int command = ENSEMBLE_TASK_SAVE;
 
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(b_overwrite) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
