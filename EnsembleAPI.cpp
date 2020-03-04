@@ -1172,4 +1172,18 @@ int CEnsembleAPI::Ensemble_Camera_Set_Config_Run(const std::string job_id)
 	return m_cls_interface_control.Camera_Set_Config_Run(job_id);
 }
 
+int CEnsembleAPI::Ensemble_Camera_Capture_SW_Trigger(const std::string job_id)
+{
+    return m_cls_interface_control.Camera_Capture_SW_Trigger(job_id);
+}
+
+int CEnsembleAPI::Ensemble_Digital_IO_GetIn(const std::string job_id)
+{
+    return m_cls_interface_control.Digital_IO_GetIn(job_id);
+}
+
+int CEnsembleAPI::Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val)
+{
+    return m_cls_interface_control.Digital_IO_SetOut(job_id, pin_num, pin_val);
+}
 
