@@ -201,6 +201,10 @@ public:
 	////[3-4] Option Inspect Crack
 	int Ensemble_Tool_Option_Crack_Get_InspectLevel(const std::string option_id);
 	int Ensemble_Tool_Option_Crack_Set_InspectLevel(const std::string option_id, const int level);
+	
+	////[3-4] Option Inspect Color Compare
+	int Ensemble_Tool_Option_ColorCompare_Get_InspectLevel(const std::string option_id);
+	int Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::string option_id, const int level);
 
 	//[5] Calibration
 	int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size);
