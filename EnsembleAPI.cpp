@@ -799,7 +799,7 @@ int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Get_InspectLevel(const std::
 
 int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::string option_id, const int level)
 {
-	return m_cls_interface_control.Tool_Option_ColorCompare_GetInspectLevel(option_id);
+	return m_cls_interface_control.Tool_Option_ColorCompare_SetInspectLevel(option_id, level);
 }
 
 std::string CEnsembleAPI::Ensemble_Job_Run(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
