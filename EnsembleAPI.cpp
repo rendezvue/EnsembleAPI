@@ -1197,3 +1197,19 @@ int CEnsembleAPI::Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_n
     return m_cls_interface_control.Digital_IO_SetOut(job_id, pin_num, pin_val);
 }
 
+std::string Ensemble_Update_Get_Version_List(void)
+{
+	return g_cls_interface_control.Update_Get_Version_List();
+}
+
+std::string Ensemble_Update_Get_Current_Version(void)
+{
+	return g_cls_interface_control.Update_Get_Current_Version();
+}
+
+int Ensemble_Update_Set_Version(std::string version_string)
+{
+	return g_cls_interface_control.Update_Set_Version(version_string);
+}
+
+
