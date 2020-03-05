@@ -2331,6 +2331,64 @@ int CInterfaceControl::Tool_Option_ColorCompare_SetInspectLevel(const std::strin
 	return ret;
 }
 
+int CInterfaceControl::Tool_Option_ColorCompare_GetSensitivity(const std::string option_id) 
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLORCOMPARE_GET_SENSITIVITY;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int level = -1 ;
+	if( vec_receive_data.size() == 1 )
+	{
+		level = vec_receive_data[0] ;
+	}
+
+	ret = level ;
+	
+    return ret;
+}
+
+int CInterfaceControl::Tool_Option_ColorCompare_SetSensitivity(const std::string option_id, const int level) 
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+		
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+	//printf("id - %d\n", id);
+
+	unsigned int command = ENSEMBLE_TOOL_OPTION_INSPECT_COLORCOMPARE_SET_SENSITIVITY;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(level) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
 int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int option, const float value)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

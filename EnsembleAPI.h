@@ -203,6 +203,8 @@ public:
 	int Ensemble_Tool_Option_Crack_Set_InspectLevel(const std::string option_id, const int level);
 	
 	////[3-4] Option Inspect Color Compare
+	int Ensemble_Tool_Option_ColorCompare_Get_Sensitivity(const std::string option_id);
+	int Ensemble_Tool_Option_ColorCompare_Set_Sensitivity(const std::string option_id, const int level);
 	int Ensemble_Tool_Option_ColorCompare_Get_InspectLevel(const std::string option_id);
 	int Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::string option_id, const int level);
 

@@ -802,6 +802,16 @@ int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::
 	return m_cls_interface_control.Tool_Option_ColorCompare_SetInspectLevel(option_id, level);
 }
 
+int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Get_Sensitivity(const std::string option_id)
+{
+	return m_cls_interface_control.Tool_Option_ColorCompare_GetSensitivity(option_id);
+}
+
+int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Set_Sensitivity(const std::string option_id, const int level)
+{
+	return m_cls_interface_control.Tool_Option_ColorCompare_SetSensitivity(option_id, level);
+}
+
 std::string CEnsembleAPI::Ensemble_Job_Run(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
 {
 	return m_cls_interface_control.JobRun(id, masking_left_top_x, masking_left_top_y, masking_right_top_x, masking_right_top_y, masking_right_bottom_x, masking_right_bottom_y, masking_left_bottom_x, masking_left_bottom_y) ;

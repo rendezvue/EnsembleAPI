@@ -219,6 +219,8 @@ public:
 	//color compare
 	int Tool_Option_ColorCompare_GetInspectLevel(const std::string option_id) ;
 	int Tool_Option_ColorCompare_SetInspectLevel(const std::string option_id, const int level) ;
+	int Tool_Option_ColorCompare_GetSensitivity(const std::string option_id) ;
+	int Tool_Option_ColorCompare_SetSensitivity(const std::string option_id, const int level) ;
 
 	//object
 	int ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
