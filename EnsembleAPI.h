@@ -4,6 +4,7 @@
 #include "ErrorType.h"
 #include "EnsembleCommon.h"
 #include <string>
+#include <vector>
 
 //[0] Connect
 int Ensemble_Network_Connect(const char* ip, const int port);
@@ -261,5 +262,10 @@ int Ensemble_Camera_Set_Config_Run(const std::string job_id);
 int Ensemble_Camera_Capture_SW_Trigger(const std::string job_id);
 int Ensemble_Digital_IO_GetIn(const std::string job_id);
 int Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val);
+
+//[7] Ensemble binary Update Tool
+std::string Ensemble_Update_Get_Version_List(void);
+std::string Ensemble_Update_Get_Current_Version(void);
+int Ensemble_Update_Set_Version(std::string version_string);
 
 #endif

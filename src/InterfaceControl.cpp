@@ -5508,3 +5508,108 @@ int CInterfaceControl::Digital_IO_SetOut(const std::string job_id, int pin_num, 
     return ret;
 }
 
+std::string CInterfaceControl::Update_Get_Current_Version(void)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
+    unsigned int command = ENSEMBLE_UPDATE_GET_CURRENT_VERSION;
+		
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+	
+    return str_ret;
+}
+
+std::string CInterfaceControl::Update_Get_Version_List(void)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+	std::string str_ret ;
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return str_ret;
+    }
+
+    unsigned int command = ENSEMBLE_UPDATE_GET_VERSION_LIST;
+		
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size > 0 )
+	{
+		str_ret.resize(receive_size);
+
+		for( int i=0 ; i<receive_size ; i++ )
+		{
+			str_ret[i] = (char)vec_receive_data[i] ;
+		}
+	}
+	
+    return str_ret;
+}
+
+int CInterfaceControl::Update_Set_Version(std::string version_string)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    std::vector<float> vec_send_data ;
+    if( !version_string.empty() )
+    {
+        int data_size = version_string.size() ;
+        for( int i=0 ; i<data_size ; i++ )
+        {
+            float data = version_string[i] ;
+            vec_send_data.push_back(data) ;
+        }
+    }
+
+    unsigned int command = ENSEMBLE_UPDATE_SET_VERSION;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret ;
+}
+
