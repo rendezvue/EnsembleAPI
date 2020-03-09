@@ -156,9 +156,10 @@ public:
 	int Camera_Set_Factory_Reset(const std::string job_id);
 	int Camera_Set_Config_Run(const std::string job_id);
 
-    int Camera_Capture_SW_Trigger(const std::string job_id);
-    int Digital_IO_GetIn(const std::string job_id);
-    int Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val);
+    int Camera_Capture_SW_Trigger(void);
+	int Camera_Capture_HW_Trigger(void);
+    int Digital_IO_GetIn(void);
+    int Digital_IO_SetOut(int pin_num, int pin_val);
 
 	std::string GetToolList(void) ;
     std::string GetToolTypeName(const int type) ;

@@ -280,9 +280,10 @@ public:
 	int Ensemble_Camera_Set_Factory_Reset(const std::string job_id);
 	int Ensemble_Camera_Set_Config_Run(const std::string job_id);
 
-	int Ensemble_Camera_Capture_SW_Trigger(const std::string job_id) ;
-	int Ensemble_Digital_IO_GetIn(const std::string job_id) ;
-	int Ensemble_Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val) ;
+	int Ensemble_Camera_Capture_SW_Trigger(void) ;
+	int Ensemble_Camera_Capture_HW_Trigger(void) ;
+	int Ensemble_Digital_IO_GetIn(void) ;
+	int Ensemble_Digital_IO_SetOut(int pin_num, int pin_val) ;
 };
 
 #endif

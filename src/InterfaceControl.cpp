@@ -5544,7 +5544,7 @@ int CInterfaceControl::SetSource(const std::string source)
     return ret;
 }
 
-int CInterfaceControl::Camera_Capture_SW_Trigger(const std::string job_id)
+int CInterfaceControl::Camera_Capture_SW_Trigger(void)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -5562,13 +5562,39 @@ int CInterfaceControl::Camera_Capture_SW_Trigger(const std::string job_id)
     unsigned int command = ENSEMBLE_CAMERA_CAPTURE_SW_TRIGGER  ;
 
     std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
     return ret;
 }
-int CInterfaceControl::Digital_IO_GetIn(const std::string job_id)
+
+int CInterfaceControl::Camera_Capture_HW_Trigger(void)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_HW_TRIGGER  ;
+
+    std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
+int CInterfaceControl::Digital_IO_GetIn(void)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -5586,7 +5612,7 @@ int CInterfaceControl::Digital_IO_GetIn(const std::string job_id)
     unsigned int command = ENSEMBLE_DIGITAL_IO_GET_IN  ;
 
     std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
@@ -5599,7 +5625,7 @@ int CInterfaceControl::Digital_IO_GetIn(const std::string job_id)
     return ret;
 }
 
-int CInterfaceControl::Digital_IO_SetOut(const std::string job_id, int pin_num, int pin_val)
+int CInterfaceControl::Digital_IO_SetOut(int pin_num, int pin_val)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -5619,7 +5645,7 @@ int CInterfaceControl::Digital_IO_SetOut(const std::string job_id, int pin_num, 
     std::vector<float> vec_send_data ;
     vec_send_data.push_back(pin_num) ;
     vec_send_data.push_back(pin_val) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, job_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
