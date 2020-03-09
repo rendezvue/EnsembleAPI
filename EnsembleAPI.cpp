@@ -1202,3 +1202,19 @@ int CEnsembleAPI::Ensemble_Digital_IO_SetOut(int pin_num, int pin_val)
     return m_cls_interface_control.Digital_IO_SetOut(pin_num, pin_val);
 }
 
+std::string CEnsembleAPI::Ensemble_Update_Get_Version_List(void)
+{
+    return m_cls_interface_control.Update_Get_Version_List();
+}
+
+std::string CEnsembleAPI::Ensemble_Update_Get_Current_Version(void)
+{
+    return m_cls_interface_control.Update_Get_Current_Version();
+}
+
+int CEnsembleAPI::Ensemble_Update_Set_Version(std::string version_string)
+{
+    return m_cls_interface_control.Update_Set_Version(version_string);
+}
+
+

@@ -284,6 +284,11 @@ public:
 	int Ensemble_Camera_Capture_HW_Trigger(void) ;
 	int Ensemble_Digital_IO_GetIn(void) ;
 	int Ensemble_Digital_IO_SetOut(int pin_num, int pin_val) ;
+
+	//[7] Ensemble binary Update Tool
+	std::string Ensemble_Update_Get_Version_List(void);
+	std::string Ensemble_Update_Get_Current_Version(void);
+	int Ensemble_Update_Set_Version(std::string version_string);
 };
 
 #endif
