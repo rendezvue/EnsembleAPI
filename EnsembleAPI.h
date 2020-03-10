@@ -31,10 +31,10 @@ public:
 
 
 	//[2] Get Image Stream
-	int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, const int width, const int height, unsigned char** data, int *out_type_option) ;
-	int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int *out_type_option) ;
-	int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int *out_type_option) ;
-	int Ensemble_Result_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int *out_type_option) ;
+	int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Source_Get_Image(const int option, const std::string id, const int type_option, ImageBuf* p_buf) ;
+	int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
 
 
 	//[3] Job Management
@@ -64,8 +64,8 @@ public:
 	int Ensemble_Poject_Get_Trigger_Run(const std::string id) ;
 
 	std::string Ensemble_Poject_Run(const std::string id) ;
-	int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+	int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
 
 
 	//[3-2] Job
@@ -74,10 +74,10 @@ public:
 	int Ensemble_Job_Del(const std::string id) ;
 	std::string Ensemble_Job_Get_Name(const std::string id) ;
 	int Ensemble_Job_Set_Name(const std::string id, const std::string name) ;
-	int Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Job_Get_Image(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
-	int Ensemble_Job_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+	int Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Job_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
+	int Ensemble_Job_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Job_Set_Image(const std::string id) ;
 	int Ensemble_Job_Set_DetectArea(const std::string id, const float x, const float y, const float width, const float height) ;
 	int Ensemble_Job_Set_Zoom(const std::string id, const float x, const float y, const float width, const float height) ;
@@ -98,8 +98,8 @@ public:
 	int Ensemble_Job_Del_Ref_Point(const std::string id) ;
 	int Ensemble_Job_Set_DetectOption(const std::string id, const int option, const float value) ;
 	float Ensemble_Job_Get_DetectOption(const std::string id, const int option) ;
-	int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+	int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
 	//Run
 	std::string Ensemble_Job_Run(const std::string id, const float masking_left_top_x=-1, const float masking_left_top_y=-1, const float masking_right_top_x=-1, const float masking_right_top_y=-1, const float masking_right_bottom_x=-1, const float masking_right_bottom_y=-1, const float masking_left_bottom_x=-1, const float masking_left_bottom_y=-1) ;
 
@@ -110,10 +110,10 @@ public:
 	int Ensemble_Tool_Del(const std::string tool_id) ;
 	std::string Ensemble_Tool_Get_Name(const std::string tool_id) ;
 	int Ensemble_Tool_Set_Name(const std::string tool_id, const std::string name) ;
-	int Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
-	int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+	int Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, ImageBuf* p_buf) ;
+	int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, ImageBuf* p_buf) ;
 
 	//[3-3] Tool : Detect Object, Line, Circle
 	int Ensemble_Tool_Set_MaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse);
@@ -167,8 +167,8 @@ public:
 	std::string Ensemble_Tool_Option_InspectDistance_Get_ID_Info_Target(const std::string option_id) ;
 
 	//[3-4] Option
-	int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+    int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+    int Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option, ImageBuf* p_buf) ;
 	std::string Ensemble_Tool_Get_OptionList(const std::string tool_id) ;
 	std::string Ensemble_Tool_Get_OptionList(const int type) ;
 	int Ensemble_Tool_Get_OptionList_Count(const int type) ;
@@ -176,8 +176,8 @@ public:
 	int Ensemble_Tool_Del_Option(const std::string option_id) ;
 
 	//[3-4] Option Inspect Color
-	int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option,  const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+    int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option,  const int width, const int height, ImageBuf* p_buf) ;
+    int Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Tool_Option_InspectColor_Set_Histogram_UseElement(const std::string option_id, const int color_elem) ;
 	int Ensemble_Tool_Option_InspectColor_Get_Histogram_UseElement(const std::string option_id) ;
 	int Ensemble_Tool_Option_InspectColor_Set_Histogram_Range(const std::string option_id, const int color_elem, const float min, const float max) ;
@@ -213,8 +213,8 @@ public:
 	int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size);
 	int Ensemble_Job_Calibration_Add(const std::string job_id, float robot_x, float robot_y);
 	int Ensemble_Job_Calibration_GetCount(const std::string job_id);
-	int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, unsigned char** data, int* out_type_option) ;
-	int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, unsigned char** data, int* out_width, int* out_height, int* out_type_option) ;
+	int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Job_Calibration_GetImage(const std::string job_id, const int index, const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Job_Calibration_GetRobotInfo(const std::string job_id, int index, float *out_robot_x, float *out_robot_y);
 	int Ensemble_Job_Calibration_Del(const std::string job_id, int index);
 	int Ensemble_Job_Calibration_Clear(const std::string job_id);
