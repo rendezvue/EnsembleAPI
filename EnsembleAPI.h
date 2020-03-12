@@ -24,6 +24,7 @@ public:
 	int Ensemble_Network_Connect(const char* ip, const int port);
 	void Ensemble_Network_Disconnect(void);
 	int Ensemble_Network_IsOnline(void);
+	int Ensemble_Network_GetInfo(std::string* out_str_ip, int* out_port);
 
 	//[1]Source
 	std::string Ensemble_Source_Get_List(void);
