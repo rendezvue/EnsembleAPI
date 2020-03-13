@@ -5520,7 +5520,7 @@ std::string CInterfaceControl::GetSourceList(void)
     return str_ret;
 }
 
-int CInterfaceControl::SetNetworkIP(const std::string str_ip)
+int CInterfaceControl::SetNetworkIp(const std::string str_ip)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
