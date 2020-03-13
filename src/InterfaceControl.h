@@ -23,6 +23,8 @@ public:
 
     int IsOnline(void);
 
+	int SetNetworkIp(const std::string str_ip) ;
+	
 	//-----------------------------
 	//Image and Source
     int GetImage(const int option, std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf);

@@ -5520,6 +5520,30 @@ std::string CInterfaceControl::GetSourceList(void)
     return str_ret;
 }
 
+int CInterfaceControl::SetNetworkIP(const std::string str_ip)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_COMMAND_NETWORK_SET_IP_ADDR;
+
+    int ret = p_cls_ethernet_control_data->SendString(p_socket, command, std::string(), str_ip) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
 int CInterfaceControl::SetSource(const std::string source)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
