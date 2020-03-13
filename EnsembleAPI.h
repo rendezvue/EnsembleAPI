@@ -29,6 +29,7 @@ public:
 	//[1]Source
 	std::string Ensemble_Source_Get_List(void);
 	int Ensemble_Source_Set(const std::string source);
+	std::string Ensemble_DB_Get_List(void) ;
 
 
 	//[2] Get Image Stream

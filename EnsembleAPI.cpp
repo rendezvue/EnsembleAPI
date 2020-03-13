@@ -61,6 +61,10 @@ int CEnsembleAPI::Ensemble_Source_Set(const std::string source)
 	return m_cls_interface_control.SetSource(source);
 }
 
+std::string CEnsembleAPI::Ensemble_DB_Get_List(void)
+{
+    return m_cls_interface_control.DB_Get_List();
+}
 
 int CEnsembleAPI::Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
 {
