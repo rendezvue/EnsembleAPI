@@ -17,7 +17,7 @@ int CEnsembleAPI::Ensemble_Network_Connect(const char* ip, const int port)
 
 	m_cls_interface_control.CreateSocket(ip, port);
 	
-	return m_cls_interface_control.SetNetworkIP(ip);
+    return m_cls_interface_control.SetNetworkIp(ip);
 	
     //return m_cls_interface_control.CreateSocket(ip, port);
 }
