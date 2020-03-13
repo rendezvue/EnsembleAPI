@@ -41,7 +41,7 @@ public:
 	int Base_Set_Run_Option(const std::string id, const bool run) ;
 	int Base_Set_View_Option(const std::string id, const bool view) ;
 	int Task_Save(const bool b_overwrite) ;
-	int Task_Load(void) ;
+	int Task_Load(const std::string str_db_path) ;
 
 	int Project_Add_New(const std::string name) ;
 	int Project_Del(const std::string id) ;

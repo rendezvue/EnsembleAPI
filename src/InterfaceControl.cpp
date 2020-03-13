@@ -210,7 +210,7 @@ int CInterfaceControl::Task_Save(const bool b_overwrite)
 	return ret ;
 }
 
-int CInterfaceControl::Task_Load(void)
+int CInterfaceControl::Task_Load(const std::string str_db_path)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -225,7 +225,18 @@ int CInterfaceControl::Task_Load(void)
 
     unsigned int command = ENSEMBLE_TASK_LOAD;
 
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
+	 std::vector<float> vec_send_data ;
+    if( !str_db_path.empty() )
+    {
+        int data_size = str_db_path.size() ;
+        for( int i=0 ; i<data_size ; i++ )
+        {
+            float data = str_db_path[i] ;
+            vec_send_data.push_back(data) ;
+        }
+    }
+	
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
