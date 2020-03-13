@@ -243,6 +243,28 @@ int CInterfaceControl::Task_Load(const std::string str_db_id)
 	return ret ;
 }
 
+int CInterfaceControl::Task_Clear(void)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_TASK_CLEAR;
+	
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), NULL) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret ;
+}
+
 int CInterfaceControl::Project_Add_New(const std::string name)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

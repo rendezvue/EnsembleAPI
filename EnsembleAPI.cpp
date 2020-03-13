@@ -186,6 +186,11 @@ int CEnsembleAPI::Ensemble_Task_File_Load(const std::string str_db_id) //load al
 	return m_cls_interface_control.Task_Load(str_db_id);
 }
 
+int CEnsembleAPI::Ensemble_Task_Clear(void)
+{
+	return m_cls_interface_control.Task_Clear();
+}
+
 int CEnsembleAPI::Ensemble_Project_Add_New(const std::string name)
 {
 	return m_cls_interface_control.Project_Add_New(name);
