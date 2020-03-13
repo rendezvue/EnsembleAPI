@@ -181,9 +181,9 @@ int CEnsembleAPI::Ensemble_Task_File_Save(const bool b_overwrite) 		//save all
 	return m_cls_interface_control.Task_Save(b_overwrite);
 }
 
-int CEnsembleAPI::Ensemble_Task_File_Load(const std::string str_db_path) //load all
+int CEnsembleAPI::Ensemble_Task_File_Load(const std::string str_db_id) //load all
 {
-	return m_cls_interface_control.Task_Load(str_db_path);
+	return m_cls_interface_control.Task_Load(str_db_id);
 }
 
 int CEnsembleAPI::Ensemble_Project_Add_New(const std::string name)

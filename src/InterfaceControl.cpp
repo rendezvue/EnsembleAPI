@@ -210,7 +210,7 @@ int CInterfaceControl::Task_Save(const bool b_overwrite)
 	return ret ;
 }
 
-int CInterfaceControl::Task_Load(const std::string str_db_path)
+int CInterfaceControl::Task_Load(const std::string str_db_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -226,12 +226,12 @@ int CInterfaceControl::Task_Load(const std::string str_db_path)
     unsigned int command = ENSEMBLE_TASK_LOAD;
 
 	 std::vector<float> vec_send_data ;
-    if( !str_db_path.empty() )
+    if( !str_db_id.empty() )
     {
-        int data_size = str_db_path.size() ;
+        int data_size = str_db_id.size() ;
         for( int i=0 ; i<data_size ; i++ )
         {
-            float data = str_db_path[i] ;
+            float data = str_db_id[i] ;
             vec_send_data.push_back(data) ;
         }
     }
