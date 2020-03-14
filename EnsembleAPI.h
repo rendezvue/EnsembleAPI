@@ -46,7 +46,8 @@ public:
 	int Ensemble_Task_Set_Run_Option(const std::string id, const bool run) ;
 	int Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
 	int Ensemble_Task_File_Save(const bool b_overwrite=false) ;		//save all
-	int Ensemble_Task_File_Load(const std::string str_db_id="") ;	//load db
+	int Ensemble_Task_File_Load(void) ;	//load all
+    int Ensemble_Task_File_Load(std::vector<std::string> vec_str_db_id) ;	//load db
 	int Ensemble_Task_Clear(void) ;	//load db
 
 	//Information

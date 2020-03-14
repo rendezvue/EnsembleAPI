@@ -210,7 +210,13 @@ int CInterfaceControl::Task_Save(const bool b_overwrite)
 	return ret ;
 }
 
-int CInterfaceControl::Task_Load(const std::string str_db_id)
+int CInterfaceControl::Task_Load(void)
+{
+	std::vector<std::string>   vec_str_db_id ;
+	Task_Load(vec_str_db_id) ;
+}
+
+int CInterfaceControl::Task_Load(std::vector<std::string>   vec_str_db_id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -225,17 +231,24 @@ int CInterfaceControl::Task_Load(const std::string str_db_id)
 
     unsigned int command = ENSEMBLE_TASK_LOAD;
 
-	 std::vector<float> vec_send_data ;
-    if( !str_db_id.empty() )
-    {
-        int data_size = str_db_id.size() ;
+	std::vector<float> vec_send_data ;
+	
+	const int db_size = vec_str_db_id.size() ; 
+	for( int i=0 ; i<db_size ; i++ )
+	{
+		int data_size = vec_str_db_id[i].size() ;
         for( int i=0 ; i<data_size ; i++ )
         {
-            float data = str_db_id[i] ;
+            float data = vec_str_db_id[i][i] ;
             vec_send_data.push_back(data) ;
         }
-    }
-	
+
+		if( i < data_size-1 )
+		{
+			vec_send_data.push_back(',') ;
+		}
+	}
+
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
