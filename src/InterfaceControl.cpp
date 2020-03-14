@@ -237,9 +237,9 @@ int CInterfaceControl::Task_Load(std::vector<std::string>   vec_str_db_id)
 	for( int i=0 ; i<db_size ; i++ )
 	{
 		int data_size = vec_str_db_id[i].size() ;
-        for( int i=0 ; i<data_size ; i++ )
+        for( int j=0 ; j<data_size ; j++ )
         {
-            float data = vec_str_db_id[i][i] ;
+            float data = vec_str_db_id[i][j] ;
             vec_send_data.push_back(data) ;
         }
 
