@@ -54,6 +54,7 @@ public:
 	std::string Ensemble_Info_Type_Get_Tool_List_Xml(void) ;
 	std::string Ensemble_Info_Get_ToolTypeName(const int type) ;
 	std::string Ensemble_Info_Type_Get_Job_List_Xml(void) ;
+	int Ensemble_Info_Get_Type(const std::string id) ;
 
 
 	//[3-1] Project

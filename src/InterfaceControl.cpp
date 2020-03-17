@@ -3429,6 +3429,36 @@ std::string CInterfaceControl::GetToolTypeName(const int type)
     return str_ret;
 }
 
+int CInterfaceControl::Get_Type(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    unsigned int command = ENSEMBLE_TASK_GET_TYPE;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int type = -1 ;
+	int receive_size = vec_receive_data.size() ;
+	if( receive_size == 1 )
+	{
+		type = (int)vec_receive_data[0] ;
+	}
+	
+    return type;
+}
+
 int CInterfaceControl::AddTool(const std::string parent_id, const int tool_type)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

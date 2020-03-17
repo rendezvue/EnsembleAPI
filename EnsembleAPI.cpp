@@ -611,6 +611,10 @@ std::string CEnsembleAPI::Ensemble_Info_Get_ToolTypeName(const int type)
     return m_cls_interface_control.GetToolTypeName(type);
 }
 
+int CEnsembleAPI::Ensemble_Info_Get_Type(const std::string id)
+{
+	return m_cls_interface_control.Get_Type(id);
+}
 
 int CEnsembleAPI::Ensemble_Tool_Add_New(const std::string parent_id, const int tool_type)
 {

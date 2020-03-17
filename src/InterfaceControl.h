@@ -168,6 +168,8 @@ public:
 
 	std::string GetToolList(void) ;
     std::string GetToolTypeName(const int type) ;
+	int Get_Type(const std::string id) ;
+	
 	int AddTool(const std::string parent_id, const int tool_type) ;
 	int InsertTool(const std::string parent_id, const int index, const int tool_type) ;
 	int MoveTool(const std::string parent_id, const int cur_index, const int target_index) ;
