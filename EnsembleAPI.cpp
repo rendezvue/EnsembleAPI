@@ -49,6 +49,8 @@ int CEnsembleAPI::Ensemble_Network_GetInfo(std::string* out_str_ip, int* out_por
 {
 	if( out_str_ip ) (*out_str_ip) = m_str_ip_addr ;
 	if( out_port ) (*out_port) = m_port ;
+
+	return 1 ;
 }
 
 std::string CEnsembleAPI::Ensemble_Source_Get_List(void)
