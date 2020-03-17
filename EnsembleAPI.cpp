@@ -68,20 +68,44 @@ std::string CEnsembleAPI::Ensemble_DB_Get_List(void)
     return m_cls_interface_control.DB_Get_List();
 }
 
-int CEnsembleAPI::Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Source_Get_Image(const int type_option, const int width, const int height, ImageBuf* p_buf)
 {
     int fixed_width = width ;
     int fixed_height = height ;
 
-    return m_cls_interface_control.GetImage(option, id, type_option, fixed_width, fixed_height, p_buf);
+    return m_cls_interface_control.GetImage(GET_IMAGE_INPUT, std::string(), type_option, fixed_width, fixed_height, p_buf);
 }
 
-int CEnsembleAPI::Ensemble_Source_Get_Image(const int option, std::string id, const int type_option, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Source_Get_Image(const int type_option, ImageBuf* p_buf)
 {
     int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = m_cls_interface_control.GetImage(option, id, type_option, get_width, get_height, p_buf);
+    int ret = m_cls_interface_control.GetImage(GET_IMAGE_INPUT, std::string(), type_option, get_width, get_height, p_buf);
+
+    if( p_buf != NULL )
+	{
+		(*p_buf).image_width = get_width ;
+    	(*p_buf).image_height = get_height ;
+    }
+
+    return ret ;
+}
+
+int CEnsembleAPI::Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
+{
+	int fixed_width = width ;
+    int fixed_height = height ;
+
+    return m_cls_interface_control.GetImage(GET_IMAGE_CALIBRATION_FEATURE, id, type_option, fixed_width, fixed_height, p_buf);
+}
+
+int CEnsembleAPI::Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, ImageBuf* p_buf)
+{
+	int get_width = -1 ;
+    int get_height = -2 ;
+
+    int ret = m_cls_interface_control.GetImage(GET_IMAGE_CALIBRATION_FEATURE, id, type_option, get_width, get_height, p_buf);
 
     if( p_buf != NULL )
 	{
