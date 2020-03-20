@@ -5861,3 +5861,62 @@ int CInterfaceControl::Update_Set_Version(std::string version_string)
 	return ret ;
 }
 
+
+int CInterfaceControl::Camera_Get_Frame_Count(void)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_GET_FRAME_COUNT  ;
+
+    std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    ret = false ;
+    if( vec_receive_data.size() > 0 )
+    {
+        ret = vec_receive_data[0] ;
+    }
+
+    return ret;
+}
+
+int CInterfaceControl::Camera_Set_Camera_Image_To_Past_Frame(int FrameNum)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_SET_CAMERA_IMAGE_TO_PAST_FRAME  ;
+
+    std::vector<float> vec_send_data ;
+    vec_send_data.push_back(FrameNum) ;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
