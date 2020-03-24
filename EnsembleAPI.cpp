@@ -1330,5 +1330,12 @@ int CEnsembleAPI::Ensemble_Update_Set_Version(std::string version_string)
 {
     return m_cls_interface_control.Update_Set_Version(version_string);
 }
-
+int CEnsembleAPI::Ensemble_Camera_Get_Frame_Count()
+{
+	return m_cls_interface_control.Camera_Get_Frame_Count();
+}
+int CEnsembleAPI::Ensemble_Camera_Set_Camera_Image_To_Past_Frame(int FrameNum)
+{
+	return m_cls_interface_control.Camera_Set_Camera_Image_To_Past_Frame(FrameNum);
+}
 

@@ -163,6 +163,10 @@ public:
 
     int Camera_Capture_SW_Trigger(void);
 	int Camera_Capture_HW_Trigger(void);
+	int Camera_Get_Frame_Count();	
+	int Camera_Set_Camera_Image_To_Past_Frame(int FrameNum);
+
+
     int Digital_IO_GetIn(void);
     int Digital_IO_SetOut(int pin_num, int pin_val);
 
