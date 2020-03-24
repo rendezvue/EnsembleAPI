@@ -37,6 +37,7 @@ public:
 	int Ensemble_Source_Get_Image(const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
 	int Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
+	int Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf) ;
 	int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
 	int Ensemble_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
 

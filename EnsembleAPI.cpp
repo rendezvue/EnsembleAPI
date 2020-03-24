@@ -116,6 +116,23 @@ int CEnsembleAPI::Ensemble_Source_Get_CalibrationImage(const std::string id, con
     return ret ;
 }
 
+int CEnsembleAPI::Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf)
+{
+	int get_width = -1 ;
+    int get_height = -2 ;
+
+    int ret = m_cls_interface_control.GetImage(GET_IMAGE_DEVICE_ICON, std::string(), 0, get_width, get_height, p_buf);
+
+    if( p_buf != NULL )
+	{
+		(*p_buf).image_width = get_width ;
+    	(*p_buf).image_height = get_height ;
+    }
+
+    return ret ;
+}
+
+
 int CEnsembleAPI::Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
