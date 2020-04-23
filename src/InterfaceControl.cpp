@@ -5950,3 +5950,36 @@ int CInterfaceControl::Camera_Set_Camera_Image_To_Past_Frame(int FrameNum)
     return ret;
 }
 
+int CInterfaceControl::Camera_Save_Image_To_Device_Local(const std::string file_name)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    std::vector<float> vec_send_data ;
+    if( !file_name.empty() )
+    {
+        int data_size = file_name.size() ;
+        for( int i=0 ; i<data_size ; i++ )
+        {
+            float data = file_name[i] ;
+            vec_send_data.push_back(data) ;
+        }
+    }
+
+    unsigned int command = ENSEMBLE_CAMERA_SAVE_IMAGE_TO_DEVICE_LOCAL;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret ;
+}
+

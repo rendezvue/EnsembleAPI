@@ -1338,4 +1338,7 @@ int CEnsembleAPI::Ensemble_Camera_Set_Camera_Image_To_Past_Frame(int FrameNum)
 {
 	return m_cls_interface_control.Camera_Set_Camera_Image_To_Past_Frame(FrameNum);
 }
-
+int CEnsembleAPI::Ensemble_Camera_Save_Image_To_Device_Local(const std::string file_name)
+{
+    return m_cls_interface_control.Camera_Save_Image_To_Device_Local(file_name);
+}

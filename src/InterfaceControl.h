@@ -166,6 +166,8 @@ public:
 	int Camera_Get_Frame_Count();	
 	int Camera_Set_Camera_Image_To_Past_Frame(int FrameNum);
 
+    int Camera_Save_Image_To_Device_Local(const std::string file_name);
+
 
     int Digital_IO_GetIn(void);
     int Digital_IO_SetOut(int pin_num, int pin_val);
