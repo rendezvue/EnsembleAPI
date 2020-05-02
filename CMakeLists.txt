@@ -3,11 +3,30 @@ project(ensembleapi)
 cmake_minimum_required(VERSION 2.8)
 
 #opencv
-#find_package(OpenCV REQUIRED)
-#include_directories( ${OPENCV_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
+find_package(OpenCV REQUIRED)
+include_directories( ${OPENCV_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #boost
 #find_package(Boost REQUIRED COMPONENTS thread)
+find_package(Boost REQUIRED)
+include_directories( ${Boost_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
+include_directories( ${Boost_LIBRARY_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ) 
+
+#git
+find_package(Git REQUIRED)
+if(NOT GIT_FOUND)
+	message(FATAL_ERROR "git not found!")
+endif()
+
+execute_process( # <-- this 
+     COMMAND ${GIT_EXECUTABLE} submodule init
+     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+execute_process( # <-- this 
+     COMMAND ${GIT_EXECUTABLE} submodule update
+     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 set(APPENDED_SOURCE)
 
@@ -48,7 +67,8 @@ endforeach(SOURCE)
 
 add_library( ensembleapi STATIC ${APPENDED_SOURCE} )
 
-#target_link_libraries(ensembleapi ${OpenCV_LIBS})
+target_link_libraries(ensembleapi ${OpenCV_LIBS})
+target_link_libraries(ensembleapi ${Boost_LIBRARIES})
 
 #install
 SET ( CMAKE_INSTALL_PREFIX ./install )
