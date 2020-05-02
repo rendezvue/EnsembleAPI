@@ -3,8 +3,7 @@
 * * *
 ## Compile
 1. Get source code
-<pre><code>
-$git clone https://github.com/rendezvue/EnsembleAPI.git<br>
+<pre><code>$git clone https://github.com/rendezvue/EnsembleAPI.git<br>
 $cd EnsembleAPI
 </code></pre>
 2. Submodule update
