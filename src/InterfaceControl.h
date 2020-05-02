@@ -87,7 +87,8 @@ public:
 	int JobSetUseCustomFeatureOption(const std::string id, const bool b_use);
 	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
 	int Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
-
+	int Job_Set_Python_Code(const std::string id, const std::string code) ;
+	
 	std::string JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y);
 
 	//Calibration
