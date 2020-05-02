@@ -110,6 +110,7 @@ public:
 	int Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Job_Set_Python_Code(const std::string id, const std::string code) ;
 	std::string Ensemble_Job_Get_Python_Code(const std::string id) ;
+	int Ensemble_Job_Run_Python_Code(const std::string id) ;
 	//Run
 	std::string Ensemble_Job_Run(const std::string id, const float masking_left_top_x=-1, const float masking_left_top_y=-1, const float masking_right_top_x=-1, const float masking_right_top_y=-1, const float masking_right_bottom_x=-1, const float masking_right_bottom_y=-1, const float masking_left_bottom_x=-1, const float masking_left_bottom_y=-1) ;
 

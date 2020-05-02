@@ -571,6 +571,31 @@ std::string CInterfaceControl::Job_Get_Python_Code(const std::string id)
     return str_ret;
 }
 
+int CInterfaceControl::Job_Run_Python_Code(const std::string id)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_JOB_RUN_PYTHON_CODE;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
 int CInterfaceControl::JobGetImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
