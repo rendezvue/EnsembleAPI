@@ -340,6 +340,11 @@ int CEnsembleAPI::Ensemble_Job_Set_Python_Code(const std::string id, const std::
 	return m_cls_interface_control.Job_Set_Python_Code(id, code) ;
 }
 
+std::string CEnsembleAPI::Ensemble_Job_Get_Python_Code(const std::string id)
+{
+	return m_cls_interface_control.Job_Get_Python_Code(id);
+}
+
 int CEnsembleAPI::Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
