@@ -1,0 +1,9 @@
+[submodule "module/PacketEthComm"]
+	path = module/PacketEthComm
+	url = https://github.com/rendezvue/PacketEthComm.git
+[submodule "module/EnsembleCommon"]
+	path = module/EnsembleCommon
+	url = https://github.com/rendezvue/EnsembleCommon.git
+[submodule "module/EnsembleCommand"]
+	path = module/EnsembleCommand
+	url = https://github.com/rendezvue/EnsembleCommand.git
