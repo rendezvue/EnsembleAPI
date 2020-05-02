@@ -53,4 +53,6 @@ _deps
 # External projects
 *-prefix/
 
+#install folder
+install
 # End of https://www.gitignore.io/api/c++,cmake
