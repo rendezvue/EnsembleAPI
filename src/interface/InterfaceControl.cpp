@@ -3146,7 +3146,7 @@ int CInterfaceControl::ToolDelOption(const std::string option_id)
     return ret;
 }
 
-std::string CInterfaceControl::Get_Able_Add_Subjob_List_Xml(const std::string id)
+std::string CInterfaceControl::Get_Addable_Subjob_List_Xml(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3161,7 +3161,7 @@ std::string CInterfaceControl::Get_Able_Add_Subjob_List_Xml(const std::string id
         return str_ret;
     }
 
-    unsigned int command = ENSEMBLE_GET_ABLE_SUBJOB_LIST;
+    unsigned int command = ENSEMBLE_GET_ADDABLE_SUBJOB_LIST;
 		
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
