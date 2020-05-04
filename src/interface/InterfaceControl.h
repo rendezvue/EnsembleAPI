@@ -57,6 +57,7 @@ public:
 	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf);
 
 	std::string Job_Type_Get_List_Xml(void) ;
+	std::string Get_Able_Add_Subjob_List_Xml(const std::string id) ;
 		
 	int Job_Add_New(const std::string project_id, const int type, const std::string name) ;
 	std::string Job_Get_TypeName(const int job_type);

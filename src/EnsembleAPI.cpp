@@ -674,6 +674,11 @@ int CEnsembleAPI::Ensemble_Info_Get_Type(const std::string id)
 	return m_cls_interface_control.Get_Type(id);
 }
 
+std::string CEnsembleAPI::Ensemble_Info_Get_Able_Add_Subjob_List_Xml(const std::string id)
+{
+	return m_cls_interface_control.Get_Able_Add_Subjob_List_Xml(id);
+}
+
 int CEnsembleAPI::Ensemble_Tool_Add_New(const std::string parent_id, const int tool_type)
 {
 	return m_cls_interface_control.AddTool(parent_id, tool_type);
