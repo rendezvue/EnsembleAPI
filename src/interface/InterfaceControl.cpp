@@ -3164,7 +3164,7 @@ std::string CInterfaceControl::Get_Addable_Subjob_List_Xml(const std::string id)
     unsigned int command = ENSEMBLE_GET_ADDABLE_SUBJOB_LIST;
 		
 	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
