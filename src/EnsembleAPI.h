@@ -35,21 +35,21 @@ public:
 
 
 	//[2] Get Image Stream	
-	int Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf) ;
-	int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
-	int Ensemble_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
-
+	int 		Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf) ;
 
 	//[3] Job Management
 	std::string Ensemble_Task_Get_Parent_Tree(const std::string id) ;
-	int Ensemble_Task_Get_Run_Option(const std::string id) ;
-	int Ensemble_Task_Get_View_Option(const std::string id) ;
-	int Ensemble_Task_Set_Run_Option(const std::string id, const bool run) ;
-	int Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
-	int Ensemble_Task_File_Save(const bool b_overwrite=false) ;		//save all
-	int Ensemble_Task_File_Load(void) ;	//load all
-    int Ensemble_Task_File_Load(std::vector<std::string> vec_str_db_id) ;	//load db
-	int Ensemble_Task_Clear(void) ;	//load db
+	int 		Ensemble_Task_Get_Run_Option(const std::string id) ;
+	int 		Ensemble_Task_Get_View_Option(const std::string id) ;
+	int 		Ensemble_Task_Set_Run_Option(const std::string id, const bool run) ;
+	int 		Ensemble_Task_Set_View_Option(const std::string id, const bool view) ;
+	int 		Ensemble_Task_File_Save(const bool b_overwrite=false) ;		//save all
+	int 		Ensemble_Task_File_Load(void) ;	//load all
+    int 		Ensemble_Task_File_Load(std::vector<std::string> vec_str_db_id) ;	//load db
+	int 		Ensemble_Task_Clear(void) ;	//load db
+	int 		Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int 		Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
+		
 
 	//Information
 	std::string Ensemble_Info_Type_Get_Tool_List_Xml(void) ;

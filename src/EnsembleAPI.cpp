@@ -133,7 +133,7 @@ int CEnsembleAPI::Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf)
 }
 
 
-int CEnsembleAPI::Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
@@ -141,7 +141,7 @@ int CEnsembleAPI::Ensemble_Result_Get_Image(const std::string id, const int type
     return m_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, p_buf);
 }
 
-int CEnsembleAPI::Ensemble_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
