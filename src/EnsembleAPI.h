@@ -21,22 +21,20 @@ private:
 	
 public:
 	//[0] Connect
-	int Ensemble_Network_Connect(const char* ip, const int port);
-	void Ensemble_Network_Disconnect(void);
-	int Ensemble_Network_IsOnline(void);
-	int Ensemble_Network_GetInfo(std::string* out_str_ip, int* out_port);
+	int 		Ensemble_Network_Connect(const char* ip, const int port);
+	void 		Ensemble_Network_Disconnect(void);
+	int 		Ensemble_Network_IsOnline(void);
+	int 		Ensemble_Network_GetInfo(std::string* out_str_ip, int* out_port);
 
 	//[1]Source
 	std::string Ensemble_Source_Get_List(void);
-	int Ensemble_Source_Set(const std::string source);
+	int 		Ensemble_Source_Set(const std::string source);
+	int 		Ensemble_Source_Get_Image(const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int 		Ensemble_Source_Get_Image(const int type_option, ImageBuf* p_buf) ;
 	std::string Ensemble_DB_Get_List(void) ;
 
 
-	//[2] Get Image Stream
-	int Ensemble_Source_Get_Image(const int type_option, const int width, const int height, ImageBuf* p_buf) ;
-	int Ensemble_Source_Get_Image(const int type_option, ImageBuf* p_buf) ;
-	int Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
-	int Ensemble_Source_Get_CalibrationImage(const std::string id, const int type_option, ImageBuf* p_buf) ;
+	//[2] Get Image Stream	
 	int Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf) ;
 	int Ensemble_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
 	int Ensemble_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
@@ -220,6 +218,8 @@ public:
 	int Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::string option_id, const int level);
 
 	//[5] Calibration
+	int Ensemble_Job_Calibration_Get_Source_Calibration_Feature_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;
+	int Ensemble_Job_Calibration_Get_Source_Calibration_Feature_Image(const std::string id, const int type_option, ImageBuf* p_buf) ;
 	int Ensemble_Job_Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size);
 	int Ensemble_Job_Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size);
 	int Ensemble_Job_Calibration_Add(const std::string job_id, float robot_x, float robot_y);
