@@ -366,43 +366,6 @@ int CInterfaceControl::Job_Add_New(const std::string project_id, const int type,
 	return ret ;
 }
 
-std::string CInterfaceControl::Job_Get_TypeName(const int job_type)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-    unsigned int command = ENSEMBLE_JOB_GET_TYPE_NAME;
-		
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(job_type) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-    return str_ret;
-}
-
-
 int CInterfaceControl::DelJob(const std::string id)
 {
     boost::unique_lock<boost::mutex> scoped_lock(mutex);
@@ -428,44 +391,7 @@ int CInterfaceControl::DelJob(const std::string id)
     return ret;
 }
 
-std::string CInterfaceControl::JobGetName(const std::string id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_JOB_GET_NAME;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-
-    return str_ret;
-}
-
-int CInterfaceControl::JobChangeName(const std::string id, const std::string name)
+int CInterfaceControl::Task_Set_Python_Code(const std::string id, const std::string code)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -480,41 +406,7 @@ int CInterfaceControl::JobChangeName(const std::string id, const std::string nam
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_SET_NAME;
-
-	std::vector<float> vec_send_data ;
-	if( !name.empty() )
-	{
-		int data_size = name.size() ;
-		for( int i=0 ; i<data_size ; i++ )
-		{
-			float data = name[i] ;
-            vec_send_data.push_back(data) ;
-		}
-	}
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-	
-	return ret;
-}
-
-int CInterfaceControl::Job_Set_Python_Code(const std::string id, const std::string code)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_JOB_SET_PYTHON_CODE;
+    unsigned int command = ENSEMBLE_TASK_SET_PYTHON_CODE;
 
 	std::vector<float> vec_send_data ;
 	if( !code.empty() )
@@ -533,7 +425,7 @@ int CInterfaceControl::Job_Set_Python_Code(const std::string id, const std::stri
 	return ret;
 }
 
-std::string CInterfaceControl::Job_Get_Python_Code(const std::string id)
+std::string CInterfaceControl::Task_Get_Python_Code(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -550,7 +442,7 @@ std::string CInterfaceControl::Job_Get_Python_Code(const std::string id)
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_GET_PYTHON_CODE;
+    unsigned int command = ENSEMBLE_TASK_GET_PYTHON_CODE;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -571,7 +463,7 @@ std::string CInterfaceControl::Job_Get_Python_Code(const std::string id)
     return str_ret;
 }
 
-int CInterfaceControl::Job_Run_Python_Code(const std::string id)
+int CInterfaceControl::Task_Get_Image(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -584,32 +476,7 @@ int CInterfaceControl::Job_Run_Python_Code(const std::string id)
         return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_JOB_RUN_PYTHON_CODE;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::JobGetImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_JOB_GET_IMAGE;
+    unsigned int command = ENSEMBLE_TASK_GET_IMAGE;
 
 	//qDebug("JobGetImage : type_option = %d", (unsigned int)type_option) ;
 	//qDebug("JobGetImage : width = %d", width) ;
@@ -624,33 +491,6 @@ int CInterfaceControl::JobGetImage(const std::string id, const int type_option, 
 	std::vector<float> vec_receive_data ;
     int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
 		
-    return image_buf_size;
-}
-
-int CInterfaceControl::OptionGetImage(const std::string option_id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_OPTION_GET_IMAGE;
-
-	std::vector<float> vec_send_data ;
-    vec_send_data.push_back(type_option) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-	
-    p_cls_ethernet_control_data->Send(p_socket, command, option_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
-	
     return image_buf_size;
 }
 
@@ -1217,33 +1057,7 @@ int CInterfaceControl::Tool_Option_InspectDiameter_Set_Tolerance(const std::stri
 	return ret;
 }
 
-int CInterfaceControl::ToolGetImage(const std::string tool_id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_GET_IMAGE;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(type_option) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-    p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
-	
-    return image_buf_size;
-}
-
-int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
+int CInterfaceControl::Task_Get_ObjectImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -1256,7 +1070,7 @@ int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_op
         return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
-    unsigned int command = ENSEMBLE_JOB_GET_OBJECT_IMAGE;
+    unsigned int command = ENSEMBLE_TASK_GET_OBJECT_IMAGE;
 		
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
@@ -1267,32 +1081,6 @@ int CInterfaceControl::JobGetObjectImage(const std::string id, const int type_op
 	
     return image_buf_size;
 }
-
-int CInterfaceControl::ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_GET_OBJECT_IMAGE;
-		
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(type_option) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-    p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
-	
-    return image_buf_size;
-}
-
 
 int CInterfaceControl::JobSetImage(const std::string id)
 {
@@ -1378,7 +1166,7 @@ int CInterfaceControl::JobSetZoom(const std::string id, const float x, const flo
 	return ret;
 }
 
-int CInterfaceControl::JobSetRefPoint(const std::string id, const float x, const float y)
+int CInterfaceControl::Find_Object_Set_RefPoint(const std::string id, const float x, const float y)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1393,7 +1181,7 @@ int CInterfaceControl::JobSetRefPoint(const std::string id, const float x, const
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_SET_REF_POINT;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_SET_REF_POINT;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(x) ;
@@ -1405,7 +1193,7 @@ int CInterfaceControl::JobSetRefPoint(const std::string id, const float x, const
 	return ret;
 }
 
-int CInterfaceControl::JobDelRefPoint(const std::string id)
+int CInterfaceControl::Find_Object_Del_RefPoint(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1420,7 +1208,7 @@ int CInterfaceControl::JobDelRefPoint(const std::string id)
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_DEL_REF_POINT;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_DEL_REF_POINT;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1430,7 +1218,7 @@ int CInterfaceControl::JobDelRefPoint(const std::string id)
 	return ret;
 }
 
-int CInterfaceControl::JobSelectObject(const std::string id, const float x, const float y, const float width, const float height)
+int CInterfaceControl::Find_Object_Set_SelectObject(const std::string id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1445,36 +1233,7 @@ int CInterfaceControl::JobSelectObject(const std::string id, const float x, cons
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_SELECT_OBJECT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(x) ;
-	vec_send_data.push_back(y) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_SELECT_ROTATED_OBJECT;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_SELECT;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(left_top_x) ;
@@ -1486,7 +1245,7 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float l
 	vec_send_data.push_back(left_bottom_x) ;
 	vec_send_data.push_back(left_bottom_y) ;
 	vec_send_data.push_back(margin) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
 	std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 	
@@ -1530,7 +1289,7 @@ int CInterfaceControl::Tool_Detect_Line_Set_SelectObject(const std::string tool_
 	return ret;
 }
 
-int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin)
+int CInterfaceControl::Find_Object_Set_DetectOption(const std::string id, const int option, const float value)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1545,89 +1304,7 @@ int CInterfaceControl::ToolSelectObject(const std::string tool_id, const float x
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_TOOL_SELECT_OBJECT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(x) ;
-	vec_send_data.push_back(y) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-	vec_send_data.push_back(margin) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolSetRefPoint(const std::string id, const float x, const float y)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_SET_REF_POINT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(x) ;
-	vec_send_data.push_back(y) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolDelRefPoint(const std::string id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_DEL_REF_POINT;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::JobSetDetectOption(const std::string id, const int option, const float value)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_JOB_SET_DETECT_OPTION;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_SET_DETECT_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
@@ -1639,7 +1316,7 @@ int CInterfaceControl::JobSetDetectOption(const std::string id, const int option
 	return ret;
 }
 
-float CInterfaceControl::JobGetDetectOption(const std::string id, const int option)
+float CInterfaceControl::Find_Object_Get_DetectOption(const std::string id, const int option)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1653,7 +1330,7 @@ float CInterfaceControl::JobGetDetectOption(const std::string id, const int opti
     }
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_GET_DETECT_OPTION;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_GET_DETECT_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
@@ -1671,7 +1348,7 @@ float CInterfaceControl::JobGetDetectOption(const std::string id, const int opti
 }
 
 
-int CInterfaceControl::JobResetObject(const std::string id)
+int CInterfaceControl::Find_Object_ResetObject(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1686,7 +1363,7 @@ int CInterfaceControl::JobResetObject(const std::string id)
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_RESET_OBJECT;
+    unsigned int command = ENSEMBLE_FIND_OBJECT_RESET_OBJECT;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1751,7 +1428,7 @@ int CInterfaceControl::Job_Del_Erase(const std::string id)
 	return ret ;
 }
 
-int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
+int CInterfaceControl::Task_SetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1766,7 +1443,7 @@ int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, fl
 
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_SET_MASK;
+    unsigned int command = ENSEMBLE_TASK_SET_MASK_AREA;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(x) ;
@@ -1782,7 +1459,7 @@ int CInterfaceControl::JobSetMaskArea(const std::string id, float x, float y, fl
 
 }
 
-int CInterfaceControl::JobUndoMaskArea(const std::string id)
+int CInterfaceControl::Task_UndoMaskArea(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1796,7 +1473,7 @@ int CInterfaceControl::JobUndoMaskArea(const std::string id)
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_UNDO_MASK;
+    unsigned int command = ENSEMBLE_TASK_UNDO_MASK_AREA;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1806,7 +1483,7 @@ int CInterfaceControl::JobUndoMaskArea(const std::string id)
 	return ret;
 }
 
-int CInterfaceControl::JobDelMaskArea(const std::string id)
+int CInterfaceControl::Task_DelMaskArea(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1820,7 +1497,7 @@ int CInterfaceControl::JobDelMaskArea(const std::string id)
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_DEL_MASK;
+    unsigned int command = ENSEMBLE_TASK_DEL_MASK_AREA;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1830,7 +1507,7 @@ int CInterfaceControl::JobDelMaskArea(const std::string id)
 	return ret;
 }
 
-int CInterfaceControl::JobGetFeatureLevel(const std::string id)
+int CInterfaceControl::Task_GetFeatureLevel(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1844,7 +1521,7 @@ int CInterfaceControl::JobGetFeatureLevel(const std::string id)
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_GET_FEATURE_LEVEL;
+	unsigned int command = ENSEMBLE_TASK_GET_FEATURE_LEVEL;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1862,7 +1539,7 @@ int CInterfaceControl::JobGetFeatureLevel(const std::string id)
     return ret;
 }
 
-int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
+int CInterfaceControl::Task_SetFeatureLevel(const std::string id, const int level)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1876,7 +1553,7 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_SET_FEATURE_LEVEL;
+	unsigned int command = ENSEMBLE_TASK_SET_FEATURE_LEVEL;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(level) ;
@@ -1887,7 +1564,7 @@ int CInterfaceControl::JobSetFeatureLevel(const std::string id, const int level)
 	return ret;
 }
 
-int CInterfaceControl::JobGetUseCustomFeatureOption(const std::string id)
+int CInterfaceControl::Task_GetUseCustomFeatureOption(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1901,7 +1578,7 @@ int CInterfaceControl::JobGetUseCustomFeatureOption(const std::string id)
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_GET_USE_CUSTOM_FEATURE_OPTION;
+	unsigned int command = ENSEMBLE_TASK_GET_FEATURE_USE_CUSTOM_OPTION;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1919,7 +1596,7 @@ int CInterfaceControl::JobGetUseCustomFeatureOption(const std::string id)
     return ret;
 }
 
-int CInterfaceControl::JobSetUseCustomFeatureOption(const std::string id, const bool b_use)
+int CInterfaceControl::Task_SetUseCustomFeatureOption(const std::string id, const bool b_use)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 		
@@ -1933,7 +1610,7 @@ int CInterfaceControl::JobSetUseCustomFeatureOption(const std::string id, const 
     }
 	//printf("id - %d\n", id);
 
-	unsigned int command = ENSEMBLE_JOB_SET_USE_CUSTOM_FEATURE_OPTION;
+	unsigned int command = ENSEMBLE_TASK_SET_FEATURE_USE_CUSTOM_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(b_use) ;
@@ -1944,7 +1621,7 @@ int CInterfaceControl::JobSetUseCustomFeatureOption(const std::string id, const 
 	return ret;
 }
 
-int CInterfaceControl::Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
+int CInterfaceControl::Task_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1958,7 +1635,7 @@ int CInterfaceControl::Job_Get_Feature_Option(const std::string id, int* out_par
     }
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_GET_FEATURE_OPTION;
+    unsigned int command = ENSEMBLE_TASK_GET_FEATURE_OPTION;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -1976,7 +1653,7 @@ int CInterfaceControl::Job_Get_Feature_Option(const std::string id, int* out_par
 	return ret ;
 }
 
-int CInterfaceControl::Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
+int CInterfaceControl::Task_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -1990,7 +1667,7 @@ int CInterfaceControl::Job_Set_Feature_Option(const std::string id, const int pa
     }
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_JOB_SET_FEATURE_OPTION;
+    unsigned int command = ENSEMBLE_TASK_SET_FEATURE_OPTION;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(param1) ;
@@ -2029,336 +1706,6 @@ int CInterfaceControl::DelTool(const std::string tool_id)
 	return ret;
 
 }
-
-std::string CInterfaceControl::ToolGetName(const std::string tool_id) 
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_GET_NAME;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-	
-    return str_ret;
-}
-
-int CInterfaceControl::ToolSetName(const std::string tool_id, const std::string name)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_SET_NAME;
-
-	std::vector<float> vec_send_data ;
-	if( !name.empty() )
-    {
-        int data_size = name.size() ;
-        for( int i=0 ; i<data_size ; i++ )
-        {
-            float data = name[i] ;
-            vec_send_data.push_back(data) ;
-        }
-    }
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolSetMaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_SET_MASK;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(x) ;
-	vec_send_data.push_back(y) ;
-	vec_send_data.push_back(w) ;
-	vec_send_data.push_back(h) ;
-	vec_send_data.push_back(inverse) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-
-}
-
-int CInterfaceControl::ToolUndoMaskArea(const std::string tool_id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_UNDO_MASK;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolDelMaskArea(const std::string tool_id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_DEL_MASK;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-
-int CInterfaceControl::ToolGetFeatureLevel(const std::string tool_id) 
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_GET_FEATURE_LEVEL;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int level = -1 ;
-	if( vec_receive_data.size() == 1 )
-	{
-		level = vec_receive_data[0] ;
-	}
-
-	ret = level ;
-	
-    return ret;
-}
-
-int CInterfaceControl::ToolSetFeatureLevel(const std::string tool_id, const int level) 
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_SET_FEATURE_LEVEL;
-
-	
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(level) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::ToolGetUseCustomFeatureOption(const std::string id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_GET_USE_CUSTOM_FEATURE_OPTION;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int use = 0 ;
-	if( vec_receive_data.size() == 1 )
-	{
-		use = vec_receive_data[0] ;
-	}
-
-	ret = use ;
-	
-    return ret;
-}
-
-int CInterfaceControl::ToolSetUseCustomFeatureOption(const std::string id, const bool b_use)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-		
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-	unsigned int command = ENSEMBLE_TOOL_SET_USE_CUSTOM_FEATURE_OPTION;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(b_use) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret;
-}
-
-int CInterfaceControl::Tool_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_GET_FEATURE_OPTION;
-
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	if( vec_receive_data.size() == 4 )
-	{
-		if( out_param1 != NULL ) (*out_param1) = vec_receive_data[0] ;
-		if( out_param2 != NULL ) (*out_param2) = vec_receive_data[1] ;
-		if( out_param3 != NULL ) (*out_param3) = vec_receive_data[2] ;
-		if( out_param4 != NULL ) (*out_param4) = vec_receive_data[3] ;
-	}
-
-	return ret ;
-}
-
-int CInterfaceControl::Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_SET_FEATURE_OPTION;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(param1) ;
-	vec_send_data.push_back(param2) ;
-	vec_send_data.push_back(param3) ;
-	vec_send_data.push_back(param4) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	return ret ;
-}
-
 
 int CInterfaceControl::Tool_Option_Crack_GetInspectLevel(const std::string option_id) 
 {
@@ -2532,64 +1879,6 @@ int CInterfaceControl::Tool_Option_ColorCompare_SetSensitivity(const std::string
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret;
-}
-
-int CInterfaceControl::ToolSetDetectOption(const std::string tool_id, const int option, const float value)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_SET_DETECT_OPTION;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(option) ;
-	vec_send_data.push_back(value) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-	
-	return ret;
-}
-
-float CInterfaceControl::ToolGetDetectOption(const std::string tool_id, const int option)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-	//printf("id - %d\n", id);
-
-    unsigned int command = ENSEMBLE_TOOL_GET_DETECT_OPTION;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(option) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-	
-	float value = 0.0 ;
-	if( vec_receive_data.size() == 1 )
-	{
-		value = vec_receive_data[0] ;
-	}
-
-	return value ;
 }
 
 int CInterfaceControl::Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold)
@@ -2777,111 +2066,6 @@ int CInterfaceControl::Tool_Detect_Code_Set_Padding(const std::string tool_id, c
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	return ret ;
-}
-
-std::string CInterfaceControl::ToolGetOptionList(const std::string tool_id)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST;
-		
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, tool_id, &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-	
-    return str_ret;
-}
-
-int CInterfaceControl::ToolGetOptionCount(const int tool_type)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST_COUNT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(tool_type) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	float value = 0.0 ;
-	if( vec_receive_data.size() ==1 )
-	{
-		value = vec_receive_data[0] ;
-	}
-
-	return value ;
-}
-
-std::string CInterfaceControl::ToolGetOptionList(const int tool_type)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-    unsigned int command = ENSEMBLE_TOOL_OPTION_GET_LIST;
-		
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(tool_type) ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-
-    return str_ret;
 }
 
 int CInterfaceControl::ToolAddNewOption(const std::string tool_id, const int option_type)
@@ -3161,7 +2345,7 @@ std::string CInterfaceControl::Get_Addable_Subjob_List_Xml(const std::string id)
         return str_ret;
     }
 
-    unsigned int command = ENSEMBLE_GET_ADDABLE_SUBJOB_LIST;
+    unsigned int command = ENSEMBLE_TASK_GET_ADDABLE_SUBJOB_LIST;
 		
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -3181,44 +2365,6 @@ std::string CInterfaceControl::Get_Addable_Subjob_List_Xml(const std::string id)
 
     return str_ret;
 }
-
-std::string CInterfaceControl::Job_Type_Get_List_Xml(void)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-	
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-    unsigned int command = ENSEMBLE_JOB_TYPE_GET_LIST;
-		
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-
-    return str_ret;
-}
-
-
 
 std::string CInterfaceControl::Project_Get_List(void)
 {
@@ -3261,7 +2407,7 @@ std::string CInterfaceControl::Project_Get_List(void)
     return str_ret;
 }
 
-std::string CInterfaceControl::Project_Get_Name(const std::string id)
+std::string CInterfaceControl::Task_Get_Name(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 
@@ -3278,7 +2424,7 @@ std::string CInterfaceControl::Project_Get_Name(const std::string id)
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_PRJ_GET_NAME;
+    unsigned int command = ENSEMBLE_TASK_GET_NAME;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
@@ -3337,7 +2483,7 @@ std::string CInterfaceControl::Project_Get_Job_Info(const std::string id)
     return str_ret;
 }
 
-int CInterfaceControl::Project_Set_Name(const std::string id, const std::string name) 
+int CInterfaceControl::Task_Set_Name(const std::string id, const std::string name) 
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
 	
@@ -3352,7 +2498,7 @@ int CInterfaceControl::Project_Set_Name(const std::string id, const std::string 
 
 	//printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_PRJ_SET_NAME;
+    unsigned int command = ENSEMBLE_TASK_SET_NAME;
 
 	std::vector<float> vec_send_data ;
 	if( !name.empty() )
@@ -3465,67 +2611,6 @@ std::string CInterfaceControl::Project_Run(const std::string id)
     return str_ret;
 }
 
-int CInterfaceControl::Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_PRJ_GET_IMAGE_RESULT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(type_option) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-    p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
-	
-    return image_buf_size;
-}
-
-std::string CInterfaceControl::GetToolList(void)
-{
-	boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-	std::string str_ret ;
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return str_ret;
-    }
-
-    unsigned int command = ENSEMBLE_GET_TOOL_LIST;
-		
-	std::vector<float> vec_send_data ;
-    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
-	std::vector<float> vec_receive_data ;
-    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
-
-	int receive_size = vec_receive_data.size() ;
-	if( receive_size > 0 )
-	{
-		str_ret.resize(receive_size);
-
-		for( int i=0 ; i<receive_size ; i++ )
-		{
-			str_ret[i] = (char)vec_receive_data[i] ;
-		}
-	}
-	
-    return str_ret;
-}
-
 std::string CInterfaceControl::GetToolTypeName(const int type)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);
@@ -3541,7 +2626,7 @@ std::string CInterfaceControl::GetToolTypeName(const int type)
         return str_ret;
     }
 
-    unsigned int command = ENSEMBLE_GET_TOOL_TYPE_NAME;
+    unsigned int command = ENSEMBLE_TOOL_GET_TYPE_NAME;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type) ;
@@ -5627,7 +4712,7 @@ int CInterfaceControl::GetImage(const int option, std::string id, const int type
         return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
-    unsigned int command = ENSEMBLE_GET_IMAGE;
+    unsigned int command = ENSEMBLE_SOURCE_GET_IMAGE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(option) ;
@@ -5653,32 +4738,7 @@ int CInterfaceControl::GetResultImage(const std::string id, const int type_optio
         return ENSEMBLE_ERROR_SOCKET_CONNECT;
     }
 
-    unsigned int command = ENSEMBLE_GET_IMAGE_RESULT;
-
-	std::vector<float> vec_send_data ;
-	vec_send_data.push_back(type_option) ;
-	vec_send_data.push_back(width) ;
-	vec_send_data.push_back(height) ;
-    p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
-    int image_buf_size= p_cls_ethernet_control_data->ReceiveImage(p_socket, command, width, height, out_buf) ;
-	
-    return image_buf_size;
-}
-
-int CInterfaceControl::Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf)
-{
-    boost::unique_lock<boost::mutex> scoped_lock(mutex);
-
-    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
-    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
-
-    if( p_socket == NULL )
-    {
-        printf("Network Error : NULL Socket\n");
-        return ENSEMBLE_ERROR_SOCKET_CONNECT;
-    }
-
-    unsigned int command = ENSEMBLE_JOB_GET_IMAGE_RESULT;
+    unsigned int command = ENSEMBLE_TASK_GET_RESULT_IMAGE;
 
 	std::vector<float> vec_send_data ;
 	vec_send_data.push_back(type_option) ;
@@ -5705,7 +4765,7 @@ std::string CInterfaceControl::DB_Get_List(void)
         return str_ret;
     }
 
-    unsigned int command = ENSEMBLE_GET_DB_LIST;
+    unsigned int command = ENSEMBLE_DB_GET_LIST;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
@@ -5741,7 +4801,7 @@ std::string CInterfaceControl::GetSourceList(void)
         return str_ret;
     }
 
-    unsigned int command = ENSEMBLE_GET_SOURCE_LIST;
+    unsigned int command = ENSEMBLE_SOURCE_GET_LIST;
 
 	std::vector<float> vec_send_data ;
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
@@ -5801,7 +4861,7 @@ int CInterfaceControl::SetSource(const std::string source)
 
     //printf("id - %d\n", id);
 
-    unsigned int command = ENSEMBLE_SET_SOURCE;
+    unsigned int command = ENSEMBLE_SOURCE_SET;
 
     int ret = p_cls_ethernet_control_data->SendString(p_socket, command, std::string(), source) ;
 	std::vector<float> vec_receive_data ;

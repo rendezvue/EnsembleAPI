@@ -133,7 +133,7 @@ int CEnsembleAPI::Ensemble_DeviceIcon_Get_Image(ImageBuf* p_buf)
 }
 
 
-int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_Result_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
@@ -141,7 +141,7 @@ int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int
     return m_cls_interface_control.GetResultImage(id, type_option, fixed_width, fixed_height, p_buf);
 }
 
-int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_Result_Image(const std::string id, const int type_option, ImageBuf* p_buf)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
@@ -155,36 +155,6 @@ int CEnsembleAPI::Ensemble_Task_Result_Get_Image(const std::string id, const int
     int ret = m_cls_interface_control.GetResultImage(id, type_option, get_width, get_height, p_buf);
 
 	if( p_buf != NULL )
-	{
-        (*p_buf).image_width = get_width ;
-        (*p_buf).image_height = get_height ;
-	}
-
-    return ret ;
-}
-
-int CEnsembleAPI::Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
-{
-	 int fixed_width = width ;
-    int fixed_height = height ;
-
-    return m_cls_interface_control.Job_GetResultImage(id, type_option, fixed_width, fixed_height, p_buf);
-}
-
-int CEnsembleAPI::Ensemble_Job_Get_ResultImage(const std::string id, const int type_option, ImageBuf* p_buf)
-{
-	int get_width = -1 ;
-    int get_height = -2 ;
-
-	if( p_buf != NULL )
-	{
-        if( (*p_buf).image_width > 0 ) get_width = (*p_buf).image_width ;
-        if( (*p_buf).image_height > 0 )  get_height = (*p_buf).image_height ;
-	}
-
-    int ret = m_cls_interface_control.Job_GetResultImage(id, type_option, get_width, get_height, p_buf);
-
-    if( p_buf != NULL )
 	{
         (*p_buf).image_width = get_width ;
         (*p_buf).image_height = get_height ;
@@ -250,9 +220,9 @@ int CEnsembleAPI::Ensemble_Project_Del(const std::string proj_id)
 	return m_cls_interface_control.Project_Del(proj_id);
 }
 
-std::string CEnsembleAPI::Ensemble_Project_Get_Name(const std::string project_id)
+std::string CEnsembleAPI::Ensemble_Task_Get_Name(const std::string project_id)
 {
-	return m_cls_interface_control.Project_Get_Name(project_id);
+	return m_cls_interface_control.Task_Get_Name(project_id);
 }
 
 std::string CEnsembleAPI::Ensemble_Project_Get_Has_Job_Info(const std::string project_id)
@@ -260,9 +230,9 @@ std::string CEnsembleAPI::Ensemble_Project_Get_Has_Job_Info(const std::string pr
 	return m_cls_interface_control.Project_Get_Job_Info(project_id);
 }
 
-int CEnsembleAPI::Ensemble_Project_Set_Name(const std::string project_id, const std::string name)
+int CEnsembleAPI::Ensemble_Task_Set_Name(const std::string id, const std::string name)
 {
-	return m_cls_interface_control.Project_Set_Name(project_id, name);
+	return m_cls_interface_control.Task_Set_Name(id, name);
 }
 
 int CEnsembleAPI::Ensemble_Poject_Set_Trigger_Run(const std::string id, const bool b_set)
@@ -280,44 +250,9 @@ std::string CEnsembleAPI::Ensemble_Poject_Run(const std::string id)
 	return m_cls_interface_control.Project_Run(id);
 }
 
-int CEnsembleAPI::Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf)
-{
-	 int fixed_width = width ;
-    int fixed_height = height ;
-
-    return m_cls_interface_control.Project_GetResultImage(id, type_option, fixed_width, fixed_height, p_buf);
-}
-
-int CEnsembleAPI::Ensemble_Project_Get_ResultImage(const std::string id, const int type_option, ImageBuf* p_buf)
-{
-	int get_width = -1 ;
-    int get_height = -2 ;
-
-    if( p_buf )
-    {
-        get_width = (*p_buf).image_width ;
-        get_height = (*p_buf).image_height ;
-    }
-
-    int ret = m_cls_interface_control.Project_GetResultImage(id, type_option, get_width, get_height, p_buf);
-
-    if( p_buf )
-    {
-        (*p_buf).image_width = get_width ;
-        (*p_buf).image_height = get_height ;
-    }
-
-    return ret ;
-}
-
 int CEnsembleAPI::Ensemble_Job_Add_New(const std::string project_id, const int type, const std::string name)
 {
 	return m_cls_interface_control.Job_Add_New(project_id, type, name);
-}
-
-std::string CEnsembleAPI::Ensemble_Job_Get_TypeName(const int job_type)
-{
-	return m_cls_interface_control.Job_Get_TypeName(job_type);
 }
 
 int CEnsembleAPI::Ensemble_Job_Del(const std::string id)
@@ -325,45 +260,30 @@ int CEnsembleAPI::Ensemble_Job_Del(const std::string id)
 	return m_cls_interface_control.DelJob(id);
 }
 
-std::string CEnsembleAPI::Ensemble_Job_Get_Name(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Set_Python_Code(const std::string id, const std::string code)
 {
-	return m_cls_interface_control.JobGetName(id);
+	return m_cls_interface_control.Task_Set_Python_Code(id, code) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_Name(const std::string id, const std::string name)
+std::string CEnsembleAPI::Ensemble_Task_Get_Python_Code(const std::string id)
 {
-	return m_cls_interface_control.JobChangeName(id, name);
+	return m_cls_interface_control.Task_Get_Python_Code(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_Python_Code(const std::string id, const std::string code)
-{
-	return m_cls_interface_control.Job_Set_Python_Code(id, code) ;
-}
-
-std::string CEnsembleAPI::Ensemble_Job_Get_Python_Code(const std::string id)
-{
-	return m_cls_interface_control.Job_Get_Python_Code(id);
-}
-
-int CEnsembleAPI::Ensemble_Job_Run_Python_Code(const std::string id)
-{
-	return m_cls_interface_control.Job_Run_Python_Code(id);
-}
-
-int CEnsembleAPI::Ensemble_Job_Get_Image(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_Image(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return m_cls_interface_control.JobGetImage(id, type_option, fixed_width, fixed_height, p_buf);
+    return m_cls_interface_control.Task_Get_Image(id, type_option, fixed_width, fixed_height, p_buf);
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_Image(const std::string id, const int type_option, ImageBuf* p_buf)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = m_cls_interface_control.JobGetImage(id, type_option, get_width, get_height, p_buf);
+    int ret = m_cls_interface_control.Task_Get_Image(id, type_option, get_width, get_height, p_buf);
 
     if( p_buf )
     {
@@ -374,20 +294,20 @@ int CEnsembleAPI::Ensemble_Job_Get_Image(const std::string id, const int type_op
     return ret ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_ObjectImage(const std::string id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
 {
 	int fixed_width = width ;
     int fixed_height = height ;
 
-    return m_cls_interface_control.JobGetObjectImage(id, type_option, fixed_width, fixed_height, p_buf);
+    return m_cls_interface_control.Task_Get_ObjectImage(id, type_option, fixed_width, fixed_height, p_buf);
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_ObjectImage(const std::string id, const int type_option, ImageBuf* p_buf)
+int CEnsembleAPI::Ensemble_Task_Get_ObjectImage(const std::string id, const int type_option, ImageBuf* p_buf)
 {
 	int get_width = -1 ;
     int get_height = -2 ;
 
-    int ret = m_cls_interface_control.JobGetObjectImage(id, type_option, get_width, get_height, p_buf);
+    int ret = m_cls_interface_control.Task_Get_ObjectImage(id, type_option, get_width, get_height, p_buf);
 
     if( p_buf )
     {
@@ -397,31 +317,6 @@ int CEnsembleAPI::Ensemble_Job_Get_ObjectImage(const std::string id, const int t
 
     return ret ;
 }
-
-int CEnsembleAPI::Ensemble_Tool_Get_ObjectImage(const std::string tool_id,const int type_option,  const int width, const int height, ImageBuf* p_buf)
-{
-	int fixed_width = width ;
-    int fixed_height = height ;
-
-    return m_cls_interface_control.ToolGetObjectImage(tool_id, type_option, fixed_width, fixed_height, p_buf);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_ObjectImage(const std::string tool_id, const int type_option, ImageBuf* p_buf)
-{
-	int get_width = -1 ;
-    int get_height = -2 ;
-
-    int ret = m_cls_interface_control.ToolGetObjectImage(tool_id, type_option, get_width, get_height, p_buf);
-
-    if( p_buf )
-    {
-        (*p_buf).image_width = get_width ;
-        (*p_buf).image_height = get_height ;
-    }
-
-    return ret ;
-}
-
 
 int CEnsembleAPI::Ensemble_Job_Set_Image(const std::string id)
 {
@@ -439,39 +334,19 @@ int CEnsembleAPI::Ensemble_Job_Set_Zoom(const std::string id, const float x, con
 
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_SelectObject(const std::string id, const float x, const float y, const float width, const float height)
+int CEnsembleAPI::Ensemble_Find_Object_Set_Ref_Point(const std::string id, const float x, const float y) 
 {
-	return m_cls_interface_control.JobSelectObject(id, x, y, width, height);
+    return m_cls_interface_control.Find_Object_Set_RefPoint(id, x, y);
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_Ref_Point(const std::string id, const float x, const float y) 
+int CEnsembleAPI::Ensemble_Find_Object_Del_Ref_Point(const std::string id)
 {
-	return m_cls_interface_control.JobSetRefPoint(id, x, y);
+	return m_cls_interface_control.Find_Object_Del_RefPoint(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Del_Ref_Point(const std::string id)
+int CEnsembleAPI::Ensemble_Find_Object_Set_SelectObject(const std::string id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
 {
-	return m_cls_interface_control.JobDelRefPoint(id);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_Ref_Point(const std::string id, const float x, const float y)
-{
-	return m_cls_interface_control.ToolSetRefPoint(id, x, y);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Del_Ref_Point(const std::string id)
-{
-	return m_cls_interface_control.ToolDelRefPoint(id);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin) 
-{
-	return m_cls_interface_control.ToolSelectObject(tool_id, x, y, width, height, margin);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_SelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin) 
-{
-	return m_cls_interface_control.ToolSelectObject(tool_id, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y, margin)  ;
+	return m_cls_interface_control.Find_Object_Set_SelectObject(id, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y, margin)  ;
 }
 
 int CEnsembleAPI::Ensemble_Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) 
@@ -479,24 +354,14 @@ int CEnsembleAPI::Ensemble_Tool_Detect_Line_Set_SelectObject(const std::string t
 	return m_cls_interface_control.Tool_Detect_Line_Set_SelectObject(tool_id, line1_x, line1_y, line2_x, line2_y, left_top_x, left_top_y, right_top_x, right_top_y, right_bottom_x, right_bottom_y, left_bottom_x, left_bottom_y)  ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_DetectOption(const std::string id, const int option, const float value) 
+int CEnsembleAPI::Ensemble_Find_Object_Set_DetectOption(const std::string id, const int option, const float value) 
 {
-	return m_cls_interface_control.JobSetDetectOption(id, option, value);
+	return m_cls_interface_control.Find_Object_Set_DetectOption(id, option, value);
 }
 
-float CEnsembleAPI::Ensemble_Job_Get_DetectOption(const std::string id, const int option)
+float CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption(const std::string id, const int option)
 {
-	return m_cls_interface_control.JobGetDetectOption(id, option);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_DetectOption(const std::string tool_id,const int option, const float value)
-{
-	return m_cls_interface_control.ToolSetDetectOption(tool_id, option, value);
-}
-
-float CEnsembleAPI::Ensemble_Tool_Get_DetectOption(const std::string tool_id,const int option)
-{
-	return m_cls_interface_control.ToolGetDetectOption(tool_id, option);
+	return m_cls_interface_control.Find_Object_Get_DetectOption(id, option);
 }
 
 std::string CEnsembleAPI::Ensemble_Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id)
@@ -566,82 +431,82 @@ int CEnsembleAPI::Ensemble_Tool_Offset_Distance_Set_Inspection_Tolerance_Info(co
 
 float CEnsembleAPI::Ensemble_Tool_Distance_Get_CalcDistance(const std::string tool_id)
 {
-	return CEnsembleAPI::Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_DISTANCE) ;
+    return CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_DISTANCE) ;
 }
 
 int CEnsembleAPI::Ensemble_Tool_Distance_Set_BaseDistance(const std::string tool_id, const float base_distance)
 {
-    return CEnsembleAPI::Ensemble_Tool_Set_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE, base_distance) ;
+    return CEnsembleAPI::Ensemble_Find_Object_Set_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE, base_distance) ;
 }
 
 float CEnsembleAPI::Ensemble_Tool_Distance_Get_BaseDistance(const std::string tool_id)
 {
-	return CEnsembleAPI::Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE) ;
+    return CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_BASE_DISTANCE) ;
 }
 
 float CEnsembleAPI::Ensemble_Tool_Angle_Get_CalcAngle(const std::string tool_id)
 {
-	return CEnsembleAPI::Ensemble_Tool_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_ANGLE) ;
+    return CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption(tool_id, DetectOption::DETECT_OPTION_CALC_ANGLE) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Del_SelectObject(const std::string id)
+int CEnsembleAPI::Ensemble_Find_Object_Del_SelectObject(const std::string id)
 {
-	return m_cls_interface_control.JobResetObject(id);
+	return m_cls_interface_control.Find_Object_ResetObject(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_Erase(const std::string id, const float x, const float y, const float width, const float height)
+int CEnsembleAPI::Ensemble_Job_Set_Feature_Erase(const std::string id, const float x, const float y, const float width, const float height)
 {
 	return m_cls_interface_control.Job_Set_Erase(id, x, y, width, height) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Del_Erase(const std::string id)
+int CEnsembleAPI::Ensemble_Job_Del_Feature_Erase(const std::string id)
 {
 	return m_cls_interface_control.Job_Del_Erase(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_MaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
+int CEnsembleAPI::Ensemble_Task_Set_MaskArea(const std::string id, float x, float y, float w, float h, bool inverse)
 {
-	return m_cls_interface_control.JobSetMaskArea(id, x, y, w, h, inverse);
+    return m_cls_interface_control.Task_SetMaskArea(id, x, y, w, h, inverse);
 }
 
-int CEnsembleAPI::Ensemble_Job_Undo_MaskArea(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Undo_MaskArea(const std::string id)
 {
-	return m_cls_interface_control.JobUndoMaskArea(id);
+    return m_cls_interface_control.Task_UndoMaskArea(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Del_MaskArea(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Del_MaskArea(const std::string id)
 {
-	return m_cls_interface_control.JobDelMaskArea(id);
+    return m_cls_interface_control.Task_DelMaskArea(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_FeatureLevel(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Get_FeatureLevel(const std::string id)
 {
-	return m_cls_interface_control.JobGetFeatureLevel(id);
+	return m_cls_interface_control.Task_GetFeatureLevel(id);
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_FeatureLevel(const std::string id, const int level)
+int CEnsembleAPI::Ensemble_Task_Set_FeatureLevel(const std::string id, const int level)
 {
-	return m_cls_interface_control.JobSetFeatureLevel(id, level);
+	return m_cls_interface_control.Task_SetFeatureLevel(id, level);
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_UseCustomFeatureOption(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Get_UseCustomFeatureOption(const std::string id)
 {
-	return m_cls_interface_control.JobGetUseCustomFeatureOption(id) ;
+	return m_cls_interface_control.Task_GetUseCustomFeatureOption(id) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_UseCustomFeatureOption(const std::string id, const bool b_use)
+int CEnsembleAPI::Ensemble_Task_Set_UseCustomFeatureOption(const std::string id, const bool b_use)
 {
-	return m_cls_interface_control.JobSetUseCustomFeatureOption(id, b_use) ;
+	return m_cls_interface_control.Task_SetUseCustomFeatureOption(id, b_use) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
+int CEnsembleAPI::Ensemble_Task_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
 {
-	return m_cls_interface_control.Job_Get_Feature_Option(id, out_param1, out_param2, out_param3, out_param4) ;
+	return m_cls_interface_control.Task_Get_Feature_Option(id, out_param1, out_param2, out_param3, out_param4) ;
 }
 
-int CEnsembleAPI::Ensemble_Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
+int CEnsembleAPI::Ensemble_Task_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
 {
-	return m_cls_interface_control.Job_Set_Feature_Option(id, param1, param2, param3, param4) ;
+	return m_cls_interface_control.Task_Set_Feature_Option(id, param1, param2, param3, param4) ;
 }
 
 int CEnsembleAPI::Ensemble_Tool_Del(const std::string tool_id)
@@ -654,27 +519,17 @@ std::string CEnsembleAPI::Ensemble_Project_Get_List(void)
 	return m_cls_interface_control.Project_Get_List();
 }
 
-std::string CEnsembleAPI::Ensemble_Info_Type_Get_Job_List_Xml(void)
-{
-	return m_cls_interface_control.Job_Type_Get_List_Xml();
-}
-
-std::string CEnsembleAPI::Ensemble_Info_Type_Get_Tool_List_Xml(void) 
-{
-	return m_cls_interface_control.GetToolList();
-}
-
-std::string CEnsembleAPI::Ensemble_Info_Get_ToolTypeName(const int type)
+std::string CEnsembleAPI::Ensemble_Tool_Get_TypeName(const int type)
 {
     return m_cls_interface_control.GetToolTypeName(type);
 }
 
-int CEnsembleAPI::Ensemble_Info_Get_Type(const std::string id)
+int CEnsembleAPI::Ensemble_Task_Get_Type_Info(const std::string id)
 {
 	return m_cls_interface_control.Get_Type(id);
 }
 
-std::string CEnsembleAPI::Ensemble_Info_Get_Addable_Subjob_List_Xml(const std::string id)
+std::string CEnsembleAPI::Ensemble_Task_Get_Addable_Subjob_List_Info_Xml(const std::string id)
 {
 	return m_cls_interface_control.Get_Addable_Subjob_List_Xml(id);
 }
@@ -692,66 +547,6 @@ int CEnsembleAPI::Ensemble_Tool_Insert(const std::string parent_id, const int in
 int CEnsembleAPI::Ensemble_Tool_Move(const std::string parent_id, const int cur_index, const int target_index)
 {
 	return m_cls_interface_control.MoveTool(parent_id, cur_index, target_index);
-}
-
-//TOOL
-std::string CEnsembleAPI::Ensemble_Tool_Get_Name(const std::string tool_id)
-{
-	return m_cls_interface_control.ToolGetName(tool_id);
-}	
-
-int CEnsembleAPI::Ensemble_Tool_Set_Name(const std::string tool_id, const std::string name) 
-{
-	return m_cls_interface_control.ToolSetName(tool_id, name);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option,  const int width, const int height, ImageBuf* p_buf)
-{
-	int fixed_width = width ;
-    int fixed_height = height ;
-
-    return m_cls_interface_control.ToolGetImage(tool_id, type_option, fixed_width, fixed_height, p_buf);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_Image(const std::string tool_id, const int type_option, ImageBuf* p_buf)
-{
-	int get_width = -1 ;
-    int get_height = -2 ;
-
-    int ret = m_cls_interface_control.ToolGetImage(tool_id, type_option, get_width, get_height, p_buf);
-
-    if( p_buf )
-    {
-        (*p_buf).image_width = get_width ;
-        (*p_buf).image_height = get_height ;
-    }
-
-    return ret ;
-}
-
-//Option
-int CEnsembleAPI::Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option,  const int width, const int height, ImageBuf* p_buf)
-{
-	int fixed_width = width ;
-    int fixed_height = height ;
-
-    return m_cls_interface_control.OptionGetImage(option_id, type_option, fixed_width, fixed_height, p_buf);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Option_GetImage(const std::string option_id, const int type_option, ImageBuf* p_buf)
-{
-	int get_width = -1 ;
-    int get_height = -2 ;
-
-    int ret = m_cls_interface_control.OptionGetImage(option_id, type_option, get_width, get_height, p_buf);
-
-    if( p_buf )
-    {
-        (*p_buf).image_width = get_width ;
-        (*p_buf).image_height = get_height ;
-    }
-
-    return ret ;
 }
 
 int CEnsembleAPI::Ensemble_Tool_Option_InspectColor_Histogram_GetImage(const std::string option_id, const int color_num, const int type_option,  const int width, const int height, ImageBuf* p_buf)
@@ -868,51 +663,6 @@ int CEnsembleAPI::Ensemble_Tool_Option_InspectDiameter_Set_Tolerance(const std::
     return m_cls_interface_control.Tool_Option_InspectDiameter_Set_Tolerance(option_id, min, max) ;
 }
 
-int CEnsembleAPI::Ensemble_Tool_Set_MaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse)
-{
-	return m_cls_interface_control.ToolSetMaskArea(tool_id, x, y, w, h, inverse);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Undo_MaskArea(const std::string tool_id)
-{
-	return m_cls_interface_control.ToolUndoMaskArea(tool_id);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Del_MaskArea(const std::string tool_id)
-{
-	return m_cls_interface_control.ToolDelMaskArea(tool_id);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_FeatureLevel(const std::string tool_id)
-{
-	return m_cls_interface_control.ToolGetFeatureLevel(tool_id);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_FeatureLevel(const std::string tool_id, const int level)
-{
-	return m_cls_interface_control.ToolSetFeatureLevel(tool_id, level);
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_UseCustomFeatureOption(const std::string id)
-{
-	return m_cls_interface_control.ToolGetUseCustomFeatureOption(id) ;
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_UseCustomFeatureOption(const std::string id, const bool b_use)
-{
-	return m_cls_interface_control.ToolSetUseCustomFeatureOption(id, b_use) ;
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4)
-{
-	return m_cls_interface_control.Tool_Get_Feature_Option(id, out_param1, out_param2, out_param3, out_param4) ;
-}
-
-int CEnsembleAPI::Ensemble_Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4)
-{
-	return m_cls_interface_control.Tool_Set_Feature_Option(id, param1, param2, param3, param4) ;
-}
-
 int CEnsembleAPI::Ensemble_Tool_Option_Crack_Get_InspectLevel(const std::string option_id)
 {
 	return m_cls_interface_control.Tool_Option_Crack_GetInspectLevel(option_id);
@@ -946,21 +696,6 @@ int CEnsembleAPI::Ensemble_Tool_Option_ColorCompare_Set_Sensitivity(const std::s
 std::string CEnsembleAPI::Ensemble_Job_Run(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y)
 {
 	return m_cls_interface_control.JobRun(id, masking_left_top_x, masking_left_top_y, masking_right_top_x, masking_right_top_y, masking_right_bottom_x, masking_right_bottom_y, masking_left_bottom_x, masking_left_bottom_y) ;
-}
-
-std::string CEnsembleAPI::Ensemble_Tool_Get_OptionList(const std::string tool_id)
-{
-	return m_cls_interface_control.ToolGetOptionList(tool_id) ;
-}
-
-std::string CEnsembleAPI::Ensemble_Tool_Get_OptionList(const int type)
-{
-	return m_cls_interface_control.ToolGetOptionList(type) ;
-}
-
-int CEnsembleAPI::Ensemble_Tool_Get_OptionList_Count(const int type)
-{
-	return m_cls_interface_control.ToolGetOptionCount(type) ;
 }
 
 int CEnsembleAPI::Ensemble_Tool_Add_NewOption(const std::string tool_id, const int option_type)

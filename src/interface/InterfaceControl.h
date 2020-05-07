@@ -44,56 +44,57 @@ public:
 	int Task_Load(void) ;
 	int Task_Load(std::vector<std::string>   vec_str_db_id) ;
 	int Task_Clear(void) ;
-
+	std::string Task_Get_Name(const std::string id) ;
+	
 	int Project_Add_New(const std::string name) ;
 	int Project_Del(const std::string id) ;
 	std::string Project_Get_List(void) ;
-	std::string Project_Get_Name(const std::string id) ;
+	
 	std::string Project_Get_Job_Info(const std::string id) ;
-	int Project_Set_Name(const std::string id, const std::string name) ;
+	int Task_Set_Name(const std::string id, const std::string name) ;
 	int Poject_Set_Trigger_Run(const std::string id, const bool b_set) ;
 	int Poject_Get_Trigger_Run(const std::string id) ;
 	std::string Project_Run(const std::string id) ;
-	int Project_GetResultImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf);
 
 	std::string Job_Type_Get_List_Xml(void) ;
 	std::string Get_Addable_Subjob_List_Xml(const std::string id) ;
 		
 	int Job_Add_New(const std::string project_id, const int type, const std::string name) ;
-	std::string Job_Get_TypeName(const int job_type);
-	
 	int DelJob(const std::string id) ;
-	std::string JobGetName(const std::string id) ;
-	int JobChangeName(const std::string id, const std::string name) ;
-	int JobGetImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
-	int JobGetObjectImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
-	int Job_GetResultImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf);
+	int Task_Get_Image(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
+	int Task_Get_ObjectImage(const std::string id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
 	int JobSetImage(const std::string id) ;
 	int JobSetDetectArea(const std::string id, const float x, const float y, const float width, const float height) ;
 	int JobSetZoom(const std::string id, const float x, const float y, const float width, const float height) ;
-	int JobSelectObject(const std::string id, const float x, const float y, const float width, const float height) ;
-	int JobSetDetectOption(const std::string id, const int option, const float value) ;
-	int JobSetRefPoint(const std::string id, const float x, const float y) ;
-	int JobDelRefPoint(const std::string id) ;
-	float JobGetDetectOption(const std::string id, const int option) ;
-	int JobResetObject(const std::string id) ;	
+	int Find_Object_Set_DetectOption(const std::string id, const int option, const float value) ;
+	float Find_Object_Get_DetectOption(const std::string id, const int option) ;
+
+	int Find_Object_Set_RefPoint(const std::string id, const float x, const float y) ;
+	int Find_Object_Del_RefPoint(const std::string id) ;
+	
+	
+	int Find_Object_ResetObject(const std::string id) ;	
 	int Job_Set_Erase(const std::string id, const float x, const float y, const float width, const float height) ;
 	int Job_Del_Erase(const std::string id) ;
-	int JobSetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse);
-	int JobUndoMaskArea(const std::string id);
-	int JobDelMaskArea(const std::string id);
-	int JobGetFeatureLevel(const std::string id);
-	int JobSetFeatureLevel(const std::string id, const int level);
-	int JobGetUseCustomFeatureOption(const std::string id);
-	int JobSetUseCustomFeatureOption(const std::string id, const bool b_use);
-	int Job_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
-	int Job_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
-	int Job_Set_Python_Code(const std::string id, const std::string code) ;
-	std::string Job_Get_Python_Code(const std::string id) ;
-	int Job_Run_Python_Code(const std::string id) ;
+
+    int Task_SetMaskArea(const std::string id, float x, float y, float w, float h, bool inverse);
+    int Task_UndoMaskArea(const std::string id);
+    int Task_DelMaskArea(const std::string id);
+
+    int Task_GetFeatureLevel(const std::string id);
+	int Task_SetFeatureLevel(const std::string id, const int level);
+	int Task_GetUseCustomFeatureOption(const std::string id);
+	int Task_SetUseCustomFeatureOption(const std::string id, const bool b_use);
+	int Task_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
+	int Task_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
+		
+	int Task_Set_Python_Code(const std::string id, const std::string code) ;
+	std::string Task_Get_Python_Code(const std::string id) ;
 	
 	std::string JobRun(const std::string id, const float masking_left_top_x, const float masking_left_top_y, const float masking_right_top_x, const float masking_right_top_y, const float masking_right_bottom_x, const float masking_right_bottom_y, const float masking_left_bottom_x, const float masking_left_bottom_y);
 
+	int Find_Object_Set_SelectObject(const std::string id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0 )  ;
+	
 	//Calibration
     int Calibration_Get_Chess_Info(const std::string job_id, int *out_x_num, int *out_y_num, float *out_squre_mm_size) ;
     int Calibration_Set_Chess_Info(const std::string job_id, const int x_num, const int y_num, const float squre_mm_size) ;
@@ -216,20 +217,6 @@ public:
 	int Tool_Option_InspectDiameter_Set_Tolerance(const std::string option_id, const float min, const float max) ;
 	
 	////
-	int ToolGetImage(const std::string tool_id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
-	std::string ToolGetName(const std::string tool_id) ;
-	int ToolSetName(const std::string tool_id, const std::string name) ;
-
-	int ToolSetMaskArea(const std::string tool_id, float x, float y, float w, float h, bool inverse);
-	int ToolUndoMaskArea(const std::string tool_id);
-	int ToolDelMaskArea(const std::string tool_id);
-	int ToolGetFeatureLevel(const std::string tool_id) ;
-	int ToolSetFeatureLevel(const std::string tool_id, const int level) ;	
-	int ToolGetUseCustomFeatureOption(const std::string id);
-	int ToolSetUseCustomFeatureOption(const std::string id, const bool b_use);
-	int Tool_Get_Feature_Option(const std::string id, int* out_param1, int* out_param2, int* out_param3, int* out_param4);
-	int Tool_Set_Feature_Option(const std::string id, const int param1, const int param2, const int param3, const int param4);
-	
 	//crack
 	int Tool_Option_Crack_GetInspectLevel(const std::string option_id) ;
 	int Tool_Option_Crack_SetInspectLevel(const std::string option_id, const int level) ;
@@ -240,16 +227,7 @@ public:
 	int Tool_Option_ColorCompare_GetSensitivity(const std::string option_id) ;
 	int Tool_Option_ColorCompare_SetSensitivity(const std::string option_id, const int level) ;
 
-	//object
-	int ToolSelectObject(const std::string tool_id, const float x, const float y, const float width, const float height, const int margin=0) ;
-	int ToolSelectObject(const std::string tool_id, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y, const int margin=0 )  ;
-	int ToolGetObjectImage(const std::string tool_id, const int type_option, int& width, int& height, ImageBuf* out_buf) ;
-	int ToolSetRefPoint(const std::string id, const float x, const float y) ;
-	int ToolDelRefPoint(const std::string id) ;
-	
 	//object detct
-	int ToolSetDetectOption(const std::string tool_id, const int option, const float value) ;
-	float ToolGetDetectOption(const std::string tool_id, const int option) ;	
 	int Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
 	int Tool_Detect_Object_Set_Inspection_Tolerance_Info(const std::string tool_id, const float score_threshold) ;
 
@@ -262,9 +240,6 @@ public:
 	//Detect line
 	int Tool_Detect_Line_Set_SelectObject(const std::string tool_id, const float line1_x, const float line1_y, const float line2_x, const float line2_y, const float left_top_x, const float left_top_y, const float right_top_x, const float right_top_y, const float right_bottom_x, const float right_bottom_y, const float left_bottom_x, const float left_bottom_y) ;
 	
-	std::string ToolGetOptionList(const std::string tool_id) ;
-	std::string ToolGetOptionList(const int tool_type) ;
-	int ToolGetOptionCount(const int tool_type) ;
 	int ToolAddNewOption(const std::string tool_id, const int option_type) ;
 	int ToolDelOption(const std::string option_id) ;
 
