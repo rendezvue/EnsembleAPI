@@ -68,6 +68,9 @@ public:
 	int JobSetZoom(const std::string id, const float x, const float y, const float width, const float height) ;
 	int Find_Object_Set_DetectOption(const std::string id, const int option, const float value) ;
 	float Find_Object_Get_DetectOption(const std::string id, const int option) ;
+	int Find_Object_Set_DetectOption_Scale_Value(const std::string id, const float min, const float max, const float precision) ;
+	int Find_Object_Get_DetectOption_Scale_Value(const std::string id, float* out_min, float* out_max, float* out_precision) ;
+	
 
 	int Find_Object_Set_RefPoint(const std::string id, const float x, const float y) ;
 	int Find_Object_Del_RefPoint(const std::string id) ;

@@ -364,6 +364,16 @@ float CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption(const std::string id, 
 	return m_cls_interface_control.Find_Object_Get_DetectOption(id, option);
 }
 
+int CEnsembleAPI::Ensemble_Find_Object_Set_DetectOption_Scale_Value(const std::string id, const float min, const float max, const float precision)
+{
+	return m_cls_interface_control.Find_Object_Set_DetectOption_Scale_Value(id, min, max, precision);
+}
+
+int CEnsembleAPI::Ensemble_Find_Object_Get_DetectOption_Scale_Value(const std::string id, float* out_min, float* out_max, float* out_precision)
+{
+	return m_cls_interface_control.Find_Object_Get_DetectOption_Scale_Value(id, out_min, out_max, out_precision);
+}
+
 std::string CEnsembleAPI::Ensemble_Tool_Detect_Code_Get_Ref_CodeType(const std::string tool_id)
 {
 	return m_cls_interface_control.Tool_Detect_Code_Get_Ref_CodeType(tool_id) ;

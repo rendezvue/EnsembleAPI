@@ -1347,7 +1347,66 @@ float CInterfaceControl::Find_Object_Get_DetectOption(const std::string id, cons
 	return value ;
 }
 
+int CInterfaceControl::Find_Object_Set_DetectOption_Scale_Value(const std::string id, const float min, const float max, const float precision)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
 
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_FIND_OBJECT_SET_DETECT_OPTION_SCALE_VALUE;
+
+	std::vector<float> vec_send_data ;
+	vec_send_data.push_back(min) ;
+	vec_send_data.push_back(max) ;
+	vec_send_data.push_back(precision) ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	return ret;
+}
+
+int CInterfaceControl::Find_Object_Get_DetectOption_Scale_Value(const std::string id, float* out_min, float* out_max, float* out_precision)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+	
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+	//printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_FIND_OBJECT_GET_DETECT_OPTION_SCALE_VALUE;
+
+	std::vector<float> vec_send_data ;
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, id, &vec_send_data) ;
+	std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	if( vec_receive_data.size() == 3 )
+	{
+		if( out_min ) 		(*out_min) = vec_receive_data[0] ;
+		if( out_max ) 		(*out_max) = vec_receive_data[1] ;
+		if( out_precision ) (*out_precision) = vec_receive_data[2] ;
+	}
+	
+	return ret;
+}
+	
 int CInterfaceControl::Find_Object_ResetObject(const std::string id)
 {
 	boost::unique_lock<boost::mutex> scoped_lock(mutex);

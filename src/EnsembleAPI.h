@@ -95,6 +95,8 @@ public:
 	int 		Ensemble_Find_Object_Del_Ref_Point(const std::string id) ;
 	int 		Ensemble_Find_Object_Set_DetectOption(const std::string id, const int option, const float value) ;
 	float 		Ensemble_Find_Object_Get_DetectOption(const std::string id, const int option) ;	
+	int 		Ensemble_Find_Object_Set_DetectOption_Scale_Value(const std::string id, const float min, const float max, const float precision) ;
+	int 		Ensemble_Find_Object_Get_DetectOption_Scale_Value(const std::string id, float* out_min, float* out_max, float* out_precision) ;	
 	
 	//[3-3] Tool
 	int 		Ensemble_Tool_Add_New(const std::string parent_id, const int tool_type) ;
