@@ -172,6 +172,8 @@ public:
 	int 		Ensemble_Tool_Option_ColorCompare_Set_Sensitivity(const std::string option_id, const int level);
 	int 		Ensemble_Tool_Option_ColorCompare_Get_InspectLevel(const std::string option_id);
 	int 		Ensemble_Tool_Option_ColorCompare_Set_InspectLevel(const std::string option_id, const int level);
+	int 		Ensemble_Tool_Option_ColorCompare_Get_UseAmplifier(const std::string option_id);
+	int 		Ensemble_Tool_Option_ColorCompare_Set_UseAmplifier(const std::string option_id, const bool b_use);
 
 	//[5] Calibration
 	int 		Ensemble_Job_Calibration_Get_Source_Calibration_Feature_Image(const std::string id, const int type_option, const int width, const int height, ImageBuf* p_buf) ;

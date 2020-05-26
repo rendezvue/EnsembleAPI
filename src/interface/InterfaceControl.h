@@ -229,6 +229,8 @@ public:
 	int Tool_Option_ColorCompare_SetInspectLevel(const std::string option_id, const int level) ;
 	int Tool_Option_ColorCompare_GetSensitivity(const std::string option_id) ;
 	int Tool_Option_ColorCompare_SetSensitivity(const std::string option_id, const int level) ;
+	int Tool_Option_ColorCompare_GetUseAmp(const std::string option_id) ;
+	int Tool_Option_ColorCompare_SetUseAmp(const std::string option_id, const bool b_use) ;
 
 	//object detct
 	int Tool_Detect_Object_Get_Inspection_Tolerance_Info(const std::string tool_id, float* out_score_threshold) ;
