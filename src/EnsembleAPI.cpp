@@ -1117,3 +1117,21 @@ int CEnsembleAPI::Ensemble_Camera_Save_Image_To_Device_Local(const std::string f
 {
     return m_cls_interface_control.Camera_Save_Image_To_Device_Local(file_name);
 }
+
+int CEnsembleAPI::Ensemble_Camera_Capture_Memory_GetList(int index_list[], int *list_length )
+{
+    return m_cls_interface_control.Camera_Capture_Memory_GetList(index_list,list_length);
+}
+int CEnsembleAPI::Ensemble_Camera_Capture_Memory_Push(int index, int* remained_space_num, int *max_space_num)
+{
+    return m_cls_interface_control.Camera_Capture_Memory_Push( index,  remained_space_num, max_space_num);
+}
+int CEnsembleAPI::Ensemble_Camera_Capture_Memory_Pop(int index)
+{
+    return m_cls_interface_control.Camera_Capture_Memory_Pop(index);
+}
+int CEnsembleAPI::Ensemble_Camera_Capture_Memory_Set_Image(int index)
+{
+    return m_cls_interface_control.Camera_Capture_Memory_Set_Image(index);
+}
+

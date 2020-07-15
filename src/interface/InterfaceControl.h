@@ -176,6 +176,10 @@ public:
 
     int Camera_Save_Image_To_Device_Local(const std::string file_name);
 
+	int Camera_Capture_Memory_GetList(int index_list[], int *list_length );
+	int Camera_Capture_Memory_Push(int index, int* remained_space_num, int *max_space_num);
+	int Camera_Capture_Memory_Pop(int index);
+	int Camera_Capture_Memory_Set_Image(int index);
 
     int Digital_IO_GetIn(void);
     int Digital_IO_SetOut(int pin_num, int pin_val);

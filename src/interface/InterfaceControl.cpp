@@ -5292,3 +5292,129 @@ int CInterfaceControl::Camera_Save_Image_To_Device_Local(const std::string file_
     return ret ;
 }
 
+int CInterfaceControl::Camera_Capture_Memory_GetList(int index_list[], int *list_length )
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_MEMORY_GETLIST  ;
+
+    std::vector<float> vec_send_data ;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int rcv_size = vec_receive_data.size();
+
+	if( rcv_size >= 1)
+	{
+		if( vec_receive_data[0] != NULL ) *list_length = vec_receive_data[0];
+	}
+
+	for( int i = 0 ; i < *list_length ; i++ )
+	{
+		if( vec_receive_data[1+i] != NULL ) index_list[i] = vec_receive_data[1+i];
+	}	
+
+    return ret;
+}
+
+int CInterfaceControl::Camera_Capture_Memory_Push(int index, int* remained_space_num, int *max_space_num)
+{
+	boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_MEMORY_PUSH  ;
+
+    std::vector<float> vec_send_data ;
+    vec_send_data.push_back(index) ;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int rcv_size = vec_receive_data.size();
+	if( rcv_size >= 2 )
+	{
+		if( vec_receive_data[0] != NULL ) *remained_space_num = vec_receive_data[0];
+		if( vec_receive_data[1] != NULL ) *max_space_num = vec_receive_data[1];
+	}
+
+    return ret;
+}
+int CInterfaceControl::Camera_Capture_Memory_Pop(int index)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_MEMORY_POP  ;
+
+    std::vector<float> vec_send_data ;
+    vec_send_data.push_back(index) ;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
+int CInterfaceControl::Camera_Capture_Memory_Set_Image(int index)
+{
+    boost::unique_lock<boost::mutex> scoped_lock(mutex);
+
+    tcp::socket *p_socket = m_cls_eth_client.GetSocketPointer() ;
+    CEthernetClientControlData* p_cls_ethernet_control_data = CEthernetClientControlData::getInstance() ;
+
+    if( p_socket == NULL )
+    {
+        printf("Network Error : NULL Socket\n");
+        return ENSEMBLE_ERROR_SOCKET_CONNECT;
+    }
+
+    //printf("id - %d\n", id);
+
+    unsigned int command = ENSEMBLE_CAMERA_CAPTURE_MEMORY_SET_IMAGE  ;
+
+    std::vector<float> vec_send_data ;
+    vec_send_data.push_back(index) ;
+
+    int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
+    std::vector<float> vec_receive_data ;
+    ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+    return ret;
+}
+
+

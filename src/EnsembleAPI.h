@@ -254,6 +254,12 @@ public:
 	int 		Ensemble_Camera_Set_Camera_Image_To_Past_Frame(int FrameNum);
     int 		Ensemble_Camera_Save_Image_To_Device_Local(const std::string file_name);
 
+	int			Ensemble_Camera_Capture_Memory_GetList(int index_list[], int *list_length );
+	int			Ensemble_Camera_Capture_Memory_Push(int index, int* remained_space_num, int *max_space_num);
+	int			Ensemble_Camera_Capture_Memory_Pop(int index);
+	int			Ensemble_Camera_Capture_Memory_Set_Image(int index);
+
+
 	//[7] GPIO
 	int 		Ensemble_Digital_IO_GetIn(void) ;
 	int 		Ensemble_Digital_IO_SetOut(int pin_num, int pin_val) ;
