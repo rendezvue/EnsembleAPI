@@ -5316,16 +5316,19 @@ int CInterfaceControl::Camera_Capture_Memory_GetList(int index_list[], int *list
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int rcv_size = vec_receive_data.size();
-
-	if( rcv_size >= 1)
+	int result=0;
+	if( rcv_size >= 2 )
 	{
-		if( vec_receive_data[0] != NULL ) *list_length = vec_receive_data[0];
+		if( vec_receive_data[0] != NULL ) result = vec_receive_data[0];
+		
+		if( vec_receive_data[1] != NULL ) *list_length = vec_receive_data[1];
+
+		for( int i = 0 ; i < *list_length ; i++ )
+		{
+			if( vec_receive_data[2+i] != NULL ) index_list[i] = vec_receive_data[2+i];
+		}	
 	}
-
-	for( int i = 0 ; i < *list_length ; i++ )
-	{
-		if( vec_receive_data[1+i] != NULL ) index_list[i] = vec_receive_data[1+i];
-	}	
+	ret += result;
 
     return ret;
 }
@@ -5355,11 +5358,14 @@ int CInterfaceControl::Camera_Capture_Memory_Push(int index, int* remained_space
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
 	int rcv_size = vec_receive_data.size();
-	if( rcv_size >= 2 )
+	int result=0;
+	if( rcv_size >= 3 )
 	{
-		if( vec_receive_data[0] != NULL ) *remained_space_num = vec_receive_data[0];
-		if( vec_receive_data[1] != NULL ) *max_space_num = vec_receive_data[1];
+		if( vec_receive_data[0] != NULL ) result = vec_receive_data[0];
+		if( vec_receive_data[1] != NULL ) *remained_space_num = vec_receive_data[1];
+		if( vec_receive_data[2] != NULL ) *max_space_num = vec_receive_data[2];
 	}
+	ret += result;
 
     return ret;
 }
@@ -5387,6 +5393,14 @@ int CInterfaceControl::Camera_Capture_Memory_Pop(int index)
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
 
+	int rcv_size = vec_receive_data.size();
+	int result=0;
+	if( rcv_size >= 1 )
+	{
+		if( vec_receive_data[0] != NULL ) result = vec_receive_data[0];
+	}
+	ret += result;
+
     return ret;
 }
 
@@ -5413,6 +5427,14 @@ int CInterfaceControl::Camera_Capture_Memory_Set_Image(int index)
     int ret = p_cls_ethernet_control_data->Send(p_socket, command, std::string(), &vec_send_data) ;
     std::vector<float> vec_receive_data ;
     ret += p_cls_ethernet_control_data->Receive(p_socket, command, &vec_receive_data) ;
+
+	int rcv_size = vec_receive_data.size();
+	int result=0;
+	if( rcv_size >= 1 )
+	{
+		if( vec_receive_data[0] != NULL ) result = vec_receive_data[0];
+	}
+	ret += result;
 
     return ret;
 }
